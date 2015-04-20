@@ -1,0 +1,7 @@
+.npmignore
+
+# source code
+src/
+
+# build process
+gulpfile.js

@@ -1,0 +1,31 @@
+{
+  "name": "carpentry",
+  "version": "0.0.0",
+  "description": "A library of highly customisable React components",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/lebowski89/carpentry.git"
+  },
+  "keywords": [
+    "React",
+    "components",
+    "carpentry"
+  ],
+  "author": "Mike Geldard",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/lebowski89/carpentry/issues"
+  },
+  "homepage": "https://github.com/lebowski89/carpentry",
+  "devDependencies": {
+    "del": "^1.1.1",
+    "gulp": "^3.8.11",
+    "gulp-react": "^3.0.1",
+    "gulp-uglify": "^1.2.0",
+    "react": "^0.13.2"
+  }
+}
