@@ -4,19 +4,39 @@ var React = require('react');
 
 module.exports = React.createClass({
 	
+	displayName: 'DecimalInput',
+	
+	propTypes: {
+		value: React.PropTypes.number.isRequired,
+		disabled: React.PropTypes.bool,
+		setValue: React.PropTypes.func.isRequired
+	},
+	
+	getDefaultProps: function() {
+		return {
+			value: 0,
+			disabled: false
+		};
+	},
+	
 	getInitialState: function() {
-		var value = this.props.value.toFixed(2);
-		var initIndex = value.indexOf('.');
+		// Initialise decimal point index state
+		var initValue = this.props.value.toFixed(2);
+		var initIndex = initValue.indexOf('.');
 		
 		return {
+			value: initValue,
 			index: initIndex
 		};
 	},
 	
 	handleFocus: function() {
 		// Empty value if equal to 0
-		if (parseFloat(this.props.value) === 0)
-			this.props.setValue(null);
+		if (this.props.value === 0)
+			this.setState({
+				value: '',
+				index: -1
+			});
 	},
 	
 	handleKeyPress: function(e) {
@@ -28,16 +48,18 @@ module.exports = React.createClass({
 	},
 	
 	handlePaste: function(e) {
+		// TODO Validate paste content
+		
 		e.preventDefault();
 	},
 	
 	handleChange: function(e) {
 		var value = e.target.value;
-		var newIndex = value.indexOf('.');
+		var firstIndex = value.indexOf('.');
 		
 		// Prevent two decimal points
-		if (newIndex !== value.lastIndexOf('.')) {
-			if (newIndex < this.state.index)
+		if (firstIndex !== value.lastIndexOf('.')) {
+			if (firstIndex !== this.state.index)
 				// Remove second decimal point
 				value = value.replace(/^(\d*\.\d*)(\.)(\d*)$/, '$1$3');
 			else
@@ -48,7 +70,13 @@ module.exports = React.createClass({
 		// Prevent more than two digits after decimal point
 		value = value.replace(/^(\d*\.\d{2})\d+$/, '$1');
 		
-		this.props.setValue(value);
+		this.setState({
+			value: value,
+			index: value.indexOf('.')
+		});
+		
+		if (value && !isNaN(value))
+			this.props.setValue(parseFloat(value));
 	},
 	
 	handleBlur: function(e) {
@@ -60,15 +88,21 @@ module.exports = React.createClass({
 			.replace(/^(\d*\.)$/, '$10')
 			.replace(/^(\d*\.\d)$/, '$10');
 		
-		this.props.setValue(value);
+		this.setState({
+			value: value,
+			index: value.indexOf('.')
+		});
+		
+		if (value && !isNaN(value))
+			this.props.setValue(parseFloat(value));
 	},
 	
 	render: function() {
 		return (
 			<input
-				className="CarpentryDecimalInput"
+				className="DecimalInput"
 				type="text"
-				value={this.props.value}
+				value={this.state.value}
 				disabled={this.props.disabled}
 				onFocus={this.handleFocus}
 				onKeyPress={this.handleKeyPress}

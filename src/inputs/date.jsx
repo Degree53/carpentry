@@ -4,10 +4,12 @@ var React = require('react');
 
 module.exports = React.createClass({
 	
+	displayName: 'DateInput',
+	
 	render: function() {
 		return (
 			<input
-				className="CarpentryDateInput"
+				className="DateInput"
 				type="text" />
 		);
 	}
