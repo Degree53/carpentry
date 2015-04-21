@@ -1,3 +1,4 @@
 'use strict';
 
-exports.DecimalInput = require('./lib/DecimalInput');
+exports.DateInput = require('./lib/inputs/date');
+exports.DecimalInput = require('./lib/inputs/decimal');

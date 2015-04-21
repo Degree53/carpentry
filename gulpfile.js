@@ -1,23 +1,33 @@
 'use strict';
 
 var gulp = require('gulp');
-var del = require('del');
 var react = require('gulp-react');
-var uglify = require('gulp-uglify');
+// var uglify = require('gulp-uglify');
+var del = require('del');
+var browserify = require('browserify');
+var source = require('vinyl-source-stream');
 
 gulp.task('clean', function() {
-	del(['lib/*']);
+	del(['./lib/*']);
 });
 
-gulp.task('scripts', ['clean'], function() {
-	return gulp.src('src/*.jsx')
+gulp.task('transform', ['clean'], function() {
+	return gulp.src('./src/**/*.jsx')
 		.pipe(react())
-		.pipe(uglify())
-		.pipe(gulp.dest('lib'));
+		.pipe(gulp.dest('./lib'));
 });
-
-gulp.task('default', ['scripts']);
 
 gulp.task('watch', function() {
-	gulp.watch(['src/*.jsx'], ['default']);
+	gulp.watch(['./src/**/*.jsx'], ['transform']);
+});
+
+gulp.task('bundle', ['transform'], function() {
+	var bundler = browserify({
+		cache: {}, packageCache: {},
+		entries: ['./index.js']
+	});
+	
+	return bundler.bundle()
+		.pipe(source('./bundle.js'))
+		.pipe(gulp.dest('./test'));
 });

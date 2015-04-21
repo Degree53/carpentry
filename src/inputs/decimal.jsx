@@ -2,7 +2,7 @@
 
 var React = require('react');
 
-var DecimalInput = React.createClass({
+module.exports = React.createClass({
 	
 	getInitialState: function() {
 		var value = this.props.value.toFixed(2);
@@ -66,7 +66,7 @@ var DecimalInput = React.createClass({
 	render: function() {
 		return (
 			<input
-				className="DecimalInput"
+				className="CarpentryDecimalInput"
 				type="text"
 				value={this.props.value}
 				disabled={this.props.disabled}
@@ -79,5 +79,3 @@ var DecimalInput = React.createClass({
 	}
 	
 });
-
-module.exports = DecimalInput;
