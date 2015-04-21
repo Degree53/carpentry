@@ -1,3 +1,6 @@
 'use strict';
 
-exports.DecimalInput = require('./lib/DecimalInput');
+module.exports = {
+	DateInput: require('./lib/inputs/date'),
+	DecimalInput: require('./lib/inputs/decimal')
+};
