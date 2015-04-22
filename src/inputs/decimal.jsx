@@ -7,6 +7,7 @@ module.exports = React.createClass({
 	displayName: 'DecimalInput',
 	
 	propTypes: {
+		className: React.PropTypes.string,
 		value: React.PropTypes.number.isRequired,
 		disabled: React.PropTypes.bool,
 		setValue: React.PropTypes.func.isRequired
@@ -14,6 +15,7 @@ module.exports = React.createClass({
 	
 	getDefaultProps: function() {
 		return {
+			className: null,
 			disabled: false
 		};
 	},
@@ -99,8 +101,8 @@ module.exports = React.createClass({
 	render: function() {
 		return (
 			<input
-				className="DecimalInput"
 				type="text"
+				className={this.props.className}
 				value={this.state.value}
 				disabled={this.props.disabled}
 				onFocus={this.handleFocus}

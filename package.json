@@ -11,9 +11,10 @@
     "url": "https://github.com/lebowski89/carpentry.git"
   },
   "keywords": [
-    "React",
+    "carpentry",
+    "react",
     "components",
-    "carpentry"
+    "decimal", "input"
   ],
   "author": "Mike Geldard",
   "license": "MIT",

@@ -7,7 +7,8 @@ developer.
 
 **WARNING** This package is under initial development. Until `v1.0.0` all
 changes should be treated as breaking. Not recommended for production.
-<br><br>
+
+<br>
 
 ## Rationale
 
@@ -25,12 +26,14 @@ to solve this problem by sticking to the following points:
 + Structural styling is configurable (e.g. a hamburger menu button can be on
 	the left or the right)
 + When necessary, components can nest other components
-<br><br>
+
+<br>
 
 ## Installation
 
 Thanks to NPM it's super easy, just `npm install carpentry`.
-<br><br>
+
+<br>
 
 ## Components
 
@@ -63,6 +66,7 @@ recommended way to access a component is via its alias:
 ``` javascript
 var MyDecimalInput = require('carpentry').DecimalInput;
 ```
+
 <br>
 
 ### DecimalInput
@@ -78,8 +82,9 @@ var MyDecimalInput = require('carpentry').DecimalInput;
 
 return (
 	<MyDecimalInput
+		className="MyDecimalInput"
 		value={this.state.value}
-		disabled={false}
+		disabled={isDisabled}
 		setValue={this.setValue} />
 );
 ```
@@ -96,6 +101,14 @@ return (
 		</tr>
 	</thead>
 	<tbody>
+		<tr>
+			<td>className</td>
+			<td>String</td>
+			<td>null</td>
+			<td>n/a</td>
+			<td>no</td>
+			<td>String to be used as the html class</td>
+		</tr>
 		<tr>
 			<td>value</td>
 			<td>Number</td>
