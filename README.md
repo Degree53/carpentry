@@ -2,7 +2,11 @@
 
 **Carpentry** is a library of highly customisable React components. The
 functionality and layout of each component is designed to be configurable
-via an API using React props. All other styling is left to the developer.
+via APIs using React props. All non-structural styling is left for the
+developer.
+
+**WARNING** This package is under initial development. Until `v1.0.0` all
+changes should be treated as breaking. Not recommended for production.
 <br><br>
 
 ## Rationale
@@ -40,13 +44,14 @@ Thanks to NPM it's super easy, just `npm install carpentry`.
 	</thead>
 	<tbody>
 		<tr style="vertical-align:top">
-			<td>[DecimalInput](#DecimalInput)</td>
+			<td>[DecimalInput](https://github.com/lebowski89/carpentry#DecimalInput)</td>
 			<td>DateInput</td>
 			<td>ResponsiveNav
 			<br>PasswordInput</td>
 		</tr>
 	</tbody>
 </table>
+
 <br>
 
 ## Usage
@@ -79,8 +84,42 @@ return (
 );
 ```
 
-Property | Type | Default | Return | Required | Description
--|-|-|-|-|-
-value | Number | n/a | n/a |  yes | Value of the input coming from your storage (set a default value in your storage)
-disabled | Boolean | false | n/a |  no | Boolean for disabling access to the input
-setValue | Function | n/a | Number |  yes | Function for setting the new value back to your storage
+<table>
+	<thead>
+		<tr>
+			<th>Property</th>
+			<th>Type</th>
+			<th>Default</th>
+			<th>Return</th>
+			<th>Required</th>
+			<th>Description</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td>value</td>
+			<td>Number</td>
+			<td>n/a</td>
+			<td>n/a</td>
+			<td>yes</td>
+			<td>Value of the input coming from your storage (set a default
+				value in your storage)</td>
+		</tr>
+		<tr>
+			<td>disabled</td>
+			<td>Boolean</td>
+			<td>false</td>
+			<td>n/a</td>
+			<td>no</td>
+			<td>Boolean for disabling access to the input</td>
+		</tr>
+		<tr>
+			<td>setValue</td>
+			<td>Function</td>
+			<td>n/a</td>
+			<td>Number</td>
+			<td>yes</td>
+			<td>Function for setting the new value back to your storage</td>
+		</tr>
+	</tbody>
+</table>
