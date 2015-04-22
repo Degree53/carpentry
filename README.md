@@ -44,7 +44,7 @@ Thanks to NPM it's super easy, just `npm install carpentry`.
 	</thead>
 	<tbody>
 		<tr style="vertical-align:top">
-			<td>[DecimalInput](https://github.com/lebowski89/carpentry#DecimalInput)</td>
+			<td><a href="https://github.com/lebowski89/carpentry#decimalinput">DecimalInput</a></td>
 			<td>DateInput</td>
 			<td>ResponsiveNav
 			<br>PasswordInput</td>
