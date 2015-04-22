@@ -14,7 +14,6 @@ module.exports = React.createClass({
 	
 	getDefaultProps: function() {
 		return {
-			value: 0,
 			disabled: false
 		};
 	},
