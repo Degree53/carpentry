@@ -1,6 +1,6 @@
 {
   "name": "carpentry",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "A library of highly customisable React components",
   "main": "index.js",
   "scripts": {
@@ -14,7 +14,8 @@
     "carpentry",
     "react",
     "components",
-    "decimal", "input"
+    "decimal",
+    "input"
   ],
   "author": "Mike Geldard",
   "license": "MIT",
