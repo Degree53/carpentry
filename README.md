@@ -46,11 +46,20 @@ Thanks to NPM it's super easy, just `npm install carpentry`.
 		</tr>
 	</thead>
 	<tbody>
-		<tr style="vertical-align:top">
-			<td><a href="https://github.com/lebowski89/carpentry#decimalinput">DecimalInput</a></td>
-			<td>DateInput</td>
-			<td>ResponsiveNav
-			<br>PasswordInput</td>
+		<tr>
+			<td valign="top">
+				<a href="#decimalinput">DecimalInput</a>
+			</td>
+			<td valign="top">
+				DateInput
+			</td>
+			<td valign="top">
+				ResponsiveNav<br>
+				SelectInput<br>
+				PasswordInput<br>
+				FullScreenNav<br>
+				SliderInput
+			</td>
 		</tr>
 	</tbody>
 </table>
@@ -107,7 +116,7 @@ return (
 			<td>null</td>
 			<td>n/a</td>
 			<td>no</td>
-			<td>String to be used as the html class</td>
+			<td>String to be used for the html class attribute</td>
 		</tr>
 		<tr>
 			<td>value</td>
