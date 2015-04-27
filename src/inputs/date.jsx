@@ -7,8 +7,17 @@ var DaysPanel = React.createClass({
 	
 	render: function() {
 		return (
-			<div className={this.props.className + '__days'}>
-				
+			<div
+				className={this.props.className + '__days'}
+				onClick={this.dayClick}>
+				<div className={this.props.className + '__daysHead'}>
+					<div className={this.props.className + '__daysRow'}>
+						{this.getWeekdays()}
+					</div>
+				</div>
+				<div className={this.props.className + '__daysBody'}>
+					{this.getDays()}
+				</div>
 			</div>
 		);
 	}
@@ -19,8 +28,12 @@ var MonthsPanel = React.createClass({
 	
 	render: function() {
 		return (
-			<div className={this.props.className + '__months'}>
-				
+			<div
+				className={this.props.className + '__months'}
+				onClick={this.monthClick}>
+				<div className={this.props.className + '__monthsBody'}>
+					
+				</div>
 			</div>
 		);
 	}
@@ -31,8 +44,12 @@ var YearsPanel = React.createClass({
 	
 	render: function() {
 		return (
-			<div className={this.props.className + '__years'}>
-				
+			<div
+				className={this.props.className + '__years'}
+				onClick={this.yearClick}>
+				<div className={this.props.className + '__yearsBody'}>
+					
+				</div>
 			</div>
 		);
 	}
@@ -75,7 +92,7 @@ module.exports = React.createClass({
 			this.props.config.format);
 			
 		return {
-			date: initMoment,
+			moment: initMoment,
 			level: 0,
 			visible: false
 		};
@@ -109,16 +126,16 @@ module.exports = React.createClass({
 		this.setVisible(false);
 	},
 	
-	setDate: function() {
-		
+	setMoment: function(moment) {
+		this.setState({ moment: moment });
 	},
 	
-	setLevel: function() {
-		
+	setLevel: function(level) {
+		this.setState({ level: level });
 	},
 	
-	setVisible: function() {
-		
+	setVisible: function(isVisible) {
+		this.setState({ visible: isVisible });
 	},
 	
 	getPanel: function(level) {
@@ -126,23 +143,23 @@ module.exports = React.createClass({
 			case 0: return (
 				<DaysPanel
 					className={this.props.className}
-					date={this.state.date}
-					setDate={this.setDate}
+					moment={this.state.moment}
+					setMoment={this.setMoment}
 					setLevel={this.setLevel}
 					setVisible={this.setVisible} />
 			);
 			case 1: return (
 				<MonthsPanel
 					className={this.props.className}
-					date={this.state.date}
-					setDate={this.setDate}
+					moment={this.state.moment}
+					setMoment={this.setMoment}
 					setLevel={this.setLevel} />
 			);
 			case 2: return (
 				<YearsPanel
 					className={this.props.className}
-					date={this.state.date}
-					setDate={this.setDate}
+					moment={this.state.moment}
+					setMoment={this.setMoment}
 					setLevel={this.setLevel} />
 			);
 		}
@@ -154,6 +171,7 @@ module.exports = React.createClass({
 				<input
 					type="text"
 					className={this.props.className + '__input'}
+					value={this.state.moment.format(this.props.config.format)}
 					onFocus={this.inputFocus}
 					onKeyPress={this.inputKeyPress}
 					onPaste={this.inputPaste}
