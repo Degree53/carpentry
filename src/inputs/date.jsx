@@ -32,7 +32,7 @@ var MonthsPanel = React.createClass({
 				className={this.props.className + '__months'}
 				onClick={this.monthClick}>
 				<div className={this.props.className + '__monthsBody'}>
-					
+					{this.getMonths()}
 				</div>
 			</div>
 		);
@@ -48,7 +48,7 @@ var YearsPanel = React.createClass({
 				className={this.props.className + '__years'}
 				onClick={this.yearClick}>
 				<div className={this.props.className + '__yearsBody'}>
-					
+					{this.getYears()}
 				</div>
 			</div>
 		);
@@ -62,12 +62,10 @@ module.exports = React.createClass({
 	
 	propTypes: {
 		className: React.PropTypes.string,
-		config: React.PropTypes.shape({
-			format: React.PropTypes.string,
-			initDate: React.PropTypes.string,
-			minDate: React.PropTypes.string,
-			maxDate: React.PropTypes.string
-		})
+		format: React.PropTypes.string,
+		initDate: React.PropTypes.string,
+		minDate: React.PropTypes.string,
+		maxDate: React.PropTypes.string
 	},
 	
 	getDefaultProps: function() {
@@ -78,18 +76,15 @@ module.exports = React.createClass({
 		
 		return {
 			className: 'DateInput',
-			config: {
-				format: 'YYYY-MM-DD',
-				initDate: isoDate,
-				minDate: null,
-				maxDate: null
-			}
+			format: 'YYYY-MM-DD',
+			initDate: isoDate,
+			minDate: null,
+			maxDate: null
 		};
 	},
 	
 	getInitialState: function() {
-		var initMoment = moment(this.props.config.initDate,
-			this.props.config.format);
+		var initMoment = moment(this.props.initDate, this.props.format);
 			
 		return {
 			moment: initMoment,
@@ -171,7 +166,7 @@ module.exports = React.createClass({
 				<input
 					type="text"
 					className={this.props.className + '__input'}
-					value={this.state.moment.format(this.props.config.format)}
+					value={this.state.moment.format(this.props.format)}
 					onFocus={this.inputFocus}
 					onKeyPress={this.inputKeyPress}
 					onPaste={this.inputPaste}
