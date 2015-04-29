@@ -1,7 +1,7 @@
 'use strict';
 
 var React = require('react');
-var moment = require('moment');
+// var moment = require('moment');
 
 var Calendar = require('./calendar');
 
@@ -14,7 +14,7 @@ module.exports = React.createClass({
 		format: React.PropTypes.string,
 		initDate: React.PropTypes.object,
 		setDate: React.PropTypes.function.isRequired,
-		locale: React.PropTypes.string,
+		// locale: React.PropTypes.string,
 		weekStart: React.PropTypes.number,
 		minDate: React.PropTypes.string,
 		maxDate: React.PropTypes.string
@@ -25,7 +25,7 @@ module.exports = React.createClass({
 			className: 'DateInput',
 			format: 'YYYY-MM-DD',
 			initDate: new Date(),
-			locale: 'en',
+			// locale: 'en',
 			weekStart: 1,
 			minDate: null,
 			maxDate: null
@@ -34,7 +34,7 @@ module.exports = React.createClass({
 	
 	getInitialState: function() {
 		// var initMoment = moment(this.props.initDate);
-		this.updateLocale(this.props.locale, this.props.weekStart);
+		// this.updateLocale(this.props.locale, this.props.weekStart);
 		
 		return {
 			date: this.props.initDate,
@@ -43,25 +43,20 @@ module.exports = React.createClass({
 		};
 	},
 	
-	componentWillReceiveProps: function(nextProps) {
-		this.updateLocale(nextProps.locale, nextProps.weekStart);
-	},
+	// componentWillReceiveProps: function(nextProps) {
+	// 	this.updateLocale(nextProps.locale, nextProps.weekStart);
+	// },
 	
-	updateLocale: function(locale, weekStart) {
-		// Hack for reordering weekday names because weekdaysMin()
-		// ignores moment.locale.week.dow property
-		moment.locale(locale);
-		
-		var weekdays = moment.weekdaysMin();
-		weekdays = weekdays.concat(weekdays.splice(0, weekStart));
-		
-		moment.locale(locale, {
-			week: {
-				dow: weekStart
-			},
-			weekdaysMin: weekdays
-		});
-	},
+	// updateLocale: function(locale, weekStart) {
+	// 	// Hack for reordering weekday names because weekdaysMin()
+	// 	// ignores moment.locale.week.dow property
+	// 	moment.locale(locale);
+	//
+	// 	var weekdays = moment.weekdaysMin();
+	// 	weekdays = weekdays.concat(weekdays.splice(0, weekStart));
+	//
+	// 	moment.locale(locale, { weekdaysMin: weekdays });
+	// },
 	
 	setDate: function(date) {
 		this.setState({ date: date });
@@ -100,8 +95,8 @@ module.exports = React.createClass({
 	},
 	
 	render: function() {
-		var displayDate = moment(this.state.date)
-			.format(this.props.format);
+		// var displayDate = moment(this.state.date)
+		// 	.format(this.props.format);
 		
 		return (
 			<div className={this.props.className}>

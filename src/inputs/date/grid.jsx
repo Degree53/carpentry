@@ -6,7 +6,7 @@ var moment = require('moment');
 module.exports = React.createClass({
 	
 	getGridHead: function() {
-		var weekdays = moment.weekdaysMin();
+		// var weekdays = moment.weekdaysMin();
 		var weekdayElems = weekdays.map(function(name, i) {
 			return (
 				<div
