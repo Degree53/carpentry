@@ -3,7 +3,7 @@
 var React = require('react');
 var moment = require('moment');
 
-var Calendar = require('calendar');
+var Calendar = require('./calendar');
 
 module.exports = React.createClass({
 	
@@ -12,35 +12,67 @@ module.exports = React.createClass({
 	propTypes: {
 		className: React.PropTypes.string,
 		format: React.PropTypes.string,
-		initDate: React.PropTypes.string,
+		initDate: React.PropTypes.object,
+		setDate: React.PropTypes.function.isRequired,
+		locale: React.PropTypes.string,
+		weekStart: React.PropTypes.number,
 		minDate: React.PropTypes.string,
 		maxDate: React.PropTypes.string
 	},
 	
 	getDefaultProps: function() {
-		// Default to ISO format
-		var isoDate = new Date().toISOString();
-		// Remove time from isoDate string
-		isoDate = isoDate.split('T')[0];
-		
 		return {
 			className: 'DateInput',
 			format: 'YYYY-MM-DD',
-			initDate: isoDate,
+			initDate: new Date(),
+			locale: 'en',
+			weekStart: 1,
 			minDate: null,
 			maxDate: null
 		};
 	},
 	
 	getInitialState: function() {
-		var initMoment = moment(this.props.initDate,
-			this.props.format);
-			
+		// var initMoment = moment(this.props.initDate);
+		this.updateLocale(this.props.locale, this.props.weekStart);
+		
 		return {
-			moment: initMoment,
+			date: this.props.initDate,
 			level: 0,
 			visible: false
 		};
+	},
+	
+	componentWillReceiveProps: function(nextProps) {
+		this.updateLocale(nextProps.locale, nextProps.weekStart);
+	},
+	
+	updateLocale: function(locale, weekStart) {
+		// Hack for reordering weekday names because weekdaysMin()
+		// ignores moment.locale.week.dow property
+		moment.locale(locale);
+		
+		var weekdays = moment.weekdaysMin();
+		weekdays = weekdays.concat(weekdays.splice(0, weekStart));
+		
+		moment.locale(locale, {
+			week: {
+				dow: weekStart
+			},
+			weekdaysMin: weekdays
+		});
+	},
+	
+	setDate: function(date) {
+		this.setState({ date: date });
+	},
+	
+	setLevel: function(level) {
+		this.setState({ level: level });
+	},
+	
+	setVisible: function(visible) {
+		this.setState({ visible: visible });
 	},
 	
 	inputFocus: function() {
@@ -67,25 +99,15 @@ module.exports = React.createClass({
 		this.setVisible(true);
 	},
 	
-	setMoment: function(moment) {
-		this.setState({ moment: moment });
-	},
-	
-	setLevel: function(level) {
-		this.setState({ level: level });
-	},
-	
-	setVisible: function(visible) {
-		this.setState({ visible: visible });
-	},
-	
 	render: function() {
+		var displayDate = moment(this.state.date)
+			.format(this.props.format);
+		
 		return (
 			<div className={this.props.className}>
 				<input
-					type="text"
 					className={this.props.className + '__input'}
-					value={this.state.moment.format(this.props.format)}
+					value={displayDate}
 					onFocus={this.inputFocus}
 					onKeyPress={this.inputKeyPress}
 					onPaste={this.inputPaste}
@@ -94,11 +116,11 @@ module.exports = React.createClass({
 				<div
 					className={this.props.className + '__icon'}
 					onClick={this.iconClick}>
-					{/* icon */}
+					
 				</div>
 				<Calendar
 					className={this.props.className}
-					moment={this.state.moment}
+					date={this.state.date}
 					level={this.state.level}
 					setMoment={this.setMoment}
 					setLevel={this.setLevel}

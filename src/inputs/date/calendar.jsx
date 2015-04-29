@@ -1,11 +1,10 @@
 'use strict';
 
 var React = require('react');
-var moment = require('moment');
 
-var Navbar = require('navbar');
-var Grid = require('grid');
-var Buttons = require('buttons');
+var Navbar = require('./navbar');
+var Grid = require('./grid');
+var Buttons = require('./buttons');
 
 module.exports = React.createClass({
 	
@@ -20,21 +19,21 @@ module.exports = React.createClass({
 				onBlur={this.calendarBlur}>
 				<Navbar
 					className={this.props.className}
-					moment={this.props.moment}
+					date={this.props.date}
 					level={this.props.level}
-					setMoment={this.props.setMoment}
+					setDate={this.props.setDate}
 					setLevel={this.props.setLevel}
 					setVisible={this.props.setVisible} />
 				<Grid
 					className={this.props.className}
-					moment={this.props.moment}
+					date={this.props.date}
 					level={this.props.level}
-					setMoment={this.props.setMoment}
+					setDate={this.props.setDate}
 					setLevel={this.props.setLevel}
 					setVisible={this.props.setVisible} />
 				<Buttons
 					className={this.props.className}
-					setMoment={this.props.setMoment}
+					setDate={this.props.setDate}
 					setVisible={this.props.setVisible} />
 			</div>
 		);
