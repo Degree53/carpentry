@@ -1,12 +1,13 @@
 'use strict';
 
 var React = require('react');
-var moment = require('moment');
 
 module.exports = React.createClass({
 	
+	displayName: 'Grid',
+	
 	getGridHead: function() {
-		// var weekdays = moment.weekdaysMin();
+		var weekdays = this.props.locale.dayNames;
 		var weekdayElems = weekdays.map(function(name, i) {
 			return (
 				<div
@@ -46,9 +47,7 @@ module.exports = React.createClass({
 	
 	render: function() {
 		return (
-			<div
-				className={this.props.className + '__grid'}
-				onClick={this.gridClick}>
+			<div className={this.props.className + '__grid'}>
 				{this.props.level === 0 ? this.getGridHead() : false}
 				{this.getGridItems()}
 			</div>
