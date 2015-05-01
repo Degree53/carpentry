@@ -65,12 +65,26 @@ module.exports = React.createClass({
 	
 	render: function() {
 		return (
-			<div className={this.props.className}>
-				<input className={this.props.className + '__input'} />
+			<div
+				className={this.props.className}
+				style={this.styles.index}>
 				<div
-					className={this.props.className + '__icon'}
-					onClick={this.onIconClick}>
-					
+					className={this.props.className + '__inputTable'}
+					style={this.styles.inputTable}>
+					<div
+						className={this.props.className + '__inputCell'}
+						style={this.styles.inputCell}>
+						<input className={this.props.className + '__input'} />
+					</div>
+					<div
+						className={this.props.className + '__inputCell'}
+						style={this.styles.inputCell}>
+						<div
+							className={this.props.className + '__icon'}
+							onClick={this.onIconClick}>
+							
+						</div>
+					</div>
 				</div>
 				<Calendar
 					className={this.props.className}
@@ -83,7 +97,17 @@ module.exports = React.createClass({
 	},
 	
 	styles: {
-		
+		index: {
+			display: 'inline-block',
+			position: 'relative'
+		},
+		inputTable: {
+			display: 'table'
+		},
+		inputCell: {
+			display: 'table-cell',
+			verticalAlign: 'middle'
+		}
 	}
 	
 });
