@@ -50,19 +50,33 @@ module.exports = React.createClass({
 		};
 	},
 	
+	setDate: function(date) {
+		this.setState({ date: date });
+		this.props.setDate(date);
+	},
+	
 	setVisible: function(visible) {
 		this.setState({ visible: visible });
+	},
+	
+	onIconClick: function() {
+		this.setVisible(!this.state.visible);
 	},
 	
 	render: function() {
 		return (
 			<div className={this.props.className}>
 				<input className={this.props.className + '__input'} />
-				<div className={this.props.className + '__icon'}></div>
+				<div
+					className={this.props.className + '__icon'}
+					onClick={this.onIconClick}>
+					
+				</div>
 				<Calendar
 					className={this.props.className}
 					locale={this.props.locale}
 					date={this.state.date}
+					setDate={this.setDate}
 					setVisible={this.setVisible} />
 			</div>
 		);

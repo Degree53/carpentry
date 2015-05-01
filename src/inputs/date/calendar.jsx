@@ -10,13 +10,20 @@ module.exports = React.createClass({
 	displayName: 'Calendar',
 	
 	getInitialState: function() {
+		var initDate = this.props.date;
+		
 		return {
+			viewDate: initDate,
 			level: 0
 		};
 	},
 	
 	onCalendarBlur: function() {
 		this.props.setVisible(false);
+	},
+	
+	setViewDate: function(date ) {
+		this.setState({ viewDate: date });
 	},
 	
 	setLevel: function(value) {
@@ -33,13 +40,19 @@ module.exports = React.createClass({
 				<Navbar
 					className={this.props.className}
 					locale={this.props.locale}
-					date={this.props.date}
+					setDate={this.props.setDate}
+					viewDate={this.state.viewDate}
 					level={this.state.level}
+					setViewDate={this.setViewDate}
 					setLevel={this.setLevel} />
 				<Grid
 					className={this.props.className}
 					locale={this.props.locale}
-					level={this.state.level} />
+					setDate={this.props.setDate}
+					viewDate={this.state.viewDate}
+					level={this.state.level}
+					setViewDate={this.setViewDate}
+					setLevel={this.setLevel} />
 				<Buttons
 					className={this.props.className} />
 			</div>

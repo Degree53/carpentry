@@ -12,13 +12,50 @@ module.exports = {
 		return newDate;
 	},
 	
+	getPrevDate: function(date) {
+		var newDate = this.cloneDate(date);
+		
+		newDate.setDate(date.getDate() - 1);
+		
+		return newDate;
+	},
+	
+	getNextDate: function(date) {
+		var newDate = this.cloneDate(date);
+		
+		newDate.setDate(date.getDate() + 1);
+		
+		return newDate;
+	},
+	
+	getLastDate: function(date) {
+		var lastDay = this.getNextMonth(date);
+		
+		lastDay.setDate(0);
+		
+		return lastDay;
+	},
+	
+	getPrevMonth: function(date) {
+		var newDate = this.cloneDate(date);
+		
+		newDate.setMonth(date.getMonth() - 1);
+		
+		return newDate;
+	},
+	
+	getNextMonth: function(date) {
+		var newDate = this.cloneDate(date);
+		
+		newDate.setMonth(date.getMonth() + 1);
+		
+		return newDate;
+	},
+	
 	getPrevYear: function(date) {
 		var newDate = this.cloneDate(date);
 		
-		newDate.setMonth(0);
-		newDate.setDate(0);
-		newDate.setDate(date.getDate());
-		newDate.setMonth(date.getMonth());
+		newDate.setFullYear(date.getFullYear() - 1);
 		
 		return newDate;
 	},
@@ -26,48 +63,62 @@ module.exports = {
 	getNextYear: function(date) {
 		var newDate = this.cloneDate(date);
 		
-		newDate.setMonth(12);
-		newDate.setDate(date.getDate());
-		newDate.setMonth(date.getMonth());
+		newDate.setFullYear(date.getFullYear() + 1);
 		
 		return newDate;
 	},
 	
-	getFirstOfDecade: function(date, decade) {
-		var newDate = this.getPrevYear(date);
-		decade.unshift(newDate);
-		debugger;
-		var year = newDate.getFullYear();
-	
-		if (!year.toString().match(/9$/))
-			this.getFirstOfDecade(newDate, decade);
-		else {
-			debugger;
-			this.getLastOfDecade(date, decade);
-		}
+	getPrevDecade: function(date) {
+		var newDate = this.cloneDate(date);
+		
+		newDate.setFullYear(date.getFullYear() - 10);
+		
+		return newDate;
 	},
 	
-	getLastOfDecade: function(date, decade) {
-		var newDate = this.getNextYear(date);
-		decade.push(newDate);
-		debugger;
-		var year = newDate.getFullYear();
-	
-		if (!year.toString().match(/0$/))
-			this.getLastOfDecade(newDate, decade);
+	getNextDecade: function(date) {
+		var newDate = this.cloneDate(date);
+		
+		newDate.setFullYear(date.getFullYear() + 10);
+		
+		return newDate;
 	},
 	
-	getDecade: function(date) {
+	getMonthDates: function(date) {
+		var month = [date];
+		var lastIndex = this.getLastDate(date).getDate();
+		
+		while (month[0].getDate() !== 1)
+			month.unshift(this.getPrevDate(month[0]));
+		
+		while (month[month.length - 1].getDate() !== lastIndex)
+			month.push(this.getNextDate(month[month.length - 1]));
+		
+		return month;
+	},
+	
+	getYearMonths: function(date) {
+		var year = [date];
+		
+		while (year[0].getMonth() !== 0)
+			year.unshift(this.getPrevMonth(year[0]));
+		
+		while (year[year.length - 1].getMonth() !== 11)
+			year.push(this.getNextMonth(year[year.length - 1]));
+		
+		return year;
+	},
+	
+	getDecadeYears: function(date) {
 		var decade = [date];
-		this.getFirstOfDecade(date, decade);
-		debugger;
+		
+		while (decade[0].toISOString()[3] !== '9')
+			decade.unshift(this.getPrevYear(decade[0]));
+		
+		while (decade[decade.length - 1].toISOString()[3] !== '0')
+			decade.push(this.getNextYear(decade[decade.length - 1]));
+		
 		return decade;
-	},
-	
-	getDecadeString: function(date) {
-		var decade = this.getDecade(date);
-		return decade[0].getFullYear() + ' - ' +
-			decade[decade.length - 1].getFullYear();
 	}
 	
 };
