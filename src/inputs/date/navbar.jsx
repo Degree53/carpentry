@@ -59,26 +59,52 @@ module.exports = React.createClass({
 	
 	render: function() {
 		return (
-			<div className={this.props.className + '__navbar'}>
-				<div className={this.props.className + '__navRow'}>
+			<div
+				className={this.props.className + '__navbar'}
+				style={this.styles.navbar}>
+				<div
+					className={this.props.className + '__navRow'}
+					style={this.styles.navRow}>
 					<div
 						className={this.props.className + '__navPrev'}
+						style={this.styles.navPrev}
 						onClick={this.onNavPrevClick}>
 						{String.fromCharCode('60')}
 					</div>
 					<div
 						className={this.props.className + '__navTitle'}
+						style={this.styles.navTitle}
 						onClick={this.onNavTitleClick}>
 						{this.getNavTitle()}
 					</div>
 					<div
 						className={this.props.className + '__navNext'}
+						style={this.styles.navNext}
 						onClick={this.onNavNextClick}>
 						{String.fromCharCode('62')}
 					</div>
 				</div>
 			</div>
 		);
+	},
+	
+	styles: {
+		navbar: {
+			display: 'table',
+			width: '100%'
+		},
+		navRow: {
+			display: 'table-row'
+		},
+		navPrev: {
+			display: 'table-cell'
+		},
+		navTitle: {
+			display: 'table-cell'
+		},
+		navNext: {
+			display: 'table-cell'
+		}
 	}
 	
 });

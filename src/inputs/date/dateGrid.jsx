@@ -14,6 +14,7 @@ module.exports = React.createClass({
 			return (
 				<div
 					className={this.props.className + '__weekday'}
+					style={this.styles.weekday}
 					key={i}>
 					{name}
 				</div>
@@ -21,8 +22,14 @@ module.exports = React.createClass({
 		}, this);
 		
 		return (
-			<div className={this.props.className + '__gridHead'}>
-				{weekdayElems}
+			<div
+				className={this.props.className + '__gridHead'}
+				style={this.styles.gridHead}>
+				<div
+					className={this.props.className + '__gridHeadRow'}
+					style={this.styles.gridHeadRow}>
+					{weekdayElems}
+				</div>
 			</div>
 		);
 	},
@@ -87,13 +94,36 @@ module.exports = React.createClass({
 	
 	render: function() {
 		return (
-			<div className={this.props.className + '__grid'}>
+			<div
+				className={this.props.className + '__grid'}
+				style={this.styles.grid}>
 				{this.props.level === 0 ? this.getGridHead() : false}
-				<div className={this.props.className + '__gridBody'}>
+				<div
+					className={this.props.className + '__gridBody'}
+					style={this.styles.gridBody}>
 					{this.getGridItems()}
 				</div>
 			</div>
 		);
+	},
+	
+	styles: {
+		grid: {
+			display: 'table',
+			width: '100%'
+		},
+		gridHead: {
+			display: 'table-header-group'
+		},
+		gridHeadRow: {
+			display: 'table-row'
+		},
+		weekday: {
+			display: 'table-cell'
+		},
+		gridBody: {
+			display: 'table-row-group'
+		}
 	}
 	
 });

@@ -36,6 +36,7 @@ module.exports = React.createClass({
 		return (
 			<div
 				className={this.props.className + '__calendar'}
+				style={this.styles.calendar}
 				onBlur={this.onCalendarBlur}>
 				<Navbar
 					className={this.props.className}
@@ -57,6 +58,13 @@ module.exports = React.createClass({
 					className={this.props.className} />
 			</div>
 		);
+	},
+	
+	styles: {
+		calendar: {
+			position: 'absolute',
+			textAlign: 'center'
+		}
 	}
 	
 });

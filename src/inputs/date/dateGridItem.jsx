@@ -48,6 +48,10 @@ module.exports = React.createClass({
 					</div>
 				);
 		}
+	},
+	
+	styles: {
+		
 	}
 	
 });

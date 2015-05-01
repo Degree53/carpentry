@@ -80,6 +80,10 @@ module.exports = React.createClass({
 					setVisible={this.setVisible} />
 			</div>
 		);
+	},
+	
+	styles: {
+		
 	}
 	
 });
