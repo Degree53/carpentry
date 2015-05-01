@@ -2,10 +2,11 @@
 
 var React = require('react');
 var Utils = require('./utils');
+var DateGridItem = require('./dateGridItem');
 
 module.exports = React.createClass({
 	
-	displayName: 'Grid',
+	displayName: 'DateGrid',
 	
 	getGridHead: function() {
 		var weekdays = this.props.locale.dayNames;
@@ -30,11 +31,13 @@ module.exports = React.createClass({
 		var days = Utils.getMonthDates(this.props.viewDate);
 		return days.map(function(date, i) {
 			return (
-				<div
-					className={this.props.className + '__day'}
-					key={i}>
-					{date.getDate()}
-				</div>
+				<DateGridItem
+					className={this.props.className}
+					setDate={this.props.setDate}
+					setVisible={this.props.setVisible}
+					date={date}
+					level={this.props.level}
+					key={i} />
 			);
 		}, this);
 	},
@@ -43,11 +46,14 @@ module.exports = React.createClass({
 		var months = Utils.getYearMonths(this.props.viewDate);
 		return months.map(function(date, i) {
 			return (
-				<div
-					className={this.props.className + '__month'}
-					key={i}>
-					{this.props.locale.monthNames[date.getMonth()]}
-				</div>
+				<DateGridItem
+					className={this.props.className}
+					locale={this.props.locale}
+					date={date}
+					level={this.props.level}
+					setViewDate={this.props.setViewDate}
+					setLevel={this.props.setLevel}
+					key={i} />
 			);
 		}, this);
 	},
@@ -56,11 +62,14 @@ module.exports = React.createClass({
 		var years = Utils.getDecadeYears(this.props.viewDate);
 		return years.map(function(date, i) {
 			return (
-				<div
-					className={this.props.className + '__year'}
-					keu={i}>
-					{date.getFullYear()}
-				</div>
+				<DateGridItem
+					className={this.props.className}
+					locale={this.props.locale}
+					date={date}
+					level={this.props.level}
+					setViewDate={this.props.setViewDate}
+					setLevel={this.props.setLevel}
+					key={i} />
 			);
 		}, this);
 	},

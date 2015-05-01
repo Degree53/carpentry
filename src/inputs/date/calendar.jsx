@@ -2,7 +2,7 @@
 
 var React = require('react');
 var Navbar = require('./navbar');
-var Grid = require('./grid');
+var DateGrid = require('./dateGrid');
 var Buttons = require('./buttons');
 
 module.exports = React.createClass({
@@ -40,15 +40,15 @@ module.exports = React.createClass({
 				<Navbar
 					className={this.props.className}
 					locale={this.props.locale}
-					setDate={this.props.setDate}
 					viewDate={this.state.viewDate}
 					level={this.state.level}
 					setViewDate={this.setViewDate}
 					setLevel={this.setLevel} />
-				<Grid
+				<DateGrid
 					className={this.props.className}
 					locale={this.props.locale}
 					setDate={this.props.setDate}
+					setVisible={this.props.setVisible}
 					viewDate={this.state.viewDate}
 					level={this.state.level}
 					setViewDate={this.setViewDate}
