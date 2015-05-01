@@ -112,11 +112,14 @@ module.exports = {
 	getDecadeYears: function(date) {
 		var decade = [date];
 		
-		while (decade[0].toISOString()[3] !== '9')
+		while (decade[0].toISOString()[3] !== '0')
 			decade.unshift(this.getPrevYear(decade[0]));
 		
-		while (decade[decade.length - 1].toISOString()[3] !== '0')
+		while (decade[decade.length - 1].toISOString()[3] !== '9')
 			decade.push(this.getNextYear(decade[decade.length - 1]));
+		
+		decade.unshift(this.getPrevYear(decade[0]));
+		decade.push(this.getNextYear(decade[decade.length - 1]));
 		
 		return decade;
 	}

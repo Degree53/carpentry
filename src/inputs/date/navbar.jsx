@@ -15,7 +15,7 @@ module.exports = React.createClass({
 			case 1:
 				return this.props.viewDate.getFullYear();
 			case 2:
-				var decade = this.getDecadeYears(this.props.viewDate);
+				var decade = Utils.getDecadeYears(this.props.viewDate);
 				return decade[0].getFullYear() + ' - ' +
 					decade[decade.length - 1].getFullYear();
 		}
