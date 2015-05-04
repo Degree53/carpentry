@@ -91,7 +91,8 @@ module.exports = React.createClass({
 	styles: {
 		navbar: {
 			display: 'table',
-			width: '100%'
+			width: '100%',
+			cursor: 'pointer'
 		},
 		navRow: {
 			display: 'table-row'

@@ -164,7 +164,8 @@ module.exports = React.createClass({
 			display: 'table-row'
 		},
 		gridBody: {
-			display: 'table-row-group'
+			display: 'table-row-group',
+			cursor: 'pointer'
 		},
 		gridBodyRow: {
 			display: 'table-row'
