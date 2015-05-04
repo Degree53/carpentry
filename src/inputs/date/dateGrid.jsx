@@ -51,14 +51,15 @@ module.exports = React.createClass({
 						setVisible={this.props.setVisible}
 						date={date}
 						level={this.props.level}
-						key={i + '.' + j} />
+						key={j} />
 				);
 			}, this);
 			
 			return (
 				<div
 					className={this.props.className}
-					style={this.styles.gridBodyRow}>
+					style={this.styles.gridBodyRow}
+					key={i}>
 					{dateElems}
 				</div>
 			);
@@ -80,14 +81,15 @@ module.exports = React.createClass({
 						level={this.props.level}
 						setViewDate={this.props.setViewDate}
 						setLevel={this.props.setLevel}
-						key={i + '.' + j} />
+						key={j} />
 				);
 			}, this);
 			
 			return (
 				<div
 					className={this.props.className}
-					style={this.styles.gridBodyRow}>
+					style={this.styles.gridBodyRow}
+					key={i}>
 					{dateElems}
 				</div>
 			);
@@ -109,14 +111,15 @@ module.exports = React.createClass({
 						level={this.props.level}
 						setViewDate={this.props.setViewDate}
 						setLevel={this.props.setLevel}
-						key={i + '.' + j} />
+						key={j} />
 				);
 			}, this);
 			
 			return (
 				<div
 					className={this.props.className}
-					style={this.styles.gridBodyRow}>
+					style={this.styles.gridBodyRow}
+					key={i}>
 					{dateElems}
 				</div>
 			);
