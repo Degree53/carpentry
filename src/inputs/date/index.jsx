@@ -15,8 +15,8 @@ module.exports = React.createClass({
 		locale: React.PropTypes.shape({
 			dayNames: React.PropTypes.arrayOf(React.PropTypes.string),
 			monthNames: React.PropTypes.arrayOf(React.PropTypes.string)
-		})//,
-		// weekStart: React.PropTypes.number,
+		}),
+		firstDoW: React.PropTypes.number//,
 		// dateRange: React.PropTypes.shape({
 		// 	firstDate: React.PropTypes.object,
 		// 	lastDate: React.PropTypes.object
@@ -33,8 +33,8 @@ module.exports = React.createClass({
 				dayNames: ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'],
 				monthNames: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
 					'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
-			}//,
-			// weekStart: 1,
+			},
+			firstDoW: 1//,
 			// dateRange: null,
 			// minDate: null,
 			// maxDate: null
@@ -89,6 +89,7 @@ module.exports = React.createClass({
 				<Calendar
 					className={this.props.className}
 					locale={this.props.locale}
+					firstDoW={this.props.firstDoW}
 					date={this.state.date}
 					setDate={this.setDate}
 					setVisible={this.setVisible} />

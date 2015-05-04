@@ -3,37 +3,13 @@
 module.exports = {
 	
 	cloneDate: function(date) {
-		var yr = date.getFullYear();
-		var mth = date.getMonth();
-		var dy = date.getDate();
+		var year = date.getFullYear();
+		var month = date.getMonth();
+		var day = date.getDate();
 		
-		var newDate = new Date(yr, mth, dy);
-		
-		return newDate;
-	},
-	
-	getPrevDate: function(date) {
-		var newDate = this.cloneDate(date);
-		
-		newDate.setDate(date.getDate() - 1);
+		var newDate = new Date(year, month, day);
 		
 		return newDate;
-	},
-	
-	getNextDate: function(date) {
-		var newDate = this.cloneDate(date);
-		
-		newDate.setDate(date.getDate() + 1);
-		
-		return newDate;
-	},
-	
-	getLastDate: function(date) {
-		var lastDay = this.getNextMonth(date);
-		
-		lastDay.setDate(0);
-		
-		return lastDay;
 	},
 	
 	getPrevMonth: function(date) {
@@ -84,17 +60,18 @@ module.exports = {
 		return newDate;
 	},
 	
-	getMonthDates: function(date) {
-		var month = [date];
-		var lastIndex = this.getLastDate(date).getDate();
+	getMonthDates: function(date, startDay) {
+		var year = date.getFullYear();
+		var month = date.getMonth();
+		var firstDay = new Date(year, month, 1).getDay();
+		var offset = startDay < firstDay ?
+			firstDay - startDay : firstDay + 7 - startDay;
 		
-		while (month[0].getDate() !== 1)
-			month.unshift(this.getPrevDate(month[0]));
+		var dates = [];
+		for (var i = -offset; i < (42 - offset); i++)
+			dates.push(new Date(year, month, i + 1));
 		
-		while (month[month.length - 1].getDate() !== lastIndex)
-			month.push(this.getNextDate(month[month.length - 1]));
-		
-		return month;
+		return dates;
 	},
 	
 	getYearMonths: function(date) {

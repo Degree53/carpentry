@@ -48,6 +48,7 @@ module.exports = React.createClass({
 				<DateGrid
 					className={this.props.className}
 					locale={this.props.locale}
+					firstDoW={this.props.firstDoW}
 					setDate={this.props.setDate}
 					setVisible={this.props.setVisible}
 					viewDate={this.state.viewDate}
