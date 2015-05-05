@@ -26,10 +26,12 @@ module.exports = React.createClass({
 			case 0:
 				return (
 					<div
-						className={this.props.className + '__dateCell'}
-						style={this.styles.dateCell}
-						onClick={this.onDateClick}>
-						<div className={this.props.className + '__date'}>
+						className={this.props.className + '__gridCell'}
+						style={this.styles.gridCell}>
+						<div
+							className={this.props.className + '__date'}
+							style={this.styles.gridElement}
+							onClick={this.onDateClick}>
 							{this.props.date.getDate()}
 						</div>
 					</div>
@@ -37,10 +39,12 @@ module.exports = React.createClass({
 			case 1:
 				return (
 					<div
-						className={this.props.className + '__monthCell'}
-						style={this.styles.dateCell}
-						onClick={this.onMonthClick}>
-						<div className={this.props.className + '__month'}>
+						className={this.props.className + '__gridCell'}
+						style={this.styles.gridCell}>
+						<div
+							className={this.props.className + '__month'}
+							style={this.styles.gridElement}
+							onClick={this.onMonthClick}>
 							{this.props.locale.monthNames[this.props.date.getMonth()]}
 						</div>
 					</div>
@@ -48,10 +52,12 @@ module.exports = React.createClass({
 			case 2:
 				return (
 					<div
-						className={this.props.className + '__yearCell'}
-						style={this.styles.dateCell}
-						onClick={this.onYearClick}>
-						<div className={this.props.className + '__year'}>
+						className={this.props.className + '__gridCell'}
+						style={this.styles.gridCell}>
+						<div
+							className={this.props.className + '__year'}
+							style={this.styles.gridElement}
+							onClick={this.onYearClick}>
 							{this.props.date.getFullYear()}
 						</div>
 					</div>
@@ -60,9 +66,12 @@ module.exports = React.createClass({
 	},
 	
 	styles: {
-		dateCell: {
+		gridCell: {
 			boxSizing: 'border-box',
-			display: 'table-cell',
+			display: 'table-cell'
+		},
+		gridElement: {
+			boxSizing: 'border-box',
 			cursor: 'pointer'
 		}
 	}

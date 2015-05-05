@@ -63,22 +63,34 @@ module.exports = React.createClass({
 				className={this.props.className + '__navbar'}
 				style={this.styles.navbar}>
 				<div
-					className={this.props.className + '__navPrev'}
-					style={this.styles.navPrev}
-					onClick={this.onNavPrevClick}>
-					{String.fromCharCode('60')}
+					className={this.props.className + '__navCell'}
+					style={this.styles.navCell}>
+					<div
+						className={this.props.className + '__navPrev'}
+						style={this.styles.navElement}
+						onClick={this.onNavPrevClick}>
+						{String.fromCharCode('60')}
+					</div>
 				</div>
 				<div
-					className={this.props.className + '__navTitle'}
-					style={this.styles.navTitle}
-					onClick={this.onNavTitleClick}>
-					{this.getNavTitle()}
+					className={this.props.className + '__navCell'}
+					style={this.styles.navCell}>
+					<div
+						className={this.props.className + '__navTitle'}
+						style={this.styles.navElement}
+						onClick={this.onNavTitleClick}>
+						{this.getNavTitle()}
+					</div>
 				</div>
 				<div
-					className={this.props.className + '__navNext'}
-					style={this.styles.navNext}
-					onClick={this.onNavNextClick}>
-					{String.fromCharCode('62')}
+					className={this.props.className + '__navCell'}
+					style={this.styles.navCell}>
+					<div
+						className={this.props.className + '__navNext'}
+						style={this.styles.navElement}
+						onClick={this.onNavNextClick}>
+						{String.fromCharCode('62')}
+					</div>
 				</div>
 			</div>
 		);
@@ -88,20 +100,15 @@ module.exports = React.createClass({
 		navbar: {
 			boxSizing: 'border-box',
 			display: 'table',
-			width: '100%',
+			width: '100%'
+		},
+		navCell: {
+			boxSizing: 'border-box',
+			display: 'table-cell'
+		},
+		navElement: {
+			boxSizing: 'border-box',
 			cursor: 'pointer'
-		},
-		navPrev: {
-			boxSizing: 'border-box',
-			display: 'table-cell'
-		},
-		navTitle: {
-			boxSizing: 'border-box',
-			display: 'table-cell'
-		},
-		navNext: {
-			boxSizing: 'border-box',
-			display: 'table-cell'
 		}
 	}
 	

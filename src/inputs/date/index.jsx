@@ -69,13 +69,17 @@ module.exports = React.createClass({
 	
 	onIconClick: function(e) {
 		if (!this.state.visible) {
-			e.target.focus();
 			this.setVisible(true);
+			e.target.focus();
 		}
 		else {
-			e.target.blur();
 			this.setVisible(false);
+			e.target.blur();
 		}
+	},
+	
+	onIconFocus: function() {
+		this.setVisible(true);
 	},
 	
 	onIconBlur: function() {
@@ -101,6 +105,7 @@ module.exports = React.createClass({
 							tabIndex={0}
 							onMouseDown={this.onIconMouseDown}
 							onClick={this.onIconClick}
+							onFocus={this.onIconFocus}
 							onBlur={this.onIconBlur} />
 						: false}
 					{this.state.visible ?

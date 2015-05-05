@@ -153,7 +153,8 @@ module.exports = React.createClass({
 		},
 		head: {
 			boxSizing: 'border-box',
-			display: 'table-row'
+			display: 'table-row',
+			cursor: 'default'
 		},
 		headCell: {
 			boxSizing: 'border-box',
