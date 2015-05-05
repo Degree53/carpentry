@@ -2,7 +2,7 @@
 
 var React = require('react');
 var Navbar = require('./navbar');
-var DateGrid = require('./dateGrid');
+var Grid = require('./grid');
 var Buttons = require('./buttons');
 
 module.exports = React.createClass({
@@ -18,8 +18,10 @@ module.exports = React.createClass({
 		};
 	},
 	
-	onCalendarBlur: function() {
-		this.props.setVisible(false);
+	// Fix for IE changing focus to child elements which
+	// would incorrectly trigger blur and hide the calendar
+	onCalendarMouseDown: function(e) {
+		e.preventDefault();
 	},
 	
 	setViewDate: function(date ) {
@@ -37,7 +39,7 @@ module.exports = React.createClass({
 			<div
 				className={this.props.className + '__calendar'}
 				style={this.styles.calendar}
-				onBlur={this.onCalendarBlur}>
+				onMouseDown={this.onCalendarMouseDown}>
 				<Navbar
 					className={this.props.className}
 					locale={this.props.locale}
@@ -45,7 +47,7 @@ module.exports = React.createClass({
 					level={this.state.level}
 					setViewDate={this.setViewDate}
 					setLevel={this.setLevel} />
-				<DateGrid
+				<Grid
 					className={this.props.className}
 					locale={this.props.locale}
 					firstDoW={this.props.firstDoW}
@@ -63,6 +65,7 @@ module.exports = React.createClass({
 	
 	styles: {
 		calendar: {
+			boxSizing: 'border-box',
 			position: 'absolute',
 			textAlign: 'center'
 		}

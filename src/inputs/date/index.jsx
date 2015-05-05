@@ -16,13 +16,14 @@ module.exports = React.createClass({
 			dayNames: React.PropTypes.arrayOf(React.PropTypes.string),
 			monthNames: React.PropTypes.arrayOf(React.PropTypes.string)
 		}),
-		firstDoW: React.PropTypes.number//,
+		firstDoW: React.PropTypes.number,
 		// dateRange: React.PropTypes.shape({
 		// 	firstDate: React.PropTypes.object,
 		// 	lastDate: React.PropTypes.object
 		// }),
 		// minDate: React.PropTypes.string,
-		// maxDate: React.PropTypes.string
+		// maxDate: React.PropTypes.string,
+		iconURL: React.PropTypes.string
 	},
 	
 	getDefaultProps: function() {
@@ -34,10 +35,11 @@ module.exports = React.createClass({
 				monthNames: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
 					'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
 			},
-			firstDoW: 1//,
+			firstDoW: 1,
 			// dateRange: null,
 			// minDate: null,
-			// maxDate: null
+			// maxDate: null,
+			iconURL: null
 		};
 	},
 	
@@ -59,55 +61,81 @@ module.exports = React.createClass({
 		this.setState({ visible: visible });
 	},
 	
-	onIconClick: function() {
-		this.setVisible(!this.state.visible);
+	// Fix for IE changing focus to child elements which
+	// would incorrectly trigger blur and hide the calendar
+	onIconMouseDown: function(e) {
+		e.preventDefault();
+	},
+	
+	onIconClick: function(e) {
+		if (!this.state.visible) {
+			e.target.focus();
+			this.setVisible(true);
+		}
+		else {
+			e.target.blur();
+			this.setVisible(false);
+		}
+	},
+	
+	onIconBlur: function() {
+		this.setVisible(false);
 	},
 	
 	render: function() {
 		return (
 			<div
 				className={this.props.className}
-				style={this.styles.index}>
+				style={this.styles.dateInput}>
 				<div
-					className={this.props.className + '__inputTable'}
-					style={this.styles.inputTable}>
-					<div
-						className={this.props.className + '__inputCell'}
-						style={this.styles.inputCell}>
-						<input className={this.props.className + '__input'} />
-					</div>
-					<div
-						className={this.props.className + '__inputCell'}
-						style={this.styles.inputCell}>
-						<div
+					className={this.props.className + '__cell'}
+					style={this.styles.dateInputCell}>
+					<input
+						className={this.props.className + '__input'}
+						style={this.styles.input} />
+					{this.props.iconURL !== null ?
+						<img
 							className={this.props.className + '__icon'}
-							onClick={this.onIconClick}>
-							
-						</div>
-					</div>
+							style={this.styles.icon}
+							src={this.props.iconURL}
+							tabIndex={0}
+							onMouseDown={this.onIconMouseDown}
+							onClick={this.onIconClick}
+							onBlur={this.onIconBlur} />
+						: false}
+					{this.state.visible ?
+						<Calendar
+							className={this.props.className}
+							locale={this.props.locale}
+							firstDoW={this.props.firstDoW}
+							date={this.state.date}
+							setDate={this.setDate}
+							setVisible={this.setVisible} />
+						: false}
 				</div>
-				<Calendar
-					className={this.props.className}
-					locale={this.props.locale}
-					firstDoW={this.props.firstDoW}
-					date={this.state.date}
-					setDate={this.setDate}
-					setVisible={this.setVisible} />
 			</div>
 		);
 	},
 	
 	styles: {
-		index: {
-			display: 'inline-block',
+		dateInput: {
+			boxSizing: 'border-box',
+			display: 'inline-table',
 			position: 'relative'
 		},
-		inputTable: {
-			display: 'table'
+		dateInputCell: {
+			boxSizing: 'border-box',
+			display: 'table-cell'
 		},
-		inputCell: {
-			display: 'table-cell',
+		input: {
+			boxSizing: 'border-box',
 			verticalAlign: 'middle'
+		},
+		icon: {
+			boxSizing: 'border-box',
+			display: 'inline-block',
+			verticalAlign: 'middle',
+			cursor: 'pointer'
 		}
 	}
 	

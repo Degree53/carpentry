@@ -2,7 +2,7 @@
 
 var React = require('react');
 var Utils = require('./utils');
-var DateGridItem = require('./dateGridItem');
+var GridItem = require('./gridItem');
 
 module.exports = React.createClass({
 	
@@ -15,8 +15,8 @@ module.exports = React.createClass({
 		var weekdayElems = weekdays.map(function(name, i) {
 			return (
 				<div
-					className={this.props.className + '__weekday'}
-					style={this.styles.gridCell}
+					className={this.props.className + '__headCell'}
+					style={this.styles.headCell}
 					key={i}>
 					{name}
 				</div>
@@ -25,13 +25,9 @@ module.exports = React.createClass({
 		
 		return (
 			<div
-				className={this.props.className + '__gridHead'}
-				style={this.styles.gridHead}>
-				<div
-					className={this.props.className + '__gridHeadRow'}
-					style={this.styles.gridHeadRow}>
-					{weekdayElems}
-				</div>
+				className={this.props.className + '__headRow'}
+				style={this.styles.head}>
+				{weekdayElems}
 			</div>
 		);
 	},
@@ -45,7 +41,7 @@ module.exports = React.createClass({
 		return weeks.map(function(week, i) {
 			var dateElems = week.map(function(date, j) {
 				return (
-					<DateGridItem
+					<GridItem
 						className={this.props.className}
 						setDate={this.props.setDate}
 						setVisible={this.props.setVisible}
@@ -57,8 +53,8 @@ module.exports = React.createClass({
 			
 			return (
 				<div
-					className={this.props.className}
-					style={this.styles.gridBodyRow}
+					className={this.props.className + '__bodyRow'}
+					style={this.styles.body}
 					key={i}>
 					{dateElems}
 				</div>
@@ -74,7 +70,7 @@ module.exports = React.createClass({
 		return months.map(function(month, i) {
 			var dateElems = month.map(function(date, j) {
 				return (
-					<DateGridItem
+					<GridItem
 						className={this.props.className}
 						locale={this.props.locale}
 						date={date}
@@ -87,8 +83,8 @@ module.exports = React.createClass({
 			
 			return (
 				<div
-					className={this.props.className}
-					style={this.styles.gridBodyRow}
+					className={this.props.className + '__bodyRow'}
+					style={this.styles.body}
 					key={i}>
 					{dateElems}
 				</div>
@@ -104,7 +100,7 @@ module.exports = React.createClass({
 		return years.map(function(year, i) {
 			var dateElems = year.map(function(date, j) {
 				return (
-					<DateGridItem
+					<GridItem
 						className={this.props.className}
 						locale={this.props.locale}
 						date={date}
@@ -117,8 +113,8 @@ module.exports = React.createClass({
 			
 			return (
 				<div
-					className={this.props.className}
-					style={this.styles.gridBodyRow}
+					className={this.props.className + '__bodyRow'}
+					style={this.styles.body}
 					key={i}>
 					{dateElems}
 				</div>
@@ -143,35 +139,29 @@ module.exports = React.createClass({
 				className={this.props.className + '__grid'}
 				style={this.styles.grid}>
 				{this.props.level === 0 ? this.getGridHead() : false}
-				<div
-					className={this.props.className + '__gridBody'}
-					style={this.styles.gridBody}>
-					{this.getGridItems()}
-				</div>
+				{this.getGridItems()}
 			</div>
 		);
 	},
 	
 	styles: {
 		grid: {
+			boxSizing: 'border-box',
 			display: 'table',
+			tableLayout: 'fixed',
 			width: '100%'
 		},
-		gridHead: {
-			display: 'table-header-group'
-		},
-		gridHeadRow: {
+		head: {
+			boxSizing: 'border-box',
 			display: 'table-row'
 		},
-		gridBody: {
-			display: 'table-row-group',
-			cursor: 'pointer'
-		},
-		gridBodyRow: {
-			display: 'table-row'
-		},
-		gridCell: {
+		headCell: {
+			boxSizing: 'border-box',
 			display: 'table-cell'
+		},
+		body: {
+			boxSizing: 'border-box',
+			display: 'table-row'
 		}
 	}
 	

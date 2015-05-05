@@ -11,7 +11,7 @@ module.exports = React.createClass({
 			<div className={this.props.className + '__buttons'}>
 				<div className={this.props.className + '__buttonsRow'}>
 					<div className={this.props.className + '__today'}>
-						
+						Today
 					</div>
 				</div>
 			</div>

@@ -63,26 +63,22 @@ module.exports = React.createClass({
 				className={this.props.className + '__navbar'}
 				style={this.styles.navbar}>
 				<div
-					className={this.props.className + '__navRow'}
-					style={this.styles.navRow}>
-					<div
-						className={this.props.className + '__navPrev'}
-						style={this.styles.navPrev}
-						onClick={this.onNavPrevClick}>
-						{String.fromCharCode('60')}
-					</div>
-					<div
-						className={this.props.className + '__navTitle'}
-						style={this.styles.navTitle}
-						onClick={this.onNavTitleClick}>
-						{this.getNavTitle()}
-					</div>
-					<div
-						className={this.props.className + '__navNext'}
-						style={this.styles.navNext}
-						onClick={this.onNavNextClick}>
-						{String.fromCharCode('62')}
-					</div>
+					className={this.props.className + '__navPrev'}
+					style={this.styles.navPrev}
+					onClick={this.onNavPrevClick}>
+					{String.fromCharCode('60')}
+				</div>
+				<div
+					className={this.props.className + '__navTitle'}
+					style={this.styles.navTitle}
+					onClick={this.onNavTitleClick}>
+					{this.getNavTitle()}
+				</div>
+				<div
+					className={this.props.className + '__navNext'}
+					style={this.styles.navNext}
+					onClick={this.onNavNextClick}>
+					{String.fromCharCode('62')}
 				</div>
 			</div>
 		);
@@ -90,20 +86,21 @@ module.exports = React.createClass({
 	
 	styles: {
 		navbar: {
+			boxSizing: 'border-box',
 			display: 'table',
 			width: '100%',
 			cursor: 'pointer'
 		},
-		navRow: {
-			display: 'table-row'
-		},
 		navPrev: {
+			boxSizing: 'border-box',
 			display: 'table-cell'
 		},
 		navTitle: {
+			boxSizing: 'border-box',
 			display: 'table-cell'
 		},
 		navNext: {
+			boxSizing: 'border-box',
 			display: 'table-cell'
 		}
 	}
