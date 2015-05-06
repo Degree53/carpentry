@@ -68,14 +68,8 @@ module.exports = React.createClass({
 	},
 	
 	onIconClick: function(e) {
-		if (!this.state.visible) {
-			this.setVisible(true);
-			e.target.focus();
-		}
-		else {
-			this.setVisible(false);
-			e.target.blur();
-		}
+		e.target.focus();
+		this.setVisible(true);
 	},
 	
 	onIconFocus: function() {
