@@ -11,7 +11,8 @@ module.exports = React.createClass({
 		switch (this.props.level) {
 			case 0:
 				var month = this.props.viewDate.getMonth();
-				return this.props.locale.monthNames[month];
+				return this.props.locale.monthNames[month] + ' ' +
+					this.props.viewDate.getFullYear();
 			case 1:
 				return this.props.viewDate.getFullYear();
 			case 2:
@@ -63,7 +64,7 @@ module.exports = React.createClass({
 				className={this.props.className + '__navbar'}
 				style={this.styles.navbar}>
 				<div
-					className={this.props.className + '__navCell'}
+					className={this.props.className + '__navCellLeft'}
 					style={this.styles.navCell}>
 					<div
 						className={this.props.className + '__navPrev'}
@@ -73,7 +74,7 @@ module.exports = React.createClass({
 					</div>
 				</div>
 				<div
-					className={this.props.className + '__navCell'}
+					className={this.props.className + '__navCellCenter'}
 					style={this.styles.navCell}>
 					<div
 						className={this.props.className + '__navTitle'}
@@ -83,7 +84,7 @@ module.exports = React.createClass({
 					</div>
 				</div>
 				<div
-					className={this.props.className + '__navCell'}
+					className={this.props.className + '__navCellRight'}
 					style={this.styles.navCell}>
 					<div
 						className={this.props.className + '__navNext'}
@@ -98,16 +99,15 @@ module.exports = React.createClass({
 	
 	styles: {
 		navbar: {
-			boxSizing: 'border-box',
 			display: 'table',
 			width: '100%'
 		},
 		navCell: {
-			boxSizing: 'border-box',
-			display: 'table-cell'
+			display: 'table-cell',
+			verticalAlign: 'middle'
 		},
 		navElement: {
-			boxSizing: 'border-box',
+			display: 'inline-block',
 			cursor: 'pointer'
 		}
 	}

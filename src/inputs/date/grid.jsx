@@ -146,22 +146,19 @@ module.exports = React.createClass({
 	
 	styles: {
 		grid: {
-			boxSizing: 'border-box',
 			display: 'table',
 			tableLayout: 'fixed',
 			width: '100%'
 		},
 		head: {
-			boxSizing: 'border-box',
 			display: 'table-row',
 			cursor: 'default'
 		},
 		headCell: {
-			boxSizing: 'border-box',
-			display: 'table-cell'
+			display: 'table-cell',
+			verticalAlign: 'middle'
 		},
 		body: {
-			boxSizing: 'border-box',
 			display: 'table-row'
 		}
 	}

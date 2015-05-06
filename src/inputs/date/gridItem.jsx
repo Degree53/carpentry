@@ -67,11 +67,11 @@ module.exports = React.createClass({
 	
 	styles: {
 		gridCell: {
-			boxSizing: 'border-box',
-			display: 'table-cell'
+			display: 'table-cell',
+			verticalAlign: 'middle'
 		},
 		gridElement: {
-			boxSizing: 'border-box',
+			display: 'inline-block',
 			cursor: 'pointer'
 		}
 	}
