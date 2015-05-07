@@ -3,6 +3,7 @@
 var React = require('react');
 var GlobalUtils = require('../../utils');
 var Utils = require('./utils');
+var Input = require('./input');
 var Calendar = require('./calendar');
 
 module.exports = React.createClass({
@@ -13,7 +14,7 @@ module.exports = React.createClass({
 		className: React.PropTypes.string,
 		size: React.PropTypes.number,
 		layout: React.PropTypes.number,
-		// format: React.PropTypes.string,
+		format: React.PropTypes.string,
 		setDate: React.PropTypes.func.isRequired,
 		locale: React.PropTypes.shape({
 			dayNames: React.PropTypes.arrayOf(React.PropTypes.string),
@@ -34,7 +35,7 @@ module.exports = React.createClass({
 			className: 'DateInput',
 			size: 10,
 			layout: 0,
-			// format: 'YYYY-MM-DD',
+			format: 'YYYY-MM-DD',
 			locale: {
 				dayNames: ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'],
 				monthNames: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
@@ -93,10 +94,12 @@ module.exports = React.createClass({
 				<div
 					className={this.props.className + '__cell'}
 					style={this.styles.dateInputCell}>
-					<input
-						className={this.props.className + '__input'}
-						style={this.styles.input}
-						size={this.props.size} />
+					<Input
+						className={this.props.className}
+						size={this.props.size}
+						format={this.props.format}
+						date={this.state.date}
+						setDate={this.setDate} />
 					{this.props.iconSrc !== null ?
 						<img
 							className={this.props.className + '__icon'}
@@ -134,10 +137,6 @@ module.exports = React.createClass({
 		dateInputCell: {
 			boxSizing: 'border-box',
 			display: 'table-cell'
-		},
-		input: {
-			boxSizing: 'border-box',
-			verticalAlign: 'middle'
 		},
 		icon: {
 			boxSizing: 'border-box',
