@@ -1,6 +1,7 @@
 'use strict';
 
 var React = require('react');
+var GlobalUtils = require('../../utils');
 var Utils = require('./utils');
 
 module.exports = React.createClass({
@@ -11,14 +12,44 @@ module.exports = React.createClass({
 		switch (this.props.level) {
 			case 0:
 				var month = this.props.viewDate.getMonth();
-				return this.props.locale.monthNames[month] + ' ' +
-					this.props.viewDate.getFullYear();
+				var monthTitle = this.props.locale.monthNames[month] +
+					' ' + this.props.viewDate.getFullYear();
+				return (
+					<div
+						className={this.props.className + '__navMonth'}
+						style={GlobalUtils.merge([
+							this.styles.navElement,
+							this.styles.interactive
+						])}
+						onClick={this.onNavTitleClick}>
+						{monthTitle}
+					</div>
+				);
 			case 1:
-				return this.props.viewDate.getFullYear();
+				var yearTitle = this.props.viewDate.getFullYear();
+				return (
+					<div
+						className={this.props.className + '__navYear'}
+						style={GlobalUtils.merge([
+							this.styles.navElement,
+							this.styles.interactive
+						])}
+						onClick={this.onNavTitleClick}>
+						{yearTitle}
+					</div>
+				);
 			case 2:
 				var decade = Utils.getDecadeYears(this.props.viewDate);
-				return decade[0].getFullYear() + ' - ' +
+				var decadeTitle = decade[0].getFullYear() + ' - ' +
 					decade[decade.length - 1].getFullYear();
+				return (
+					<div
+						className={this.props.className + '__navDecade'}
+						style={this.styles.navElement}
+						onClick={this.onNavTitleClick}>
+						{decadeTitle}
+					</div>
+				);
 		}
 	},
 	
@@ -68,7 +99,10 @@ module.exports = React.createClass({
 					style={this.styles.navCell}>
 					<div
 						className={this.props.className + '__navPrev'}
-						style={this.styles.navElement}
+						style={GlobalUtils.merge([
+							this.styles.navElement,
+							this.styles.interactive
+						])}
 						onClick={this.onNavPrevClick}>
 						{String.fromCharCode('60')}
 					</div>
@@ -76,19 +110,17 @@ module.exports = React.createClass({
 				<div
 					className={this.props.className + '__navCellCenter'}
 					style={this.styles.navCell}>
-					<div
-						className={this.props.className + '__navTitle'}
-						style={this.styles.navElement}
-						onClick={this.onNavTitleClick}>
-						{this.getNavTitle()}
-					</div>
+					{this.getNavTitle()}
 				</div>
 				<div
 					className={this.props.className + '__navCellRight'}
 					style={this.styles.navCell}>
 					<div
 						className={this.props.className + '__navNext'}
-						style={this.styles.navElement}
+						style={GlobalUtils.merge([
+							this.styles.navElement,
+							this.styles.interactive
+						])}
 						onClick={this.onNavNextClick}>
 						{String.fromCharCode('62')}
 					</div>
@@ -108,6 +140,9 @@ module.exports = React.createClass({
 		},
 		navElement: {
 			display: 'inline-block',
+			cursor: 'default'
+		},
+		interactive: {
 			cursor: 'pointer'
 		}
 	}

@@ -1,6 +1,7 @@
 'use strict';
 
 var React = require('react');
+var GlobalUtils = require('../../utils');
 var Utils = require('./utils');
 var Calendar = require('./calendar');
 
@@ -10,6 +11,8 @@ module.exports = React.createClass({
 	
 	propTypes: {
 		className: React.PropTypes.string,
+		size: React.PropTypes.number,
+		layout: React.PropTypes.number,
 		// format: React.PropTypes.string,
 		setDate: React.PropTypes.func.isRequired,
 		locale: React.PropTypes.shape({
@@ -23,12 +26,14 @@ module.exports = React.createClass({
 		// }),
 		// minDate: React.PropTypes.string,
 		// maxDate: React.PropTypes.string,
-		iconURL: React.PropTypes.string
+		iconSrc: React.PropTypes.string
 	},
 	
 	getDefaultProps: function() {
 		return {
 			className: 'DateInput',
+			size: 10,
+			layout: 0,
 			// format: 'YYYY-MM-DD',
 			locale: {
 				dayNames: ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'],
@@ -39,7 +44,7 @@ module.exports = React.createClass({
 			// dateRange: null,
 			// minDate: null,
 			// maxDate: null,
-			iconURL: null
+			iconSrc: null
 		};
 	},
 	
@@ -90,12 +95,16 @@ module.exports = React.createClass({
 					style={this.styles.dateInputCell}>
 					<input
 						className={this.props.className + '__input'}
-						style={this.styles.input} />
-					{this.props.iconURL !== null ?
+						style={this.styles.input}
+						size={this.props.size} />
+					{this.props.iconSrc !== null ?
 						<img
 							className={this.props.className + '__icon'}
-							style={this.styles.icon}
-							src={this.props.iconURL}
+							style={GlobalUtils.merge([
+								this.styles.icon,
+								this.props.layout === 1 && this.styles.iconInside
+							])}
+							src={this.props.iconSrc}
 							tabIndex={0}
 							onMouseDown={this.onIconMouseDown}
 							onClick={this.onIconClick}
@@ -135,6 +144,10 @@ module.exports = React.createClass({
 			display: 'inline-block',
 			verticalAlign: 'middle',
 			cursor: 'pointer'
+		},
+		iconInside: {
+			position: 'absolute',
+			right: 0
 		}
 	}
 	

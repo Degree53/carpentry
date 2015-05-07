@@ -9,8 +9,11 @@ module.exports = React.createClass({
 	displayName: 'DateGrid',
 	
 	getGridHead: function() {
+		var firstDoW = 0 < this.props.firstDoW && this.props.firstDoW < 7 ?
+			this.props.firstDoW : 1;
 		var weekdays = this.props.locale.dayNames.slice(0);
-		weekdays = weekdays.concat(weekdays.splice(0, this.props.firstDoW));
+		
+		weekdays = weekdays.concat(weekdays.splice(0, firstDoW));
 		
 		var weekdayElems = weekdays.map(function(name, i) {
 			return (
@@ -33,10 +36,11 @@ module.exports = React.createClass({
 	},
 	
 	getDayElems: function() {
-		var weeks = Utils.getMonthDates(this.props.viewDate,
-			this.props.firstDoW);
-		for (var i = 0; i < 6; i++)
-			weeks.push(weeks.splice(0, 7));
+		var firstDoW = 0 < this.props.firstDoW && this.props.firstDoW < 7 ?
+			this.props.firstDoW : 1;
+		var weeks = Utils.getMonthDates(this.props.viewDate, firstDoW);
+		
+		for (var i = 0; i < 6; i++)	weeks.push(weeks.splice(0, 7));
 			
 		return weeks.map(function(week, i) {
 			var dateElems = week.map(function(date, j) {

@@ -5,7 +5,7 @@ var react = require('gulp-react');
 var del = require('del');
 
 gulp.task('clean', function() {
-	del(['./lib/*']);
+	return del.sync(['./lib/*']);
 });
 
 gulp.task('copy', ['clean'], function() {
@@ -13,12 +13,14 @@ gulp.task('copy', ['clean'], function() {
 		.pipe(gulp.dest('./lib'));
 });
 
-gulp.task('transform', ['copy'], function() {
+gulp.task('transform', ['clean'], function() {
 	return gulp.src('./src/**/*.jsx')
 		.pipe(react())
 		.pipe(gulp.dest('./lib'));
 });
 
+gulp.task('build', ['copy', 'transform']);
+
 gulp.task('watch', function() {
-	gulp.watch(['./src/**/*.jsx'], ['transform']);
+	gulp.watch(['./src/**/*.jsx'], ['build']);
 });
