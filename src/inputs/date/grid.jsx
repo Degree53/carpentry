@@ -21,7 +21,11 @@ module.exports = React.createClass({
 					className={this.props.className + '__headCell'}
 					style={this.styles.headCell}
 					key={i}>
-					{name}
+					<div
+						className={this.props.className + '__weekday'}
+						style={this.styles.headElement}>
+						{name}
+					</div>
 				</div>
 			);
 		}, this);
@@ -154,7 +158,6 @@ module.exports = React.createClass({
 	styles: {
 		grid: {
 			display: 'table',
-			tableLayout: 'fixed',
 			width: '100%'
 		},
 		head: {
@@ -164,6 +167,9 @@ module.exports = React.createClass({
 		headCell: {
 			display: 'table-cell',
 			verticalAlign: 'middle'
+		},
+		headElement: {
+			display: 'inline-block'
 		},
 		body: {
 			display: 'table-row'
