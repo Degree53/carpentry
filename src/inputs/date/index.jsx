@@ -18,7 +18,8 @@ module.exports = React.createClass({
 		setDate: React.PropTypes.func.isRequired,
 		locale: React.PropTypes.shape({
 			dayNames: React.PropTypes.arrayOf(React.PropTypes.string),
-			monthNames: React.PropTypes.arrayOf(React.PropTypes.string)
+			monthNames: React.PropTypes.arrayOf(React.PropTypes.string),
+			today: React.PropTypes.string
 		}),
 		firstDoW: React.PropTypes.number,
 		// dateRange: React.PropTypes.shape({
@@ -39,7 +40,8 @@ module.exports = React.createClass({
 			locale: {
 				dayNames: ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'],
 				monthNames: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
-					'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+					'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+				today: 'Today'
 			},
 			firstDoW: 1,
 			// dateRange: null,
@@ -53,13 +55,13 @@ module.exports = React.createClass({
 		var initDate = Utils.cloneDate(new Date());
 		
 		return {
-			date: initDate,
+			selectedDate: initDate,
 			visible: false
 		};
 	},
 	
 	setDate: function(date) {
-		this.setState({ date: date });
+		this.setState({ selectedDate: date });
 		this.props.setDate(date);
 	},
 	
@@ -98,7 +100,7 @@ module.exports = React.createClass({
 						className={this.props.className}
 						size={this.props.size}
 						format={this.props.format}
-						date={this.state.date}
+						selectedDate={this.state.selectedDate}
 						setDate={this.setDate} />
 					{this.props.iconSrc !== null ?
 						<img
@@ -119,7 +121,7 @@ module.exports = React.createClass({
 							className={this.props.className}
 							locale={this.props.locale}
 							firstDoW={this.props.firstDoW}
-							date={this.state.date}
+							selectedDate={this.state.selectedDate}
 							setDate={this.setDate}
 							setVisible={this.setVisible} />
 						: false}

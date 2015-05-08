@@ -10,7 +10,7 @@ module.exports = React.createClass({
 	displayName: 'Calendar',
 	
 	getInitialState: function() {
-		var initDate = this.props.date;
+		var initDate = this.props.selectedDate;
 		
 		return {
 			viewDate: initDate,
@@ -51,6 +51,7 @@ module.exports = React.createClass({
 					className={this.props.className}
 					locale={this.props.locale}
 					firstDoW={this.props.firstDoW}
+					selectedDate={this.props.selectedDate}
 					setDate={this.props.setDate}
 					setVisible={this.props.setVisible}
 					viewDate={this.state.viewDate}
@@ -58,7 +59,10 @@ module.exports = React.createClass({
 					setViewDate={this.setViewDate}
 					setLevel={this.setLevel} />
 				<Buttons
-					className={this.props.className} />
+					className={this.props.className}
+					locale={this.props.locale}
+					setDate={this.props.setDate}
+					setVisible={this.props.setVisible} />
 			</div>
 		);
 	},

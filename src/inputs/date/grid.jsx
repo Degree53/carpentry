@@ -47,6 +47,7 @@ module.exports = React.createClass({
 				return (
 					<GridItem
 						className={this.props.className}
+						selectedDate={this.props.selectedDate}
 						setDate={this.props.setDate}
 						setVisible={this.props.setVisible}
 						date={date}
@@ -68,8 +69,8 @@ module.exports = React.createClass({
 	
 	getMonthElems: function() {
 		var months = Utils.getYearMonths(this.props.viewDate);
-		for (var i = 0; i < 3; i++)
-			months.push(months.splice(0, 4));
+		
+		for (var i = 0; i < 3; i++)	months.push(months.splice(0, 4));
 		
 		return months.map(function(month, i) {
 			var dateElems = month.map(function(date, j) {
@@ -77,6 +78,7 @@ module.exports = React.createClass({
 					<GridItem
 						className={this.props.className}
 						locale={this.props.locale}
+						selectedDate={this.props.selectedDate}
 						date={date}
 						level={this.props.level}
 						setViewDate={this.props.setViewDate}
@@ -98,8 +100,8 @@ module.exports = React.createClass({
 	
 	getYearElems: function() {
 		var years = Utils.getDecadeYears(this.props.viewDate);
-		for (var i = 0; i < 3; i++)
-			years.push(years.splice(0, 4));
+		
+		for (var i = 0; i < 3; i++)	years.push(years.splice(0, 4));
 		
 		return years.map(function(year, i) {
 			var dateElems = year.map(function(date, j) {
@@ -107,6 +109,7 @@ module.exports = React.createClass({
 					<GridItem
 						className={this.props.className}
 						locale={this.props.locale}
+						selectedDate={this.props.selectedDate}
 						date={date}
 						level={this.props.level}
 						setViewDate={this.props.setViewDate}

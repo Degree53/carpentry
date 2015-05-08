@@ -7,12 +7,12 @@ module.exports = React.createClass({
 	displayName: 'Input',
 	
 	getDateFormatted: function() {
-		var year = this.props.date.getFullYear().toString();
+		var year = this.props.selectedDate.getFullYear().toString();
 		var yr = year.match(/\d\d(\d\d)/)[1];
-		var month = (this.props.date.getMonth() + 1).toString();
+		var month = (this.props.selectedDate.getMonth() + 1).toString();
 		var monthPadded = month.length < 2 ?
 			'0' + month : month;
-		var day = this.props.date.getDate().toString();
+		var day = this.props.selectedDate.getDate().toString();
 		var dayPadded = day.length < 2 ?
 			'0' + day : day;
 		return this.props.format

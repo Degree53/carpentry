@@ -6,7 +6,55 @@ module.exports = React.createClass({
 	
 	displayName: 'DateGridItem',
 	
-	onDateClick: function() {
+	getGridItem: function() {
+		var day = this.props.date.getDate();
+		var selectedDay = this.props.selectedDate.getDate();
+		var month = this.props.date.getMonth();
+		var selectedMonth = this.props.selectedDate.getMonth();
+		var year = this.props.date.getFullYear();
+		var selectedYear = this.props.selectedDate.getFullYear();
+		var selected = '';
+		
+		switch (this.props.level) {
+			case 0:
+				if (day === selectedDay && month === selectedMonth &&
+					year === selectedYear) selected = ' selected';
+				
+				return (
+					<div
+						className={this.props.className + '__day' + selected}
+						style={this.styles.gridElement}
+						onClick={this.onDayClick}>
+						{this.props.date.getDate()}
+					</div>
+				);
+			case 1:
+				if (month === selectedMonth && year === selectedYear)
+					selected = ' selected';
+				
+				return (
+					<div
+						className={this.props.className + '__month' + selected}
+						style={this.styles.gridElement}
+						onClick={this.onMonthClick}>
+						{this.props.locale.monthNames[month]}
+					</div>
+				);
+			case 2:
+				if (year === selectedYear) selected = ' selected';
+				
+				return (
+					<div
+						className={this.props.className + '__year' + selected}
+						style={this.styles.gridElement}
+						onClick={this.onYearClick}>
+						{this.props.date.getFullYear()}
+					</div>
+				);
+		}
+	},
+	
+	onDayClick: function() {
 		this.props.setDate(this.props.date);
 		this.props.setVisible(false);
 	},
@@ -22,47 +70,13 @@ module.exports = React.createClass({
 	},
 	
 	render: function() {
-		switch (this.props.level) {
-			case 0:
-				return (
-					<div
-						className={this.props.className + '__gridCell'}
-						style={this.styles.gridCell}>
-						<div
-							className={this.props.className + '__date'}
-							style={this.styles.gridElement}
-							onClick={this.onDateClick}>
-							{this.props.date.getDate()}
-						</div>
-					</div>
-				);
-			case 1:
-				return (
-					<div
-						className={this.props.className + '__gridCell'}
-						style={this.styles.gridCell}>
-						<div
-							className={this.props.className + '__month'}
-							style={this.styles.gridElement}
-							onClick={this.onMonthClick}>
-							{this.props.locale.monthNames[this.props.date.getMonth()]}
-						</div>
-					</div>
-				);
-			case 2:
-				return (
-					<div
-						className={this.props.className + '__gridCell'}
-						style={this.styles.gridCell}>
-						<div
-							className={this.props.className + '__year'}
-							style={this.styles.gridElement}
-							onClick={this.onYearClick}>
-							{this.props.date.getFullYear()}
-						</div>
-					</div>
-				);
-		}
+		return (
+			<div
+				className={this.props.className + '__gridCell'}
+				style={this.styles.gridCell}>
+				{this.getGridItem()}
+			</div>
+		);
 	},
 	
 	styles: {
