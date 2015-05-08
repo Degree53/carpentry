@@ -48,6 +48,9 @@ module.exports = React.createClass({
 			
 		return weeks.map(function(week, i) {
 			var dateElems = week.map(function(date, j) {
+				var isCurrentMonth =
+					date.getMonth() === this.props.viewDate.getMonth();
+				
 				return (
 					<GridItem
 						className={this.props.className}
@@ -56,6 +59,7 @@ module.exports = React.createClass({
 						setVisible={this.props.setVisible}
 						date={date}
 						level={this.props.level}
+						isCurrentMonth={isCurrentMonth}
 						key={j} />
 				);
 			}, this);

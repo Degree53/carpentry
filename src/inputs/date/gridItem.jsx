@@ -13,16 +13,19 @@ module.exports = React.createClass({
 		var selectedMonth = this.props.selectedDate.getMonth();
 		var year = this.props.date.getFullYear();
 		var selectedYear = this.props.selectedDate.getFullYear();
-		var selected = '';
+		var selected = ' notSelected';
 		
 		switch (this.props.level) {
 			case 0:
+				var isThisMonth = this.props.isCurrentMonth ?
+					' isThisMonth' : ' notThisMonth';
 				if (day === selectedDay && month === selectedMonth &&
-					year === selectedYear) selected = ' selected';
+					year === selectedYear) selected = ' isSelected';
 				
 				return (
 					<div
-						className={this.props.className + '__day' + selected}
+						className={this.props.className + '__day' +
+							isThisMonth + selected}
 						style={this.styles.gridElement}
 						onClick={this.onDayClick}>
 						{this.props.date.getDate()}
