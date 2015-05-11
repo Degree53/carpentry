@@ -1,6 +1,6 @@
 {
   "name": "carpentry",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "A library of highly customisable React components",
   "main": "index.js",
   "scripts": {
@@ -23,8 +23,8 @@
     "url": "https://github.com/lebowski89/carpentry/issues"
   },
   "homepage": "https://github.com/lebowski89/carpentry",
-  "dependencies": {
-    "react": "^0.13.2"
+  "peerDependencies": {
+    "react": "0.13.x"
   },
   "devDependencies": {
     "del": "^1.1.1",
