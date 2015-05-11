@@ -132,16 +132,13 @@ module.exports = React.createClass({
 	
 	styles: {
 		dateInput: {
-			boxSizing: 'border-box',
 			display: 'inline-table',
 			position: 'relative'
 		},
 		dateInputCell: {
-			boxSizing: 'border-box',
 			display: 'table-cell'
 		},
 		icon: {
-			boxSizing: 'border-box',
 			display: 'inline-block',
 			verticalAlign: 'middle',
 			cursor: 'pointer'

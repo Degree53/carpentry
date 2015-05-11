@@ -14,8 +14,10 @@
     "carpentry",
     "react",
     "components",
+    "input",
     "decimal",
-    "input"
+    "date",
+    "calendar"
   ],
   "author": "Mike Geldard",
   "license": "MIT",

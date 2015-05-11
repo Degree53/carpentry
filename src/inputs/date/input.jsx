@@ -32,18 +32,10 @@ module.exports = React.createClass({
 		return (
 			<input
 				className={this.props.className + '__input'}
-				style={this.styles.input}
 				size={this.props.size}
 				value={this.getDateFormatted()}
 				onChange={this.onInputChange} />
 		);
-	},
-	
-	styles: {
-		input: {
-			boxSizing: 'border-box',
-			verticalAlign: 'middle'
-		}
 	}
 	
 });

@@ -69,7 +69,6 @@ module.exports = React.createClass({
 	
 	styles: {
 		calendar: {
-			boxSizing: 'border-box',
 			position: 'absolute',
 			textAlign: 'center'
 		}
