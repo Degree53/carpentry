@@ -8,39 +8,39 @@ module.exports = React.createClass({
 	
 	propTypes: {
 		className: React.PropTypes.string,
-		value: React.PropTypes.number.isRequired,
+		decimal: React.PropTypes.number.isRequired,
 		disabled: React.PropTypes.bool,
-		setValue: React.PropTypes.func.isRequired
+		setDecimal: React.PropTypes.func.isRequired
 	},
 	
 	getDefaultProps: function() {
 		return {
-			className: null,
+			className: 'DecimalInput',
 			disabled: false
 		};
 	},
 	
 	getInitialState: function() {
 		// Initialise decimal point index state
-		var initValue = this.props.value.toFixed(2);
-		var initIndex = initValue.indexOf('.');
+		var initDecimal = this.props.decimal.toFixed(2);
+		var initIndex = initDecimal.indexOf('.');
 		
 		return {
-			value: initValue,
+			decimal: initDecimal,
 			index: initIndex
 		};
 	},
 	
-	handleFocus: function() {
-		// Empty value if equal to 0
-		if (this.props.value === 0)
+	onInputFocus: function() {
+		// Empty decimal if equal to 0
+		if (this.props.decimal === 0)
 			this.setState({
-				value: '',
+				decimal: '',
 				index: -1
 			});
 	},
 	
-	handleKeyPress: function(e) {
+	onInputKeyPress: function(e) {
 		// Limit input to digits and decimal points
 		if (!e.key.match(/\d|\.|decimal/)) e.preventDefault();
 		
@@ -48,41 +48,41 @@ module.exports = React.createClass({
 		this.setState({ index: e.target.value.indexOf('.') });
 	},
 	
-	handlePaste: function(e) {
+	onInputPaste: function(e) {
 		// TODO Validate paste content
 		
 		e.preventDefault();
 	},
 	
-	handleChange: function(e) {
-		var value = e.target.value;
-		var firstIndex = value.indexOf('.');
+	onInputChange: function(e) {
+		var decimal = e.target.value;
+		var firstIndex = decimal.indexOf('.');
 		
 		// Prevent two decimal points
-		if (firstIndex !== value.lastIndexOf('.')) {
+		if (firstIndex !== decimal.lastIndexOf('.')) {
 			if (firstIndex !== this.state.index)
 				// Remove second decimal point
-				value = value.replace(/^(\d*\.\d*)(\.)(\d*)$/, '$1$3');
+				decimal = decimal.replace(/^(\d*\.\d*)(\.)(\d*)$/, '$1$3');
 			else
 				// Remove first decimal point
-				value = value.replace(/^(\d*)(\.)(\d*\.\d*)$/, '$1$3');
+				decimal = decimal.replace(/^(\d*)(\.)(\d*\.\d*)$/, '$1$3');
 		}
 		
 		// Prevent more than two digits after decimal point
-		value = value.replace(/^(\d*\.\d{2})\d+$/, '$1');
+		decimal = decimal.replace(/^(\d*\.\d{2})\d+$/, '$1');
 		
 		this.setState({
-			value: value,
-			index: value.indexOf('.')
+			decimal: decimal,
+			index: decimal.indexOf('.')
 		});
 		
-		if (value && !isNaN(value))
-			this.props.setValue(parseFloat(value));
+		if (decimal && !isNaN(decimal))
+			this.props.setDecimal(parseFloat(decimal));
 	},
 	
-	handleBlur: function(e) {
+	onInputBlur: function(e) {
 		// Ensure value is valid decimal
-		var value = e.target.value
+		var decimal = e.target.value
 			.replace(/^([^\.]*)$/, '$1.')
 			.replace(/^(\.\d*)$/, '0$1')
 			.replace(/^0+(\d+\.?\d*)$/, '$1')
@@ -90,26 +90,25 @@ module.exports = React.createClass({
 			.replace(/^(\d*\.\d)$/, '$10');
 		
 		this.setState({
-			value: value,
-			index: value.indexOf('.')
+			decimal: decimal,
+			index: decimal.indexOf('.')
 		});
 		
-		if (value && !isNaN(value))
-			this.props.setValue(parseFloat(value));
+		if (decimal && !isNaN(decimal))
+			this.props.setDecimal(parseFloat(decimal));
 	},
 	
 	render: function() {
 		return (
 			<input
-				type="text"
 				className={this.props.className}
-				value={this.state.value}
+				value={this.state.decimal}
 				disabled={this.props.disabled}
-				onFocus={this.handleFocus}
-				onKeyPress={this.handleKeyPress}
-				onPaste={this.handlePaste}
-				onChange={this.handleChange}
-				onBlur={this.handleBlur} />
+				onFocus={this.onInputFocus}
+				onKeyPress={this.onInputKeyPress}
+				onPaste={this.onInputPaste}
+				onChange={this.onInputChange}
+				onBlur={this.onInputBlur} />
 		);
 	}
 	
