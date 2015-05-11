@@ -34,3 +34,6 @@ src/
 
 # Build process
 gulpfile.js
+
+# Linting
+.jshintrc
