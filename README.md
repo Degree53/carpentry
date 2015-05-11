@@ -92,9 +92,9 @@ var MyDecimalInput = require('carpentry').DecimalInput;
 return (
 	<MyDecimalInput
 		className="MyDecimalInput"
-		value={this.state.value}
+		value={this.state.decimalValue}
 		disabled={isDisabled}
-		setValue={this.setValue} />
+		setValue={this.setDecimalValue} />
 );
 ```
 

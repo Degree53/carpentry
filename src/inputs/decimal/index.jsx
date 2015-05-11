@@ -8,9 +8,9 @@ module.exports = React.createClass({
 	
 	propTypes: {
 		className: React.PropTypes.string,
-		decimal: React.PropTypes.number.isRequired,
+		value: React.PropTypes.number.isRequired,
 		disabled: React.PropTypes.bool,
-		setDecimal: React.PropTypes.func.isRequired
+		setValue: React.PropTypes.func.isRequired
 	},
 	
 	getDefaultProps: function() {
@@ -22,7 +22,7 @@ module.exports = React.createClass({
 	
 	getInitialState: function() {
 		// Initialise decimal point index state
-		var initDecimal = this.props.decimal.toFixed(2);
+		var initDecimal = this.props.value.toFixed(2);
 		var initIndex = initDecimal.indexOf('.');
 		
 		return {
@@ -33,7 +33,7 @@ module.exports = React.createClass({
 	
 	onInputFocus: function() {
 		// Empty decimal if equal to 0
-		if (this.props.decimal === 0)
+		if (this.props.value === 0)
 			this.setState({
 				decimal: '',
 				index: -1
@@ -77,7 +77,7 @@ module.exports = React.createClass({
 		});
 		
 		if (decimal && !isNaN(decimal))
-			this.props.setDecimal(parseFloat(decimal));
+			this.props.setValue(parseFloat(decimal));
 	},
 	
 	onInputBlur: function(e) {
@@ -95,7 +95,7 @@ module.exports = React.createClass({
 		});
 		
 		if (decimal && !isNaN(decimal))
-			this.props.setDecimal(parseFloat(decimal));
+			this.props.setValue(parseFloat(decimal));
 	},
 	
 	render: function() {
