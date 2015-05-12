@@ -1,6 +1,7 @@
 'use strict';
 
 var React = require('react');
+var Utils = require('../../utils');
 
 module.exports = React.createClass({
 	
@@ -29,6 +30,15 @@ module.exports = React.createClass({
 			decimal: initDecimal,
 			index: initIndex
 		};
+	},
+	
+	componentWillReceiveProps: function(nextProps) {
+		// Update state upon receiving new value
+		var newDecimal = nextProps.value;
+		var oldDecimal = parseFloat(this.state.decimal);
+		
+		if (newDecimal !== oldDecimal)
+			this.setState({ decimal: newDecimal });
 	},
 	
 	onInputFocus: function() {
@@ -76,7 +86,7 @@ module.exports = React.createClass({
 			index: decimal.indexOf('.')
 		});
 		
-		if (decimal && !isNaN(decimal))
+		if (Utils.isNum(decimal))
 			this.props.setValue(parseFloat(decimal));
 	},
 	
@@ -94,7 +104,7 @@ module.exports = React.createClass({
 			index: decimal.indexOf('.')
 		});
 		
-		if (decimal && !isNaN(decimal))
+		if (Utils.isNum(decimal))
 			this.props.setValue(parseFloat(decimal));
 	},
 	
