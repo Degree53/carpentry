@@ -1,30 +1,32 @@
 # Carpentry
 
-**Carpentry** is a library of highly customisable React components. The
+Carpentry is a library of highly customisable React components. The
 functionality and layout of each component is designed to be configurable
 via APIs using React props. All non-structural styling is left for the
 developer.
 
-**WARNING** This package is under initial development. Until `v1.0.0` all
-changes should be treated as breaking. Not recommended for production.
+**WARNING** This package is under initial development. Until `v1.0.0`
+all changes should be treated as breaking. Not recommended for production.
 
 <br>
 
 ## Rationale
 
-Working to different style guides on different projects often means highly
-opinionated / pre-styled components can't be used. Developers can often reuse
-functionality but not styling even though the designs they are given usually
-conform to common user interface trends. All Carpentry components are designed
-to solve this problem by sticking to the following points:
+Working to different style guides on different projects often means
+highly opinionated / pre-styled components can't be used. Developers
+can often reuse functionality but not styling even though the designs
+they are given usually conform to common user interface trends. All
+Carpentry components are designed to solve this problem by sticking to
+the following points:
 
-+ Components are functionally specialised, doing one job and doing it well
-+ Components can have their functionality configured easily via an API using
-	React props
-+ Components have only structural styling included (no colours, fonts, padding
-	etc.)
-+ Structural styling is configurable (e.g. a hamburger menu button can be on
-	the left or the right)
++ Components are functionally specialised, doing one job and doing it
+	well
++ Components can have their functionality configured easily via an API
+	using React props
++ Components have only structural styling included (no colours, fonts,
+	padding	etc.)
++ Structural styling is configurable (e.g. a hamburger menu button can
+	be on the left or the right)
 + When necessary, components can nest other components
 
 <br>
@@ -40,29 +42,46 @@ Thanks to NPM it's super easy, just `npm install carpentry`.
 <table>
 	<thead>
 		<tr>
-			<th>Currently included</th>
-			<th>In development</th>
-			<th>Future development</th>
+			<th>Component</th>
+			<th>Status</th>
 		</tr>
 	</thead>
 	<tbody>
 		<tr>
-			<td valign="top">
-				<a href="#decimalinput">DecimalInput</a>
-			</td>
-			<td valign="top">
-				DateInput
-			</td>
-			<td valign="top">
-				ResponsiveNav<br>
-				SelectInput<br>
-				PasswordInput<br>
-				FullScreenNav<br>
-				SliderInput
-			</td>
+			<td><a href="#decimalinput">DecimalInput</a></td>
+			<td>Unstable</td>
+		</tr>
+		<tr>
+			<td>DateInput</td>
+			<td>Unstable</td>
+		</tr>
+		<tr>
+			<td>ResponsiveNav</td>
+			<td>Planned</td>
+		</tr>
+		<tr>
+			<td>SelectInput</td>
+			<td>Planned</td>
+		</tr>
+		<tr>
+			<td>PasswordInput</td>
+			<td>Planned</td>
+		</tr>
+		<tr>
+			<td>FullScreenNav</td>
+			<td>Planned</td>
+		</tr>
+		<tr>
+			<td>SliderInput</td>
+			<td>Planned</td>
 		</tr>
 	</tbody>
 </table>
+
+**Stable:** Currently included, API is stable.<br>
+**Unstable:** Currently included, API still under development.<br>
+**Development:** Not included, in development.<br>
+**Planned:** Not yet in development.
 
 <br>
 
@@ -80,20 +99,27 @@ var MyDecimalInput = require('carpentry').DecimalInput;
 
 ### DecimalInput
 
-Use this component to enforce input of a decimal value. It should be placed
-in a cycle where `value` is updated with the stored value and `setValue` is
-a function that can set a new value back to storage.
+Use this component to enforce input of a decimal value. `setValue`
+should be a function that can set a value back to storage.
 
 ``` javascript
-var MyDecimalInput = require('carpentry').DecimalInput;
-
-...
-
 return (
 	<MyDecimalInput
 		className="MyDecimalInput"
-		value={this.state.decimalValue}
-		disabled={isDisabled}
+		setValue={this.setDecimalValue} />
+);
+```
+
+Alternatively, the component can take a value for conversion or display
+purposes. When passing in a value it is advised you disable user input
+to avoid strange behaviour.
+
+``` javascript
+return (
+	<MyDecimalInput
+		className="MyDecimalInput"
+		value={this.getDecimalValue}
+		disabled={true}
 		setValue={this.setDecimalValue} />
 );
 ```
@@ -104,7 +130,6 @@ return (
 			<th>Property</th>
 			<th>Type</th>
 			<th>Default</th>
-			<th>Return</th>
 			<th>Required</th>
 			<th>Description</th>
 		</tr>
@@ -114,24 +139,34 @@ return (
 			<td>className</td>
 			<td>String</td>
 			<td>null</td>
-			<td>n/a</td>
 			<td>no</td>
 			<td>String to be used for the html class attribute</td>
 		</tr>
 		<tr>
+			<td>initValue</td>
+			<td>Number</td>
+			<td>0</td>
+			<td>no</td>
+			<td>Initial value of the input</td>
+		</tr>
+		<tr>
+			<td>numOfPlaces</td>
+			<td>Number</td>
+			<td>2</td>
+			<td>no</td>
+			<td>Number of decimal places to format value to</td>
+		</tr>
+		<tr>
 			<td>value</td>
 			<td>Number</td>
-			<td>n/a</td>
-			<td>n/a</td>
-			<td>yes</td>
-			<td>Value of the input coming from your storage (set a default
-				value in your storage)</td>
+			<td>null</td>
+			<td>no</td>
+			<td>Value of the input if not being set by user input</td>
 		</tr>
 		<tr>
 			<td>disabled</td>
 			<td>Boolean</td>
 			<td>false</td>
-			<td>n/a</td>
 			<td>no</td>
 			<td>Boolean for disabling access to the input</td>
 		</tr>
@@ -139,9 +174,8 @@ return (
 			<td>setValue</td>
 			<td>Function</td>
 			<td>n/a</td>
-			<td>Number</td>
 			<td>yes</td>
-			<td>Function for setting the new value back to your storage</td>
+			<td>Function for setting value back to storage</td>
 		</tr>
 	</tbody>
 </table>
