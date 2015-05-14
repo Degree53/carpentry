@@ -42,37 +42,45 @@ Thanks to NPM it's super easy, just `npm install carpentry`.
 <table>
 	<thead>
 		<tr>
-			<th>Component</th>
+			<th>Alias</th>
+			<th>Description</th>
 			<th>Status</th>
 		</tr>
 	</thead>
 	<tbody>
 		<tr>
 			<td><a href="#decimalinput">DecimalInput</a></td>
+			<td>Enforces input of a decimal value</td>
 			<td>Unstable</td>
 		</tr>
 		<tr>
 			<td>DateInput</td>
+			<td></td>
 			<td>Unstable</td>
 		</tr>
 		<tr>
 			<td>ResponsiveNav</td>
+			<td></td>
 			<td>Planned</td>
 		</tr>
 		<tr>
 			<td>SelectInput</td>
+			<td></td>
 			<td>Planned</td>
 		</tr>
 		<tr>
 			<td>PasswordInput</td>
+			<td></td>
 			<td>Planned</td>
 		</tr>
 		<tr>
 			<td>FullScreenNav</td>
+			<td></td>
 			<td>Planned</td>
 		</tr>
 		<tr>
 			<td>SliderInput</td>
+			<td></td>
 			<td>Planned</td>
 		</tr>
 	</tbody>
@@ -88,7 +96,7 @@ Thanks to NPM it's super easy, just `npm install carpentry`.
 ## Usage
 
 Carpentry is built to work with the Node.js `require()` function. All
-components have an alias which are listed in the table above. The
+components have an alias as listed in the table above. The
 recommended way to access a component is via its alias:
 
 ``` javascript
@@ -100,28 +108,25 @@ var MyDecimalInput = require('carpentry').DecimalInput;
 ### DecimalInput
 
 Use this component to enforce input of a decimal value. `setValue`
-should be a function that can set a value back to storage.
+should be a function that can set a value back to storage. Using `value`,
+the component can also take a value for conversion or display purposes.
+This can be useful for chaining multiple inputs or applying your own
+validation. If `setValue` and `value` are used together to create a loop
+it's advised to set `setOnChange` to `false` to prevent strange
+behaviour whilst the user is inputting.
 
 ``` javascript
-return (
-	<MyDecimalInput
-		className="MyDecimalInput"
-		setValue={this.setDecimalValue} />
-);
-```
+setDecimal: function(decimal) {
+	Actions.updateDecimal(decimal);
+},
 
-Alternatively, the component can take a value for conversion or display
-purposes. When passing in a value it is advised you disable user input
-to avoid strange behaviour.
-
-``` javascript
-return (
-	<MyDecimalInput
-		className="MyDecimalInput"
-		value={this.getDecimalValue}
-		disabled={true}
-		setValue={this.setDecimalValue} />
-);
+render: function() {
+	return (
+		<MyDecimalInput
+			className="MyDecimalInput"
+			setValue={this.setDecimal} />
+	);
+}
 ```
 
 <table>
@@ -161,7 +166,7 @@ return (
 			<td>Number</td>
 			<td>null</td>
 			<td>no</td>
-			<td>Value of the input if not being set by user input</td>
+			<td>Incoming value to set the input to</td>
 		</tr>
 		<tr>
 			<td>disabled</td>
@@ -176,6 +181,27 @@ return (
 			<td>n/a</td>
 			<td>yes</td>
 			<td>Function for setting value back to storage</td>
+		</tr>
+		<tr>
+			<td>setOnChange</td>
+			<td>Boolean</td>
+			<td>true</td>
+			<td>no</td>
+			<td>Boolean for disabling calling setValue on onChange</td>
+		</tr>
+		<tr>
+			<td>onFocus</td>
+			<td>Function</td>
+			<td>null</td>
+			<td>no</td>
+			<td>Function to call asynchronously on onFocus</td>
+		</tr>
+		<tr>
+			<td>onBlur</td>
+			<td>Function</td>
+			<td>null</td>
+			<td>no</td>
+			<td>Function to call asynchronously on onBlur</td>
 		</tr>
 	</tbody>
 </table>
