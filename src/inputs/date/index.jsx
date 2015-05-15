@@ -11,24 +11,28 @@ module.exports = React.createClass({
 	displayName: 'DateInput',
 	
 	propTypes: {
+		// Default element attributes
 		className: React.PropTypes.string,
 		size: React.PropTypes.number,
+		// Layout and localisation
 		layout: React.PropTypes.number,
-		format: React.PropTypes.string,
-		setDate: React.PropTypes.func.isRequired,
 		locale: React.PropTypes.shape({
 			dayNames: React.PropTypes.arrayOf(React.PropTypes.string),
 			monthNames: React.PropTypes.arrayOf(React.PropTypes.string),
 			today: React.PropTypes.string
 		}),
 		firstDoW: React.PropTypes.number,
+		format: React.PropTypes.string,
+		// Required functionality
+		iconSrc: React.PropTypes.string.isRequired,
+		setDate: React.PropTypes.func.isRequired
+		// Optional functionality
 		// dateRange: React.PropTypes.shape({
 		// 	firstDate: React.PropTypes.object,
 		// 	lastDate: React.PropTypes.object
 		// }),
 		// minDate: React.PropTypes.string,
-		// maxDate: React.PropTypes.string,
-		iconSrc: React.PropTypes.string
+		// maxDate: React.PropTypes.string
 	},
 	
 	getDefaultProps: function() {
@@ -36,7 +40,6 @@ module.exports = React.createClass({
 			className: 'DateInput',
 			size: 10,
 			layout: 0,
-			format: 'YYYY-MM-DD',
 			locale: {
 				dayNames: ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'],
 				monthNames: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
@@ -44,10 +47,10 @@ module.exports = React.createClass({
 				today: 'Today'
 			},
 			firstDoW: 1,
+			format: 'YYYY-MM-DD'
 			// dateRange: null,
 			// minDate: null,
-			// maxDate: null,
-			iconSrc: null
+			// maxDate: null
 		};
 	},
 	
