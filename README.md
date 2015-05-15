@@ -145,63 +145,65 @@ render: function() {
 			<td>String</td>
 			<td>null</td>
 			<td>no</td>
-			<td>String to be used for the html class attribute</td>
+			<td>A String to be used for the html class attribute on the
+				component and all sub-components</td>
 		</tr>
 		<tr>
 			<td>initValue</td>
 			<td>Number</td>
 			<td>0</td>
 			<td>no</td>
-			<td>Initial value of the input</td>
+			<td>The initial value of the input</td>
 		</tr>
 		<tr>
 			<td>numOfPlaces</td>
 			<td>Number</td>
 			<td>2</td>
 			<td>no</td>
-			<td>Number of decimal places to format value to</td>
+			<td>The number of decimal places to restrict the value to</td>
 		</tr>
 		<tr>
 			<td>value</td>
 			<td>Number</td>
 			<td>null</td>
 			<td>no</td>
-			<td>Incoming value to set the input to</td>
+			<td>An incoming value to set the input to (useful for
+				chaining inputs)</td>
 		</tr>
 		<tr>
 			<td>disabled</td>
 			<td>Boolean</td>
 			<td>false</td>
 			<td>no</td>
-			<td>Boolean for disabling access to the input</td>
+			<td>A Boolean for disabling access to the input</td>
 		</tr>
 		<tr>
 			<td>setValue</td>
 			<td>Function</td>
 			<td>n/a</td>
 			<td>yes</td>
-			<td>Function for setting value back to storage</td>
+			<td>A Function for setting the value back to storage</td>
 		</tr>
 		<tr>
 			<td>setOnChange</td>
 			<td>Boolean</td>
 			<td>true</td>
 			<td>no</td>
-			<td>Boolean for disabling calling setValue on onChange</td>
+			<td>A Boolean for disabling calling setValue on onChange</td>
 		</tr>
 		<tr>
 			<td>onFocus</td>
 			<td>Function</td>
 			<td>null</td>
 			<td>no</td>
-			<td>Function to call asynchronously on onFocus</td>
+			<td>A Function to call asynchronously on onFocus</td>
 		</tr>
 		<tr>
 			<td>onBlur</td>
 			<td>Function</td>
 			<td>null</td>
 			<td>no</td>
-			<td>Function to call asynchronously on onBlur</td>
+			<td>A Function to call asynchronously on onBlur</td>
 		</tr>
 	</tbody>
 </table>
