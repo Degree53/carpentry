@@ -145,8 +145,8 @@ render: function() {
 			<td>String</td>
 			<td>null</td>
 			<td>no</td>
-			<td>A String to be used for the html class attribute on the
-				component and all sub-components</td>
+			<td>A String to be used for the html class attribute for
+				the	component and all sub-components</td>
 		</tr>
 		<tr>
 			<td>initValue</td>
@@ -160,7 +160,8 @@ render: function() {
 			<td>Number</td>
 			<td>2</td>
 			<td>no</td>
-			<td>The number of decimal places to restrict the value to</td>
+			<td>The number of decimal places to which the decimal value
+				should be restricted</td>
 		</tr>
 		<tr>
 			<td>value</td>
@@ -182,28 +183,31 @@ render: function() {
 			<td>Function</td>
 			<td>n/a</td>
 			<td>yes</td>
-			<td>A Function for setting the value back to storage</td>
+			<td>A Function for setting the value back to state or via
+				an action to storage</td>
 		</tr>
 		<tr>
 			<td>setOnChange</td>
 			<td>Boolean</td>
 			<td>true</td>
 			<td>no</td>
-			<td>A Boolean for disabling calling setValue on onChange</td>
+			<td>A Boolean for disabling calling setValue on onChange
+				(use to prevent overwriting user input when	the input
+				is placed in an update loop)</td>
 		</tr>
 		<tr>
 			<td>onFocus</td>
 			<td>Function</td>
 			<td>null</td>
 			<td>no</td>
-			<td>A Function to call asynchronously on onFocus</td>
+			<td>A Function to call on onFocus</td>
 		</tr>
 		<tr>
 			<td>onBlur</td>
 			<td>Function</td>
 			<td>null</td>
 			<td>no</td>
-			<td>A Function to call asynchronously on onBlur</td>
+			<td>A Function to call on onBlur</td>
 		</tr>
 	</tbody>
 </table>
