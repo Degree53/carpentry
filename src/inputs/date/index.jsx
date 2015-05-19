@@ -21,7 +21,17 @@ module.exports = React.createClass({
 			monthNames: React.PropTypes.arrayOf(React.PropTypes.string),
 			today: React.PropTypes.string
 		}),
-		firstDoW: React.PropTypes.number,
+		firstDoW: function(props, propName, componentName) {
+			if (!GlobalUtils.isNum(props[propName]))
+				return new Error(propName + ' must be a Number. Check' +
+					' the props of ' + componentName);
+			if (props[propName] % 1 !== 0)
+				return new Error(propName + ' must be an integer.' +
+					' Check the props of ' + componentName);
+			if (props[propName] < 0 || 6 < props[propName])
+				return new Error(propName + ' must be a value between' +
+					' 0 and 6. Check the props of ' + componentName);
+		},
 		format: React.PropTypes.string,
 		// Required functionality
 		iconSrc: React.PropTypes.string.isRequired,
@@ -96,59 +106,61 @@ module.exports = React.createClass({
 			<div
 				className={this.props.className}
 				style={this.styles.dateInput}>
-				<div
-					className={this.props.className + '__cell'}
-					style={this.styles.dateInputCell}>
-					<Input
-						className={this.props.className}
-						size={this.props.size}
-						format={this.props.format}
-						selectedDate={this.state.selectedDate}
-						setDate={this.setDate} />
-					{this.props.iconSrc !== null ?
+				<Input
+					className={this.props.className}
+					size={this.props.size}
+					format={this.props.format}
+					selectedDate={this.state.selectedDate}
+					setDate={this.setDate} />
+				{this.props.iconSrc !== null ?
+					<div
+						className={this.props.className + '__icon'}
+						style={GlobalUtils.merge([
+							this.styles.icon,
+							this.props.layout === 1 &&
+								this.styles.iconInside])}>
 						<img
-							className={this.props.className + '__icon'}
-							style={GlobalUtils.merge([
-								this.styles.icon,
-								this.props.layout === 1 && this.styles.iconInside
-							])}
+							style={this.styles.iconImg}
 							src={this.props.iconSrc}
 							tabIndex={0}
 							onMouseDown={this.onIconMouseDown}
 							onClick={this.onIconClick}
 							onFocus={this.onIconFocus}
 							onBlur={this.onIconBlur} />
-						: false}
-					{this.state.visible ?
-						<Calendar
-							className={this.props.className}
-							locale={this.props.locale}
-							firstDoW={this.props.firstDoW}
-							selectedDate={this.state.selectedDate}
-							setDate={this.setDate}
-							setVisible={this.setVisible} />
-						: false}
-				</div>
+					</div>
+					: false}
+				{this.state.visible ?
+					<Calendar
+						className={this.props.className}
+						locale={this.props.locale}
+						firstDoW={this.props.firstDoW}
+						selectedDate={this.state.selectedDate}
+						setDate={this.setDate}
+						setVisible={this.setVisible} />
+					: false}
 			</div>
 		);
 	},
 	
 	styles: {
 		dateInput: {
-			display: 'inline-table',
+			display: 'inline-block',
 			position: 'relative'
-		},
-		dateInputCell: {
-			display: 'table-cell'
 		},
 		icon: {
 			display: 'inline-block',
-			verticalAlign: 'middle',
+			verticalAlign: 'top',
+			height: '100%'
+		},
+		iconImg: {
+			display: 'block',
+			minHeight: '100%',
+			maxHeight: '100%',
 			cursor: 'pointer'
 		},
 		iconInside: {
 			position: 'absolute',
-			right: 0
+			top: 0, right: 0
 		}
 	}
 	
