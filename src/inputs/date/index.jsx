@@ -11,24 +11,38 @@ module.exports = React.createClass({
 	displayName: 'DateInput',
 	
 	propTypes: {
+		// Default element attributes
 		className: React.PropTypes.string,
 		size: React.PropTypes.number,
+		// Layout and localisation
 		layout: React.PropTypes.number,
-		format: React.PropTypes.string,
-		setDate: React.PropTypes.func.isRequired,
 		locale: React.PropTypes.shape({
 			dayNames: React.PropTypes.arrayOf(React.PropTypes.string),
 			monthNames: React.PropTypes.arrayOf(React.PropTypes.string),
 			today: React.PropTypes.string
 		}),
-		firstDoW: React.PropTypes.number,
+		firstDoW: function(props, propName, componentName) {
+			if (!GlobalUtils.isNum(props[propName]))
+				return new Error(propName + ' must be a Number. Check' +
+					' the props of ' + componentName);
+			if (props[propName] % 1 !== 0)
+				return new Error(propName + ' must be an integer.' +
+					' Check the props of ' + componentName);
+			if (props[propName] < 0 || 6 < props[propName])
+				return new Error(propName + ' must be a value between' +
+					' 0 and 6. Check the props of ' + componentName);
+		},
+		format: React.PropTypes.string,
+		// Required functionality
+		iconSrc: React.PropTypes.string.isRequired,
+		setDate: React.PropTypes.func.isRequired
+		// Optional functionality
 		// dateRange: React.PropTypes.shape({
 		// 	firstDate: React.PropTypes.object,
 		// 	lastDate: React.PropTypes.object
 		// }),
 		// minDate: React.PropTypes.string,
-		// maxDate: React.PropTypes.string,
-		iconSrc: React.PropTypes.string
+		// maxDate: React.PropTypes.string
 	},
 	
 	getDefaultProps: function() {
@@ -36,7 +50,6 @@ module.exports = React.createClass({
 			className: 'DateInput',
 			size: 10,
 			layout: 0,
-			format: 'YYYY-MM-DD',
 			locale: {
 				dayNames: ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'],
 				monthNames: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
@@ -44,10 +57,10 @@ module.exports = React.createClass({
 				today: 'Today'
 			},
 			firstDoW: 1,
+			format: 'YYYY-MM-DD'
 			// dateRange: null,
 			// minDate: null,
-			// maxDate: null,
-			iconSrc: null
+			// maxDate: null
 		};
 	},
 	
@@ -93,59 +106,61 @@ module.exports = React.createClass({
 			<div
 				className={this.props.className}
 				style={this.styles.dateInput}>
-				<div
-					className={this.props.className + '__cell'}
-					style={this.styles.dateInputCell}>
-					<Input
-						className={this.props.className}
-						size={this.props.size}
-						format={this.props.format}
-						selectedDate={this.state.selectedDate}
-						setDate={this.setDate} />
-					{this.props.iconSrc !== null ?
+				<Input
+					className={this.props.className}
+					size={this.props.size}
+					format={this.props.format}
+					selectedDate={this.state.selectedDate}
+					setDate={this.setDate} />
+				{this.props.iconSrc !== null ?
+					<div
+						className={this.props.className + '__icon'}
+						style={GlobalUtils.merge([
+							this.styles.icon,
+							this.props.layout === 1 &&
+								this.styles.iconInside])}>
 						<img
-							className={this.props.className + '__icon'}
-							style={GlobalUtils.merge([
-								this.styles.icon,
-								this.props.layout === 1 && this.styles.iconInside
-							])}
+							style={this.styles.iconImg}
 							src={this.props.iconSrc}
 							tabIndex={0}
 							onMouseDown={this.onIconMouseDown}
 							onClick={this.onIconClick}
 							onFocus={this.onIconFocus}
 							onBlur={this.onIconBlur} />
-						: false}
-					{this.state.visible ?
-						<Calendar
-							className={this.props.className}
-							locale={this.props.locale}
-							firstDoW={this.props.firstDoW}
-							selectedDate={this.state.selectedDate}
-							setDate={this.setDate}
-							setVisible={this.setVisible} />
-						: false}
-				</div>
+					</div>
+					: false}
+				{this.state.visible ?
+					<Calendar
+						className={this.props.className}
+						locale={this.props.locale}
+						firstDoW={this.props.firstDoW}
+						selectedDate={this.state.selectedDate}
+						setDate={this.setDate}
+						setVisible={this.setVisible} />
+					: false}
 			</div>
 		);
 	},
 	
 	styles: {
 		dateInput: {
-			display: 'inline-table',
+			display: 'inline-block',
 			position: 'relative'
-		},
-		dateInputCell: {
-			display: 'table-cell'
 		},
 		icon: {
 			display: 'inline-block',
-			verticalAlign: 'middle',
+			verticalAlign: 'top',
+			height: '100%'
+		},
+		iconImg: {
+			display: 'block',
+			minHeight: '100%',
+			maxHeight: '100%',
 			cursor: 'pointer'
 		},
 		iconInside: {
 			position: 'absolute',
-			right: 0
+			top: 0, right: 0
 		}
 	}
 	
