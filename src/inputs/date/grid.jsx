@@ -20,7 +20,7 @@ module.exports = React.createClass({
 					key={i}>
 					<div
 						className={this.props.className + '__weekday'}
-						style={this.styles.headElement}>
+						style={this.styles.headContent}>
 						{name}
 					</div>
 				</div>
@@ -108,8 +108,7 @@ module.exports = React.createClass({
 	
 	styles: {
 		grid: {
-			display: 'table',
-			width: '100%'
+			display: 'table'
 		},
 		head: {
 			display: 'table-row',
@@ -119,7 +118,7 @@ module.exports = React.createClass({
 			display: 'table-cell',
 			verticalAlign: 'middle'
 		},
-		headElement: {
+		headContent: {
 			display: 'inline-block'
 		},
 		body: {

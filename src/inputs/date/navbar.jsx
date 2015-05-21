@@ -18,11 +18,14 @@ module.exports = React.createClass({
 					<div
 						className={this.props.className + '__navMonth'}
 						style={GlobalUtils.merge([
-							this.styles.navElement,
+							this.styles.cellContentTable,
+							this.styles.navCenter,
 							this.styles.interactive
 						])}
 						onClick={this.onNavTitleClick}>
-						{monthTitle}
+						<div style={this.styles.cellContentCell}>
+							{monthTitle}
+						</div>
 					</div>
 				);
 			case 1:
@@ -31,11 +34,14 @@ module.exports = React.createClass({
 					<div
 						className={this.props.className + '__navYear'}
 						style={GlobalUtils.merge([
-							this.styles.navElement,
+							this.styles.cellContentTable,
+							this.styles.navCenter,
 							this.styles.interactive
 						])}
 						onClick={this.onNavTitleClick}>
-						{yearTitle}
+						<div style={this.styles.cellContentCell}>
+							{yearTitle}
+						</div>
 					</div>
 				);
 			case 2:
@@ -45,9 +51,14 @@ module.exports = React.createClass({
 				return (
 					<div
 						className={this.props.className + '__navDecade'}
-						style={this.styles.navElement}
+						style={GlobalUtils.merge([
+							this.styles.cellContentTable,
+							this.styles.navCenter
+						])}
 						onClick={this.onNavTitleClick}>
-						{decadeTitle}
+						<div style={this.styles.cellContentCell}>
+							{decadeTitle}
+						</div>
 					</div>
 				);
 		}
@@ -95,34 +106,40 @@ module.exports = React.createClass({
 				className={this.props.className + '__navbar'}
 				style={this.styles.navbar}>
 				<div
-					className={this.props.className + '__navCellLeft'}
+					className={this.props.className + '__navLeft'}
 					style={this.styles.navCell}>
 					<div
 						className={this.props.className + '__navPrev'}
 						style={GlobalUtils.merge([
-							this.styles.navElement,
+							this.styles.cellContentTable,
+							this.styles.navLeft,
 							this.styles.interactive
 						])}
 						onClick={this.onNavPrevClick}>
-						{String.fromCharCode('60')}
+						<div style={this.styles.cellContentCell}>
+							{String.fromCharCode('60')}
+						</div>
 					</div>
 				</div>
 				<div
-					className={this.props.className + '__navCellCenter'}
+					className={this.props.className + '__navCenter'}
 					style={this.styles.navCell}>
 					{this.getNavTitle()}
 				</div>
 				<div
-					className={this.props.className + '__navCellRight'}
+					className={this.props.className + '__navRight'}
 					style={this.styles.navCell}>
 					<div
 						className={this.props.className + '__navNext'}
 						style={GlobalUtils.merge([
-							this.styles.navElement,
+							this.styles.cellContentTable,
+							this.styles.navRight,
 							this.styles.interactive
 						])}
 						onClick={this.onNavNextClick}>
-						{String.fromCharCode('62')}
+						<div style={this.styles.cellContentCell}>
+							{String.fromCharCode('62')}
+						</div>
 					</div>
 				</div>
 			</div>
@@ -138,9 +155,25 @@ module.exports = React.createClass({
 			display: 'table-cell',
 			verticalAlign: 'middle'
 		},
-		navElement: {
-			display: 'inline-block',
+		cellContentTable: {
+			display: 'table',
 			cursor: 'default'
+		},
+		navLeft: {
+			marginLeft: 'auto',
+			marginRight: 0
+		},
+		navCenter: {
+			marginLeft: 'auto',
+			marginRight: 'auto'
+		},
+		navRight: {
+			marginLeft: 0,
+			marginRight: 'auto'
+		},
+		cellContentCell: {
+			display: 'table-cell',
+			verticalAlign: 'middle'
 		},
 		interactive: {
 			cursor: 'pointer'

@@ -41,9 +41,11 @@ module.exports = React.createClass({
 				return (
 					<div
 						className={this.props.className + '__day' +	modifiers}
-						style={this.styles.gridElement}
+						style={this.styles.cellContentTable}
 						onClick={this.onDayClick}>
-						{this.props.date.getDate()}
+						<div style={this.styles.cellContentCell}>
+							{this.props.date.getDate()}
+						</div>
 					</div>
 				);
 			case 1:
@@ -53,9 +55,11 @@ module.exports = React.createClass({
 				return (
 					<div
 						className={this.props.className + '__month' + modifiers}
-						style={this.styles.gridElement}
+						style={this.styles.cellContentTable}
 						onClick={this.onMonthClick}>
-						{this.props.locale.monthNames[month]}
+						<div style={this.styles.cellContentCell}>
+							{this.props.locale.monthNames[month]}
+						</div>
 					</div>
 				);
 			case 2:
@@ -64,9 +68,11 @@ module.exports = React.createClass({
 				return (
 					<div
 						className={this.props.className + '__year' + modifiers}
-						style={this.styles.gridElement}
+						style={this.styles.cellContentTable}
 						onClick={this.onYearClick}>
-						{this.props.date.getFullYear()}
+						<div style={this.styles.cellContentCell}>
+							{this.props.date.getFullYear()}
+						</div>
 					</div>
 				);
 		}
@@ -87,9 +93,15 @@ module.exports = React.createClass({
 			display: 'table-cell',
 			verticalAlign: 'middle'
 		},
-		gridElement: {
-			display: 'inline-block',
+		cellContentTable: {
+			display: 'table',
+			marginLeft: 'auto',
+			marginRight: 'auto',
 			cursor: 'pointer'
+		},
+		cellContentCell: {
+			display: 'table-cell',
+			verticalAlign: 'middle'
 		}
 	}
 	

@@ -37,39 +37,49 @@ module.exports = React.createClass({
 	render: function() {
 		return (
 			<div
-				className={this.props.className + '__calendar'}
-				style={this.styles.calendar}
-				onMouseDown={this.onCalendarMouseDown}>
-				<Navbar
-					className={this.props.className}
-					locale={this.props.locale}
-					viewDate={this.state.viewDate}
-					level={this.state.level}
-					setViewDate={this.setViewDate}
-					setLevel={this.setLevel} />
-				<Grid
-					className={this.props.className}
-					locale={this.props.locale}
-					firstDoW={this.props.firstDoW}
-					selectedDate={this.props.selectedDate}
-					setDate={this.props.setDate}
-					setVisible={this.props.setVisible}
-					viewDate={this.state.viewDate}
-					level={this.state.level}
-					setViewDate={this.setViewDate}
-					setLevel={this.setLevel} />
-				<Buttons
-					className={this.props.className}
-					locale={this.props.locale}
-					setDate={this.props.setDate}
-					setVisible={this.props.setVisible} />
+				className={this.props.className + '__calendarWrapper'}
+				style={this.styles.calendarWrapper}>
+				<div
+					className={this.props.className + '__calendar'}
+					style={this.styles.calendar}
+					onMouseDown={this.onCalendarMouseDown}>
+					<Navbar
+						className={this.props.className}
+						locale={this.props.locale}
+						viewDate={this.state.viewDate}
+						level={this.state.level}
+						setViewDate={this.setViewDate}
+						setLevel={this.setLevel} />
+					<Grid
+						className={this.props.className}
+						locale={this.props.locale}
+						firstDoW={this.props.firstDoW}
+						selectedDate={this.props.selectedDate}
+						setDate={this.props.setDate}
+						setVisible={this.props.setVisible}
+						viewDate={this.state.viewDate}
+						level={this.state.level}
+						setViewDate={this.setViewDate}
+						setLevel={this.setLevel} />
+					<Buttons
+						className={this.props.className}
+						locale={this.props.locale}
+						setDate={this.props.setDate}
+						setVisible={this.props.setVisible} />
+				</div>
 			</div>
 		);
 	},
 	
 	styles: {
-		calendar: {
+		calendarWrapper: {
 			position: 'absolute',
+			zIndex: 1,
+			left: '50%'
+		},
+		calendar: {
+			position: 'relative',
+			left: '-50%',
 			textAlign: 'center'
 		}
 	}
