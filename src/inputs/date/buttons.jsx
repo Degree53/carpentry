@@ -19,18 +19,24 @@ module.exports = React.createClass({
 			<div className={this.props.className + '__buttons'}>
 				<div
 					className={this.props.className + '__today'}
-					style={this.styles.today}
+					style={this.styles.buttonTable}
 					onClick={this.onTodayClick}>
-					{this.props.locale.today}
+					<div style={this.styles.buttonCell}>
+						{this.props.locale.today}
+					</div>
 				</div>
 			</div>
 		);
 	},
 	
 	styles: {
-		today: {
-			display: 'inline-block',
+		buttonTable: {
+			display: 'inline-table',
 			cursor: 'pointer'
+		},
+		buttonCell: {
+			display: 'table-cell',
+			verticalAlign: 'middle'
 		}
 	}
 	
