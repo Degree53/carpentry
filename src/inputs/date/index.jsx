@@ -11,10 +11,15 @@ module.exports = React.createClass({
 	displayName: 'DateInput',
 	
 	propTypes: {
-		// Default element attributes
 		className: React.PropTypes.string,
+		initDate: function(props, propName, componentName) {
+			if (Object.prototype.toString.call(props[propName]) !== '[object Date]')
+				return new Error(propName + ' must be a Date. Check' +
+					' the props of ' + componentName);
+		},
 		size: React.PropTypes.number,
-		// Layout and localisation
+		iconSrc: React.PropTypes.string.isRequired,
+		format: React.PropTypes.string,
 		layout: React.PropTypes.number,
 		locale: React.PropTypes.shape({
 			dayNames: React.PropTypes.arrayOf(React.PropTypes.string),
@@ -32,23 +37,22 @@ module.exports = React.createClass({
 				return new Error(propName + ' must be a value between' +
 					' 0 and 6. Check the props of ' + componentName);
 		},
-		format: React.PropTypes.string,
-		// Required functionality
-		iconSrc: React.PropTypes.string.isRequired,
-		setDate: React.PropTypes.func.isRequired
-		// Optional functionality
+		// disabled: React.PropTypes.bool,
 		// dateRange: React.PropTypes.shape({
 		// 	firstDate: React.PropTypes.object,
 		// 	lastDate: React.PropTypes.object
 		// }),
 		// minDate: React.PropTypes.string,
-		// maxDate: React.PropTypes.string
+		// maxDate: React.PropTypes.string,
+		setDate: React.PropTypes.func.isRequired
 	},
 	
 	getDefaultProps: function() {
 		return {
 			className: 'DateInput',
+			initDate: new Date(),
 			size: 10,
+			format: 'YYYY-MM-DD',
 			layout: 0,
 			locale: {
 				dayNames: ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'],
@@ -56,8 +60,8 @@ module.exports = React.createClass({
 					'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
 				today: 'Today'
 			},
-			firstDoW: 1,
-			format: 'YYYY-MM-DD'
+			firstDoW: 1
+			// disabled: false,
 			// dateRange: null,
 			// minDate: null,
 			// maxDate: null
@@ -65,7 +69,7 @@ module.exports = React.createClass({
 	},
 	
 	getInitialState: function() {
-		var initDate = Utils.cloneDate(new Date());
+		var initDate = Utils.cloneDate(this.props.initDate);
 		
 		return {
 			selectedDate: initDate,

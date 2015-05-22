@@ -9,11 +9,11 @@ module.exports = React.createClass({
 	
 	propTypes: {
 		className: React.PropTypes.string,
-		initValue: React.PropTypes.number,
+		initDecimal: React.PropTypes.number,
 		numOfPlaces: React.PropTypes.number,
-		value: React.PropTypes.number,
+		decimal: React.PropTypes.number,
 		disabled: React.PropTypes.bool,
-		setValue: React.PropTypes.func.isRequired,
+		setDecimal: React.PropTypes.func.isRequired,
 		setOnChange: React.PropTypes.bool,
 		onFocus: React.PropTypes.func,
 		onBlur: React.PropTypes.func
@@ -22,9 +22,9 @@ module.exports = React.createClass({
 	getDefaultProps: function() {
 		return {
 			className: 'DecimalInput',
-			initValue: 0,
+			initDecimal: 0,
 			numOfPlaces: 2,
-			value: null,
+			decimal: null,
 			disabled: false,
 			setOnChange: true,
 			onFocus: null,
@@ -33,16 +33,16 @@ module.exports = React.createClass({
 	},
 	
 	getInitialState: function() {
-		var initDecimal = this.props.initValue.toFixed(2);
+		var initDecimal = this.props.initDecimal.toFixed(2);
 		var initIndex = initDecimal.indexOf('.');
 		
 		return { decimal: initDecimal, index: initIndex, cursor: 0 };
 	},
 	
 	componentWillReceiveProps: function(nextProps) {
-		// Overwrite state upon receiving new props.value
-		if (nextProps.value !== this.props.value) {
-			var newDecimal = nextProps.value.toFixed(2);
+		// Overwrite state upon receiving new props.decimal
+		if (nextProps.decimal !== this.props.decimal) {
+			var newDecimal = nextProps.decimal.toFixed(2);
 			var newIndex = newDecimal.indexOf('.');
 			
 			// Store cursor position
@@ -54,7 +54,7 @@ module.exports = React.createClass({
 			
 			// Pass decimal to parent if isNum
 			if (Utils.isNum(newDecimal))
-				this.props.setValue(parseFloat(newDecimal));
+				this.props.setDecimal(parseFloat(newDecimal));
 		}
 	},
 	
@@ -67,7 +67,7 @@ module.exports = React.createClass({
 		}
 	},
 	
-	setValue: function(newDecimal, isOnBlur) {
+	setDecimal: function(newDecimal, isOnBlur) {
 		// Set decimal and index in state
 		var newIndex = newDecimal.indexOf('.');
 		
@@ -78,12 +78,12 @@ module.exports = React.createClass({
 		this.setState({	decimal: newDecimal, index: newIndex,
 			cursor: position });
 		
-		// Call props.setValue if isNum
+		// Call props.setDecimal if isNum
 		if (Utils.isNum(newDecimal)) {
 			if (isOnBlur)
-				this.props.setValue(parseFloat(newDecimal));
+				this.props.setDecimal(parseFloat(newDecimal));
 			else if (this.props.setOnChange)
-				this.props.setValue(parseFloat(newDecimal));
+				this.props.setDecimal(parseFloat(newDecimal));
 		}
 	},
 	
@@ -127,7 +127,7 @@ module.exports = React.createClass({
 		var regex = '^(\\d*\\.\\d{' + this.props.numOfPlaces + '})\\d+$';
 		decimal = decimal.replace(new RegExp(regex), '$1');
 		
-		this.setValue(decimal, false);
+		this.setDecimal(decimal, false);
 	},
 	
 	onInputBlur: function(e) {
@@ -139,7 +139,7 @@ module.exports = React.createClass({
 			.replace(/^(\d*\.)$/, '$10')
 			.replace(/^(\d*\.\d)$/, '$10');
 		
-		this.setValue(decimal, true);
+		this.setDecimal(decimal, true);
 		
 		if (this.props.onBlur) this.props.onBlur();
 	},
