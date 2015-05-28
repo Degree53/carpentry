@@ -1,6 +1,7 @@
 'use strict';
 
 var React = require('react');
+var GlobalUtils = require('../../utils');
 
 module.exports = React.createClass({
 	
@@ -10,14 +11,16 @@ module.exports = React.createClass({
 		className: React.PropTypes.string,
 		character: React.PropTypes.number,
 		initChecked: React.PropTypes.bool,
-		setChecked: React.PropTypes.func.isRequired
+		setChecked: React.PropTypes.func.isRequired,
+		onChange: React.PropTypes.func
 	},
 	
 	getDefaultProps: function() {
 		return {
 			className: 'CheckboxInput',
 			charCode: 10003,
-			initChecked: false
+			initChecked: false,
+			onChange: null
 		};
 	},
 	
@@ -25,6 +28,10 @@ module.exports = React.createClass({
 		return {
 			checked: this.props.initChecked
 		};
+	},
+	
+	componentWillUpdate: function() {
+		if (this.props.onChange) this.props.onChange();
 	},
 	
 	onComponentMouseDown: function(e) {
@@ -35,7 +42,7 @@ module.exports = React.createClass({
 		var checked = !this.state.checked;
 		
 		this.setState({ checked: checked });
-		this.setChecked(checked);
+		this.props.setChecked(checked);
 	},
 	
 	render: function() {
@@ -47,7 +54,10 @@ module.exports = React.createClass({
 				onClick={this.onComponentClick}>
 				<div
 					className={this.props.className + '__cell'}
-					style={this.styles.cell}>
+					style={GlobalUtils.merge([
+						this.styles.cell,
+						this.state.checked && this.styles.checked
+					])}>
 					{String.fromCharCode(this.props.charCode)}
 				</div>
 			</div>
@@ -61,7 +71,11 @@ module.exports = React.createClass({
 		cell: {
 			display: 'table-cell',
 			verticalAlign: 'middle',
-			textAlign: 'center'
+			textAlign: 'center',
+			opacity: 0
+		},
+		checked: {
+			opacity: 1
 		}
 	}
 	
