@@ -25,7 +25,8 @@ the following points:
 	using React props
 + Components have only structural styling included (no colours, fonts,
 	padding	etc.)
-+ Structural styling can be configured (e.g. a hamburger menu button on the left or the right)
++ Structural styling can be configured (e.g. a hamburger menu button on
+	the left or the right)
 + When necessary, components can nest other components
 
 <br>
@@ -71,6 +72,11 @@ var MyDecimalInput = require('carpentry').DecimalInput;
 		</tr>
 		<tr>
 			<td>ResponsiveNav</td>
+			<td></td>
+			<td>Development</td>
+		</tr>
+		<tr>
+			<td>CheckboxInput</td>
 			<td></td>
 			<td>Development</td>
 		</tr>
