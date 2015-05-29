@@ -58,12 +58,12 @@ var MyDecimalInput = require('carpentry').DecimalInput;
 	<tbody>
 		<tr>
 			<td><a href="#decimalinput">DecimalInput</a></td>
-			<td>Enforces input of a decimal value</td>
+			<td>An input for enforcing a decimal value</td>
 			<td>Unstable</td>
 		</tr>
 		<tr>
 			<td><a href="#dateinput">DateInput</a></td>
-			<td>Enforces input of a Date object</td>
+			<td>An input for picking a date</td>
 			<td>Unstable</td>
 		</tr>
 		<tr>
@@ -73,8 +73,8 @@ var MyDecimalInput = require('carpentry').DecimalInput;
 		</tr>
 		<tr>
 			<td>CheckboxInput</td>
-			<td></td>
-			<td>Development</td>
+			<td>A fully styleable checkbox input</td>
+			<td>Unstable</td>
 		</tr>
 		<tr>
 			<td>SelectInput</td>
