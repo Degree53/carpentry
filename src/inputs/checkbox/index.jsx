@@ -4,22 +4,17 @@ var React = require('react');
 var utils = require('../../utils');
 
 var styles = {
-	checkbox: {
+	checkboxTable: {
 		display: 'inline-table',
-		verticalAlign: 'text-bottom',
+		textAlign: 'center',
 		cursor: 'pointer'
 	},
 	disabled: {
 		cursor: 'default'
 	},
-	cell: {
+	checkboxCell: {
 		display: 'table-cell',
-		opacity: 0,
-		verticalAlign: 'middle',
-		textAlign: 'center'
-	},
-	checked: {
-		opacity: 1
+		verticalAlign: 'middle'
 	}
 };
 
@@ -29,7 +24,9 @@ module.exports = React.createClass({
 	
 	propTypes: {
 		className: React.PropTypes.string,
+		iconSrc: React.PropTypes.string,
 		charCode: React.PropTypes.number,
+		label: React.PropTypes.string,
 		checked: React.PropTypes.bool,
 		setChecked: React.PropTypes.func.isRequired,
 		disabled: React.PropTypes.bool,
@@ -39,7 +36,9 @@ module.exports = React.createClass({
 	getDefaultProps: function() {
 		return {
 			className: 'CheckboxInput',
-			charCode: 10003,
+			iconSrc: null,
+			charCode: null,
+			label: null,
 			checked: false,
 			disabled: false,
 			onChange: null
@@ -67,26 +66,41 @@ module.exports = React.createClass({
 		}
 	},
 	
+	getIconElem: function() {
+		if (this.props.iconSrc) {
+			return (
+				<img className={this.props.className + '__imgIcon'}
+					src={this.props.iconSrc} />
+			);
+		}
+		if (this.props.charCode) {
+			return (
+				<div className={this.props.className + '__charIcon'}>
+					{String.fromCharCode(this.props.charCode)}
+				</div>
+			);
+		}
+	},
+	
 	render: function() {
-		var modifiers = '';
-		if (this.props.disabled) modifiers += ' isDisabled';
-		if (this.state.checked) modifiers += ' isChecked';
+		var classes = this.props.className;
+		if (this.props.disabled) classes += ' isDisabled';
+		if (this.state.checked) classes += ' isChecked';
 		
 		var checkboxStyles = utils.merge([
-			styles.checkbox,
+			styles.checkboxTable,
 			this.props.disabled && styles.disabled
 		]);
 		
-		var cellStyles = utils.merge([
-			styles.cell,
-			this.state.checked && styles.checked
-		]);
-		
 		return (
-			<div className={this.props.className + modifiers} style={checkboxStyles}
-				onMouseDown={this.componentMouseDown} onClick={this.componentClick}>
-				<div className={this.props.className + '__cell'} style={cellStyles}>
-					{String.fromCharCode(this.props.charCode)}
+			<div className={classes}
+				style={checkboxStyles}
+				onMouseDown={this.componentMouseDown}
+				onClick={this.componentClick}>
+				<div className={this.props.className + '__cell'}
+					style={styles.checkboxCell}>
+					{this.getIconElem()}
+					{this.props.label}
 				</div>
 			</div>
 		);
