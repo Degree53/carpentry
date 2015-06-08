@@ -22,5 +22,8 @@ gulp.task('transform', ['clean'], function() {
 gulp.task('build', ['copy', 'transform']);
 
 gulp.task('watch', function() {
-	gulp.watch(['./src/**/*.jsx'], ['build']);
+	gulp.watch([
+		'./src/**/*.jsx',
+		'./src/**/*.js'
+	], ['build']);
 });
