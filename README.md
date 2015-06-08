@@ -142,11 +142,20 @@ render: function() {
 			sub-components</td>
 		</tr>
 		<tr>
-			<td>initDecimal</td>
+			<td>decimal</td>
 			<td>Number</td>
-			<td>0</td>
+			<td>null</td>
 			<td>no</td>
-			<td>The initial decimal value of the input</td>
+			<td>A number value to set the input to (useful for chaining inputs). Can also
+			be used to set an initial value</td>
+		</tr>
+		<tr>
+			<td>setDecimal</td>
+			<td>Function</td>
+			<td>n/a</td>
+			<td>yes</td>
+			<td>A Function for setting the decimal value back to state or for passing it to
+			an action</td>
 		</tr>
 		<tr>
 			<td>numOfPlaces</td>
@@ -156,26 +165,11 @@ render: function() {
 			<td>The number of decimal places to which the decimal value should be restricted</td>
 		</tr>
 		<tr>
-			<td>decimal</td>
-			<td>Number</td>
-			<td>null</td>
-			<td>no</td>
-			<td>An incoming decimal value to set the input to (useful for chaining inputs)</td>
-		</tr>
-		<tr>
 			<td>disabled</td>
 			<td>Boolean</td>
 			<td>false</td>
 			<td>no</td>
 			<td>A Boolean for disabling access to the input</td>
-		</tr>
-		<tr>
-			<td>setDecimal</td>
-			<td>Function</td>
-			<td>n/a</td>
-			<td>yes</td>
-			<td>A Function for setting the decimal value back to state or for passing it to
-			an action</td>
 		</tr>
 		<tr>
 			<td>onFocus</td>

@@ -9,7 +9,6 @@ module.exports = React.createClass({
 	
 	propTypes: {
 		className: React.PropTypes.string,
-		initDecimal: React.PropTypes.number,
 		numOfPlaces: React.PropTypes.number,
 		decimal: React.PropTypes.number,
 		disabled: React.PropTypes.bool,
@@ -21,9 +20,8 @@ module.exports = React.createClass({
 	getDefaultProps: function() {
 		return {
 			className: 'DecimalInput',
-			initDecimal: 0,
 			numOfPlaces: 2,
-			decimal: null,
+			decimal: 0,
 			disabled: false,
 			onFocus: null,
 			onBlur: null
@@ -31,21 +29,18 @@ module.exports = React.createClass({
 	},
 	
 	getInitialState: function() {
-		var initDecimal = this.props.initDecimal.toFixed(this.props.numOfPlaces);
+		var initDecimal = this.props.decimal.toFixed(this.props.numOfPlaces);
 		var initIndex = initDecimal.indexOf('.');
 		
 		return { decimal: initDecimal, index: initIndex, cursor: 0 };
 	},
 	
 	componentWillReceiveProps: function(nextProps) {
-		// Overwrite state upon receiving new props.decimal
 		if (nextProps.decimal !== this.props.decimal) {
+			// Overwrite state upon receiving new props.decimal
 			var newDecimal = nextProps.decimal.toFixed(this.props.numOfPlaces);
 			var newIndex = newDecimal.indexOf('.');
-			
-			// Store cursor position
-			var position = React.findDOMNode(this.refs.input)
-				.selectionStart;
+			var position = React.findDOMNode(this.refs.input).selectionStart;
 			
 			this.setState({ decimal: newDecimal, index: newIndex, cursor: position });
 			
@@ -68,15 +63,12 @@ module.exports = React.createClass({
 		var newIndex = newDecimal.indexOf('.');
 		
 		// Store cursor position
-		var position = React.findDOMNode(this.refs.input)
-			.selectionStart;
+		var position = React.findDOMNode(this.refs.input).selectionStart;
 		
 		this.setState({ decimal: newDecimal, index: newIndex, cursor: position });
 		
 		// Call props.setDecimal if isNum
-		if (Utils.isNum(newDecimal)) {
-			this.props.setDecimal(parseFloat(newDecimal));
-		}
+		if (Utils.isNum(newDecimal)) this.props.setDecimal(parseFloat(newDecimal));
 	},
 	
 	onInputFocus: function() {
@@ -125,11 +117,15 @@ module.exports = React.createClass({
 	onInputBlur: function(e) {
 		// Ensure value is valid decimal
 		var decimal = e.target.value
+			// Add decimal point if not present
 			.replace(/^([^\.]*)$/, '$1.')
+			// Pad with leading 0 if starting with decimal point
 			.replace(/^(\.\d*)$/, '0$1')
-			.replace(/^0+(\d+\.?\d*)$/, '$1')
-			.replace(/^(\d*\.)$/, '$10')
-			.replace(/^(\d*\.\d)$/, '$10');
+			// Remove leading 0 if more than one digit before decimal point
+			.replace(/^0+(\d+\.?\d*)$/, '$1');
+		
+		// Ensure correct number of decimal places
+		decimal = parseFloat(decimal).toFixed(this.props.numOfPlaces);
 		
 		this.setDecimal(decimal);
 		
