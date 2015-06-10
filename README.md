@@ -19,7 +19,8 @@ Carpentry components are designed to solve this problem by sticking to the follo
 + Components are functionally specialised, doing one job and doing it well
 + Components can have their functionality configured easily via an API using React props
 + Components have only structural styling included (no colours, fonts, padding etc.)
-+ Structural styling can be configured (e.g. a hamburger menu button on the left or the right)
++ Structural styling can be configured (e.g. a hamburger menu button on the left or the
+	right)
 + When necessary, components can nest other components
 
 <br>
@@ -32,8 +33,9 @@ Thanks to NPM it's super easy, just `npm install carpentry`.
 
 ## Usage
 
-Carpentry is built to work with the Node.js `require()` function. All components have an alias
-as listed in the table above. The recommended way to access a component is via its alias:
+Carpentry is built to work with the Node.js `require()` function. All components have an
+alias as listed in the table above. The recommended way to access a component is via its
+alias:
 
 ``` javascript
 var MyDecimalInput = require('carpentry').DecimalInput;
@@ -103,10 +105,10 @@ development.
 
 ### DecimalInput
 
-Use this component to enforce input of a decimal value. `setDecimal` should be a function
-that can set a value back to state or pass it to an action. Using `decimal`, the component
-can also take a value for conversion or display purposes. This can be useful for chaining
-multiple inputs or applying your own validation.
+Use this component to enforce input of a decimal value. `setValue` should be a function that
+can set a value to state or pass it to an action. Using `value`, the component can also take
+a value for conversion or display purposes. This can be useful for chaining multiple inputs
+or applying your own validation.
 
 ``` javascript
 setDecimal: function(decimal) {
@@ -117,7 +119,7 @@ render: function() {
 	return (
 		<MyDecimalInput
 			className="MyDecimalInput"
-			setDecimal={this.setDecimal} />
+			setValue={this.setDecimal} />
 	);
 }
 ```
@@ -142,7 +144,7 @@ render: function() {
 			sub-components</td>
 		</tr>
 		<tr>
-			<td>decimal</td>
+			<td>value</td>
 			<td>Number</td>
 			<td>null</td>
 			<td>no</td>
@@ -150,12 +152,12 @@ render: function() {
 			be used to set an initial value</td>
 		</tr>
 		<tr>
-			<td>setDecimal</td>
+			<td>setValue</td>
 			<td>Function</td>
 			<td>n/a</td>
 			<td>yes</td>
-			<td>A Function for setting the decimal value back to state or for passing it to
-			an action</td>
+			<td>A Function for setting the decimal value to state or for passing it to an
+			action</td>
 		</tr>
 		<tr>
 			<td>numOfPlaces</td>
@@ -188,7 +190,7 @@ render: function() {
 	</tbody>
 </table>
 
-###DateInput
+### DateInput
 
 This component is useful for enforcing input of a `Date` object. `setDate` should be a
 function that can set a `Date` back to state or pass it to an action. `iconSrc` should be
