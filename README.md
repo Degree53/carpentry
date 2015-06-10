@@ -167,7 +167,7 @@ render: function() {
 			<td>The number of decimal places to which the decimal value should be restricted</td>
 		</tr>
 		<tr>
-			<td>disabled</td>
+			<td>isDisabled</td>
 			<td>Boolean</td>
 			<td>false</td>
 			<td>no</td>
