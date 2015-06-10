@@ -17,7 +17,8 @@
     "input",
     "decimal",
     "date",
-    "calendar"
+    "calendar",
+    "checkbox"
   ],
   "author": "Mike Geldard",
   "license": "MIT",
