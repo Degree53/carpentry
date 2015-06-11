@@ -1,7 +1,6 @@
 'use strict';
 
 var React = require('react');
-var Utils = require('../../utils');
 
 module.exports = React.createClass({
 	
@@ -49,8 +48,7 @@ module.exports = React.createClass({
 				this.setState({ decimal: newDecimal, index: newIndex });
 			}
 			
-			// Pass decimal to parent if isNum
-			if (Utils.isNum(newDecimal)) this.props.setValue(parseFloat(newDecimal));
+			this.props.setValue(Number(newDecimal));
 		}
 	},
 	
@@ -71,8 +69,7 @@ module.exports = React.createClass({
 		
 		this.setState({ decimal: newDecimal, index: newIndex, cursor: position });
 		
-		// Only pass value up if valid number
-		if (Utils.isNum(newDecimal)) this.props.setValue(parseFloat(newDecimal));
+		this.props.setValue(Number(newDecimal));
 	},
 	
 	onInputFocus: function() {
