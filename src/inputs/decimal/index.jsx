@@ -35,27 +35,20 @@ module.exports = React.createClass({
 	},
 	
 	componentWillReceiveProps: function(nextProps) {
-		// Update if receiving new decimal
-		if (nextProps.value !== this.props.value) {
+		// Update decimal and index if not currently focused
+		if (React.findDOMNode(this) !== document.activeElement) {
 			
 			var newDecimal = nextProps.value.toFixed(this.props.numOfPlaces);
+			var newIndex = newDecimal.indexOf('.');
 			
-			// Set state if not currently focused
-			if (React.findDOMNode(this) !== document.activeElement) {
-				
-				var newIndex = newDecimal.indexOf('.');
-				
-				this.setState({ decimal: newDecimal, index: newIndex });
-			}
-			
-			this.props.setValue(Number(newDecimal));
+			this.setState({ decimal: newDecimal, index: newIndex });
 		}
 	},
 	
 	componentDidUpdate: function(prevProps, prevState) {
 		if (this.state.cursor !== prevState.cursor) {
 			
-			var input = React.findDOMNode(this.refs.input);
+			var input = React.findDOMNode(this);
 			
 			input.selectionStart = this.state.cursor;
 			input.selectionEnd = this.state.cursor;
@@ -65,7 +58,7 @@ module.exports = React.createClass({
 	setValue: function(newDecimal) {
 		// Store decimal, index and cursor position in state
 		var newIndex = newDecimal.indexOf('.');
-		var position = React.findDOMNode(this.refs.input).selectionStart;
+		var position = React.findDOMNode(this).selectionStart;
 		
 		this.setState({ decimal: newDecimal, index: newIndex, cursor: position });
 		
@@ -125,7 +118,7 @@ module.exports = React.createClass({
 	
 	render: function() {
 		return (
-			<input ref="input"
+			<input
 				className={this.props.className}
 				value={this.state.decimal}
 				disabled={this.props.isDisabled}
