@@ -1,7 +1,6 @@
 'use strict';
 
 var React = require('react');
-var Utils = require('../../utils');
 
 module.exports = React.createClass({
 	
@@ -9,12 +8,10 @@ module.exports = React.createClass({
 	
 	propTypes: {
 		className: React.PropTypes.string,
-		initValue: React.PropTypes.number,
-		numOfPlaces: React.PropTypes.number,
 		value: React.PropTypes.number,
-		disabled: React.PropTypes.bool,
+		numOfPlaces: React.PropTypes.number,
+		isDisabled: React.PropTypes.bool,
 		setValue: React.PropTypes.func.isRequired,
-		setOnChange: React.PropTypes.bool,
 		onFocus: React.PropTypes.func,
 		onBlur: React.PropTypes.func
 	},
@@ -22,69 +19,50 @@ module.exports = React.createClass({
 	getDefaultProps: function() {
 		return {
 			className: 'DecimalInput',
-			initValue: 0,
+			value: 0,
 			numOfPlaces: 2,
-			value: null,
-			disabled: false,
-			setOnChange: true,
+			isDisabled: false,
 			onFocus: null,
 			onBlur: null
 		};
 	},
 	
 	getInitialState: function() {
-		var initDecimal = this.props.initValue.toFixed(2);
+		var initDecimal = this.props.value.toFixed(this.props.numOfPlaces);
 		var initIndex = initDecimal.indexOf('.');
 		
 		return { decimal: initDecimal, index: initIndex, cursor: 0 };
 	},
 	
 	componentWillReceiveProps: function(nextProps) {
-		// Overwrite state upon receiving new props.value
-		if (nextProps.value !== this.props.value) {
-			var newDecimal = nextProps.value.toFixed(2);
+		// Update decimal and index if not currently focused
+		if (React.findDOMNode(this) !== document.activeElement) {
+			
+			var newDecimal = nextProps.value.toFixed(this.props.numOfPlaces);
 			var newIndex = newDecimal.indexOf('.');
 			
-			// Store cursor position
-			var position = React.findDOMNode(this.refs.input)
-				.selectionStart;
-			
-			this.setState({	decimal: newDecimal, index: newIndex,
-				cursor: position });
-			
-			// Pass decimal to parent if isNum
-			if (Utils.isNum(newDecimal))
-				this.props.setValue(parseFloat(newDecimal));
+			this.setState({ decimal: newDecimal, index: newIndex });
 		}
 	},
 	
 	componentDidUpdate: function(prevProps, prevState) {
 		if (this.state.cursor !== prevState.cursor) {
-			var input = React.findDOMNode(this.refs.input);
+			
+			var input = React.findDOMNode(this);
 			
 			input.selectionStart = this.state.cursor;
 			input.selectionEnd = this.state.cursor;
 		}
 	},
 	
-	setValue: function(newDecimal, isOnBlur) {
-		// Set decimal and index in state
+	setValue: function(newDecimal) {
+		// Store decimal, index and cursor position in state
 		var newIndex = newDecimal.indexOf('.');
+		var position = React.findDOMNode(this).selectionStart;
 		
-		// Store cursor position
-		var position = React.findDOMNode(this.refs.input)
-			.selectionStart;
+		this.setState({ decimal: newDecimal, index: newIndex, cursor: position });
 		
-		this.setState({	decimal: newDecimal, index: newIndex,
-			cursor: position });
-		
-		// Call props.setValue if isNum
-		if (Utils.isNum(newDecimal)) {
-			if (isOnBlur)
-				this.props.setValue(parseFloat(newDecimal));
-			else if (this.props.setOnChange)
-				this.props.setValue(parseFloat(newDecimal));
-		}
+		this.props.setValue(Number(newDecimal));
 	},
 	
 	onInputFocus: function() {
@@ -104,17 +82,16 @@ module.exports = React.createClass({
 	},
 	
 	onInputPaste: function(e) {
-		// TODO Validate paste content
-		
 		e.preventDefault();
 	},
 	
 	onInputChange: function(e) {
-		// Prevent two decimal points
 		var decimal = e.target.value;
 		var firstIndex = decimal.indexOf('.');
 		
+		// Prevent two decimal points
 		if (firstIndex !== decimal.lastIndexOf('.')) {
+			
 			if (firstIndex === this.state.index)
 				// Remove first decimal point
 				decimal = decimal.replace(/^(\d*)\.(\d*\.\d*)$/, '$1$2');
@@ -123,33 +100,28 @@ module.exports = React.createClass({
 				decimal = decimal.replace(/^(\d*\.\d*)\.(\d*)$/, '$1$2');
 		}
 		
-		// Prevent more than x digits after decimal point
+		// Prevent excess digits after decimal place
 		var regex = '^(\\d*\\.\\d{' + this.props.numOfPlaces + '})\\d+$';
 		decimal = decimal.replace(new RegExp(regex), '$1');
 		
-		this.setValue(decimal, false);
+		this.setValue(decimal);
 	},
 	
-	onInputBlur: function(e) {
-		// Ensure value is valid decimal
-		var decimal = e.target.value
-			.replace(/^([^\.]*)$/, '$1.')
-			.replace(/^(\.\d*)$/, '0$1')
-			.replace(/^0+(\d+\.?\d*)$/, '$1')
-			.replace(/^(\d*\.)$/, '$10')
-			.replace(/^(\d*\.\d)$/, '$10');
+	onInputBlur: function() {
+		var newDecimal = this.props.value.toFixed(this.props.numOfPlaces);
+		var newIndex = newDecimal.indexOf('.');
 		
-		this.setValue(decimal, true);
+		this.setState({ decimal: newDecimal, index: newIndex });
 		
 		if (this.props.onBlur) this.props.onBlur();
 	},
 	
 	render: function() {
 		return (
-			<input ref="input"
+			<input
 				className={this.props.className}
 				value={this.state.decimal}
-				disabled={this.props.disabled}
+				disabled={this.props.isDisabled}
 				onFocus={this.onInputFocus}
 				onKeyPress={this.onInputKeyPress}
 				onPaste={this.onInputPaste}
