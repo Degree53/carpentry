@@ -10,12 +10,12 @@ module.exports = React.createClass({
 	displayName: 'Calendar',
 	
 	getInitialState: function() {
-		var initDate = this.props.selectedDate;
+		var yr = this.props.selectedDate.getFullYear();
+		var mth = this.props.selectedDate.getMonth();
 		
-		return {
-			viewDate: initDate,
-			level: 0
-		};
+		var initDate = new Date(yr, mth, 1);
+		
+		return { viewDate: initDate, level: 0 };
 	},
 	
 	// Fix for IE changing focus to child elements which
@@ -30,42 +30,25 @@ module.exports = React.createClass({
 	
 	setLevel: function(value) {
 		var newLevel = this.state.level + value;
-		if (0 <= newLevel && newLevel <= 2)
-			this.setState({ level: newLevel });
+		if (0 <= newLevel && newLevel <= 2)	this.setState({ level: newLevel });
 	},
 	
 	render: function() {
 		return (
-			<div
-				className={this.props.className + '__calendarWrapper'}
+			<div className={this.props.className + '__calendarWrapper'}
 				style={this.styles.calendarWrapper}>
-				<div
-					className={this.props.className + '__calendar'}
-					style={this.styles.calendar}
+				<div className={this.props.className + '__calendar'} style={this.styles.calendar}
 					onMouseDown={this.onCalendarMouseDown}>
-					<Navbar
-						className={this.props.className}
-						locale={this.props.locale}
-						viewDate={this.state.viewDate}
-						level={this.state.level}
-						setViewDate={this.setViewDate}
-						setLevel={this.setLevel} />
-					<Grid
-						className={this.props.className}
-						locale={this.props.locale}
-						firstDoW={this.props.firstDoW}
-						selectedDate={this.props.selectedDate}
-						setDate={this.props.setDate}
-						setVisible={this.props.setVisible}
-						viewDate={this.state.viewDate}
-						level={this.state.level}
-						setViewDate={this.setViewDate}
-						setLevel={this.setLevel} />
-					<Buttons
-						className={this.props.className}
-						locale={this.props.locale}
-						setDate={this.props.setDate}
-						setVisible={this.props.setVisible} />
+					<Navbar className={this.props.className} locale={this.props.locale}
+						viewDate={this.state.viewDate} level={this.state.level}
+						setViewDate={this.setViewDate} setLevel={this.setLevel} />
+					<Grid className={this.props.className} locale={this.props.locale}
+						firstDoW={this.props.firstDoW} selectedDate={this.props.selectedDate}
+						setDate={this.props.setDate} setVisible={this.props.setVisible}
+						viewDate={this.state.viewDate} level={this.state.level}
+						setViewDate={this.setViewDate} setLevel={this.setLevel} />
+					<Buttons className={this.props.className} locale={this.props.locale}
+						setDate={this.props.setDate} setVisible={this.props.setVisible} />
 				</div>
 			</div>
 		);

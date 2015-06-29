@@ -10,11 +10,9 @@ module.exports = React.createClass({
 		var year = this.props.selectedDate.getFullYear().toString();
 		var yr = year.match(/\d\d(\d\d)/)[1];
 		var month = (this.props.selectedDate.getMonth() + 1).toString();
-		var monthPadded = month.length < 2 ?
-			'0' + month : month;
+		var monthPadded = month.length < 2 ? '0' + month : month;
 		var day = this.props.selectedDate.getDate().toString();
-		var dayPadded = day.length < 2 ?
-			'0' + day : day;
+		var dayPadded = day.length < 2 ? '0' + day : day;
 		return this.props.format
 			.replace(/[Yy]{4}/, year)
 			.replace(/[Yy]{2}/, yr)
@@ -25,16 +23,13 @@ module.exports = React.createClass({
 	},
 	
 	onInputChange: function() {
-		
+		// TODO Handle input behaviour
 	},
 	
 	render: function() {
 		return (
-			<input
-				className={this.props.className + '__input'}
-				size={this.props.size}
-				value={this.getDateFormatted()}
-				onChange={this.onInputChange} />
+			<input className={this.props.className + '__input'} size={this.props.size}
+				value={this.getDateFormatted()} onChange={this.onInputChange} />
 		);
 	}
 	

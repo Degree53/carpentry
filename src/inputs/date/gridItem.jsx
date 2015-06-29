@@ -35,28 +35,23 @@ module.exports = React.createClass({
 			case 0:
 				if (month === viewMonth) modifiers += ' isThisMonth';
 				
-				if (day === selectedDay && month === selectedMonth &&
-					year === selectedYear) modifiers += ' isSelected';
+				if (day === selectedDay && month === selectedMonth && year === selectedYear)
+					modifiers += ' isSelected';
 				
 				return (
-					<div
-						className={this.props.className + '__day' +	modifiers}
-						style={this.styles.cellContentTable}
-						onClick={this.onDayClick}>
+					<div className={this.props.className + '__day' + modifiers}
+						style={this.styles.cellContentTable} onClick={this.onDayClick}>
 						<div style={this.styles.cellContentCell}>
 							{this.props.date.getDate()}
 						</div>
 					</div>
 				);
 			case 1:
-				if (month === selectedMonth && year === selectedYear)
-					modifiers += ' isSelected';
+				if (month === selectedMonth && year === selectedYear) modifiers += ' isSelected';
 				
 				return (
-					<div
-						className={this.props.className + '__month' + modifiers}
-						style={this.styles.cellContentTable}
-						onClick={this.onMonthClick}>
+					<div className={this.props.className + '__month' + modifiers}
+						style={this.styles.cellContentTable} onClick={this.onMonthClick}>
 						<div style={this.styles.cellContentCell}>
 							{this.props.locale.monthNames[month]}
 						</div>
@@ -66,10 +61,8 @@ module.exports = React.createClass({
 				if (year === selectedYear) modifiers += ' isSelected';
 				
 				return (
-					<div
-						className={this.props.className + '__year' + modifiers}
-						style={this.styles.cellContentTable}
-						onClick={this.onYearClick}>
+					<div className={this.props.className + '__year' + modifiers}
+						style={this.styles.cellContentTable} onClick={this.onYearClick}>
 						<div style={this.styles.cellContentCell}>
 							{this.props.date.getFullYear()}
 						</div>
@@ -80,9 +73,7 @@ module.exports = React.createClass({
 	
 	render: function() {
 		return (
-			<div
-				className={this.props.className + '__gridCell'}
-				style={this.styles.gridCell}>
+			<div className={this.props.className + '__gridCell'} style={this.styles.gridCell}>
 				{this.getGridItem()}
 			</div>
 		);

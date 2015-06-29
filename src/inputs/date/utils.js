@@ -3,11 +3,11 @@
 module.exports = {
 	
 	cloneDate: function(date) {
-		var year = date.getFullYear();
-		var month = date.getMonth();
-		var day = date.getDate();
+		var yr = date.getFullYear();
+		var mth = date.getMonth();
+		var dt = date.getDate();
 		
-		var newDate = new Date(year, month, day);
+		var newDate = new Date(yr, mth, dt);
 		
 		return newDate;
 	},
@@ -61,27 +61,29 @@ module.exports = {
 	},
 	
 	getMonthDates: function(date, startDay) {
-		var year = date.getFullYear();
-		var month = date.getMonth();
-		var firstDay = new Date(year, month, 1).getDay();
-		var offset = startDay < firstDay ?
-			firstDay - startDay : firstDay + 7 - startDay;
+		var month = [];
 		
-		var dates = [];
-		for (var i = -offset; i < (42 - offset); i++)
-			dates.push(new Date(year, month, i + 1));
+		var yr = date.getFullYear();
+		var mth = date.getMonth();
+		var firstDay = new Date(yr, mth, 1).getDay();
 		
-		return dates;
+		var offset = startDay < firstDay ? firstDay - startDay : firstDay + 7 - startDay;
+		
+		for (var i = -offset; i < (42 - offset); i++) {
+			var newDate = this.cloneDate(date);
+			newDate.setDate(i + 1);
+			month.push(newDate);
+		}
+		
+		return month;
 	},
 	
 	getYearMonths: function(date) {
 		var year = [date];
 		
-		while (year[0].getMonth() !== 0)
-			year.unshift(this.getPrevMonth(year[0]));
+		while (year[0].getMonth() !== 0) year.unshift(this.getPrevMonth(year[0]));
 		
-		while (year[year.length - 1].getMonth() !== 11)
-			year.push(this.getNextMonth(year[year.length - 1]));
+		while (year[year.length - 1].getMonth() !== 11) year.push(this.getNextMonth(year[year.length - 1]));
 		
 		return year;
 	},
@@ -89,8 +91,7 @@ module.exports = {
 	getDecadeYears: function(date) {
 		var decade = [date];
 		
-		while (decade[0].toISOString()[3] !== '0')
-			decade.unshift(this.getPrevYear(decade[0]));
+		while (decade[0].toISOString()[3] !== '0') decade.unshift(this.getPrevYear(decade[0]));
 		
 		while (decade[decade.length - 1].toISOString()[3] !== '9')
 			decade.push(this.getNextYear(decade[decade.length - 1]));
