@@ -192,7 +192,7 @@ render: function() {
 
 ### DateInput
 
-This component is useful for enforcing input of a `Date` object. `setDate` should be a
+This component is useful for enforcing input of a `Date` object. `setValue` should be a
 function that can set a `Date` back to state or pass it to an action. `iconSrc` should be
 a relative path to an image file to be used for the icon that users click to display the
 calendar.
@@ -206,7 +206,7 @@ render: function() {
 	return (
 		<MyDateInput
 			className="MyDateInput"
-			setDate={this.setDate} />
+			setValue={this.setDate} />
 	);
 }
 ```
@@ -225,17 +225,25 @@ render: function() {
 		<tr>
 			<td>className</td>
 			<td>String</td>
-			<td>null</td>
+			<td width="19%">null</td>
 			<td>no</td>
 			<td>A String to be used for the html class attribute for the component and all
 			sub-components</td>
 		</tr>
 		<tr>
-			<td>initDate</td>
+			<td>value</td>
 			<td>Date</td>
-			<td>new Date</td>
+			<td>new Date()</td>
 			<td>no</td>
-			<td>This initial date value of the input</td>
+			<td>A Date to set the input to. Can be used to set an initial value</td>
+		</tr>
+		<tr>
+			<td>setValue</td>
+			<td>function</td>
+			<td>n/a</td>
+			<td>yes</td>
+			<td>A Function for setting the date value back to state or for passing it to an
+			action</td>
 		</tr>
 		<tr>
 			<td>size</td>
@@ -257,8 +265,7 @@ render: function() {
 			<td>String</td>
 			<td>'YYYY-MM-DD'</td>
 			<td>no</td>
-			<td>A String representing the format for displaying the selected date (see
-			below)</td>
+			<td>A String representing the format for displaying the selected date</td>
 		</tr>
 		<tr>
 			<td>layout</td>
@@ -268,12 +275,27 @@ render: function() {
 			<td>0 = icon displayed outside of input, 1 = icon displayed inside of input</td>
 		</tr>
 		<tr>
-			<td>locale</td>
-			<td>Object</td>
-			<td>(see below)</td>
+			<td>dayNames</td>
+			<td>String Array</td>
+			<td>['Su', 'Mo', ...]</td>
 			<td>no</td>
-			<td>An object with `dayNames`, `monthNames` and `today` properties for
-			localisation</td>
+			<td>An Array of strings to display as the days of the week on the calendar
+			beginning with Sunday</td>
+		</tr>
+		<tr>
+			<td>monthNames</td>
+			<td>String Array</td>
+			<td>['Jan', 'Feb', ...]</td>
+			<td>no</td>
+			<td>An Array of strings to display as the months of the year on the calendar
+			beginning with January</td>
+		</tr>
+		<tr>
+			<td>today</td>
+			<td>String</td>
+			<td>'Today'</td>
+			<td>no</td>
+			<td>The text to use for the today button</td>
 		</tr>
 		<tr>
 			<td>firstDoW</td>
@@ -282,14 +304,6 @@ render: function() {
 			<td>no</td>
 			<td>The first day of the week beginning with Sunday = 0, ending with Saturday
 			= 6</td>
-		</tr>
-		<tr>
-			<td>setDate</td>
-			<td>function</td>
-			<td>n/a</td>
-			<td>yes</td>
-			<td>A Function for setting the date value back to state or for passing it to an
-			action</td>
 		</tr>
 	</tbody>
 </table>

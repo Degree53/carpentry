@@ -24,7 +24,7 @@ module.exports = React.createClass({
 		e.preventDefault();
 	},
 	
-	setViewDate: function(date ) {
+	setViewDate: function(date) {
 		this.setState({ viewDate: date });
 	},
 	
@@ -39,16 +39,17 @@ module.exports = React.createClass({
 				style={this.styles.calendarWrapper}>
 				<div className={this.props.className + '__calendar'} style={this.styles.calendar}
 					onMouseDown={this.onCalendarMouseDown}>
-					<Navbar className={this.props.className} locale={this.props.locale}
+					<Navbar className={this.props.className} monthNames={this.props.monthNames}
 						viewDate={this.state.viewDate} level={this.state.level}
 						setViewDate={this.setViewDate} setLevel={this.setLevel} />
-					<Grid className={this.props.className} locale={this.props.locale}
-						firstDoW={this.props.firstDoW} selectedDate={this.props.selectedDate}
-						setDate={this.props.setDate} setVisible={this.props.setVisible}
-						viewDate={this.state.viewDate} level={this.state.level}
-						setViewDate={this.setViewDate} setLevel={this.setLevel} />
-					<Buttons className={this.props.className} locale={this.props.locale}
-						setDate={this.props.setDate} setVisible={this.props.setVisible} />
+					<Grid className={this.props.className} dayNames={this.props.dayNames}
+						monthNames={this.props.monthNames} firstDoW={this.props.firstDoW}
+						selectedDate={this.props.selectedDate} viewDate={this.state.viewDate}
+						level={this.state.level} setValue={this.props.setValue}
+						setVisible={this.props.setVisible} setViewDate={this.setViewDate}
+						setLevel={this.setLevel} />
+					<Buttons className={this.props.className} today={this.props.today}
+						setValue={this.props.setValue} setVisible={this.props.setVisible} />
 				</div>
 			</div>
 		);

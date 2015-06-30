@@ -10,7 +10,7 @@ module.exports = React.createClass({
 	onTodayClick: function() {
 		var today = DateUtils.cloneDate(new Date());
 		
-		this.props.setDate(today);
+		this.props.setValue(today);
 		this.props.setVisible(false);
 	},
 	
@@ -20,7 +20,7 @@ module.exports = React.createClass({
 				<div className={this.props.className + '__today'} style={this.styles.buttonTable}
 					onClick={this.onTodayClick}>
 					<div style={this.styles.buttonCell}>
-						{this.props.locale.today}
+						{this.props.today}
 					</div>
 				</div>
 			</div>
