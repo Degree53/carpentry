@@ -12,20 +12,19 @@ module.exports = React.createClass({
 	
 	propTypes: {
 		className: React.PropTypes.string,
-		initDate: function(props, propName, componentName) {
+		value: function(props, propName, componentName) {
 			if (Object.prototype.toString.call(props[propName]) !== '[object Date]')
-				return new Error(propName + ' must be a Date. Check' +
-					' the props of ' + componentName);
+				return new Error(propName + ' must be a Date. Check the props of ' +
+					componentName);
 		},
+		setValue: React.PropTypes.func.isRequired,
 		size: React.PropTypes.number,
 		iconSrc: React.PropTypes.string.isRequired,
 		format: React.PropTypes.string,
 		layout: React.PropTypes.number,
-		locale: React.PropTypes.shape({
-			dayNames: React.PropTypes.arrayOf(React.PropTypes.string),
-			monthNames: React.PropTypes.arrayOf(React.PropTypes.string),
-			today: React.PropTypes.string
-		}),
+		dayNames: React.PropTypes.arrayOf(React.PropTypes.string),
+		monthNames: React.PropTypes.arrayOf(React.PropTypes.string),
+		today: React.PropTypes.string,
 		firstDoW: function(props, propName, componentName) {
 			if (!GlobalUtils.isNum(props[propName]))
 				return new Error(propName + ' must be a Number. Check the props of ' +
@@ -36,7 +35,7 @@ module.exports = React.createClass({
 			if (props[propName] < 0 || 6 < props[propName])
 				return new Error(propName + ' must be a value between 0 and 6. Check the' +
 					' props of ' + componentName);
-		},
+		}
 		// disabled: React.PropTypes.bool,
 		// dateRange: React.PropTypes.shape({
 		// 	firstDate: React.PropTypes.object,
@@ -44,22 +43,19 @@ module.exports = React.createClass({
 		// }),
 		// minDate: React.PropTypes.string,
 		// maxDate: React.PropTypes.string,
-		setDate: React.PropTypes.func.isRequired
 	},
 	
 	getDefaultProps: function() {
 		return {
 			className: 'DateInput',
-			initDate: new Date(),
+			value: new Date(),
 			size: 10,
 			format: 'YYYY-MM-DD',
 			layout: 0,
-			locale: {
-				dayNames: ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'],
-				monthNames: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep',
-					'Oct', 'Nov', 'Dec'],
-				today: 'Today'
-			},
+			dayNames: ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'],
+			monthNames: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep',
+				'Oct', 'Nov', 'Dec'],
+			today: 'Today',
 			firstDoW: 1
 			// disabled: false,
 			// dateRange: null,
@@ -69,14 +65,14 @@ module.exports = React.createClass({
 	},
 	
 	getInitialState: function() {
-		var initDate = DateUtils.cloneDate(this.props.initDate);
+		var initDate = DateUtils.cloneDate(this.props.value);
 		
 		return { selectedDate: initDate, visible: false };
 	},
 	
-	setDate: function(date) {
+	setValue: function(date) {
 		this.setState({ selectedDate: date });
-		this.props.setDate(date);
+		this.props.setValue(date);
 	},
 	
 	setVisible: function(visible) {
@@ -104,9 +100,10 @@ module.exports = React.createClass({
 	
 	renderCalendar: function() {
 		if (this.state.visible) return (
-			<Calendar className={this.props.className} locale={this.props.locale}
-				firstDoW={this.props.firstDoW} selectedDate={this.state.selectedDate}
-				setDate={this.setDate} setVisible={this.setVisible} />
+			<Calendar className={this.props.className} dayNames={this.props.dayNames}
+				monthNames={this.props.monthNames} firstDoW={this.props.firstDoW}
+				today={this.props.today} selectedDate={this.state.selectedDate}
+				setValue={this.setValue} setVisible={this.setVisible} />
 		);
 	},
 	
@@ -114,13 +111,12 @@ module.exports = React.createClass({
 		return (
 			<div className={this.props.className} style={this.styles.dateInput}>
 				<Input className={this.props.className}	size={this.props.size}
-					format={this.props.format} selectedDate={this.state.selectedDate}
-					setDate={this.setDate} />
+					format={this.props.format} selectedDate={this.state.selectedDate} />
 				<div className={this.props.className + '__icon'} style={GlobalUtils.merge([
 					this.styles.icon, this.props.layout === 1 && this.styles.iconInside ])}>
-					<img style={this.styles.iconImg} src={this.props.iconSrc} tabIndex={0}
+					<img style={this.styles.iconImg} src={this.props.iconSrc}
 						onMouseDown={this.onIconMouseDown} onClick={this.onIconClick}
-						onFocus={this.onIconFocus} onBlur={this.onIconBlur} />
+						tabIndex={0} onFocus={this.onIconFocus} onBlur={this.onIconBlur} />
 				</div>
 				{this.renderCalendar()}
 			</div>

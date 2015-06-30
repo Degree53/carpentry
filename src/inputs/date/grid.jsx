@@ -10,7 +10,7 @@ module.exports = React.createClass({
 	
 	renderGridHead: function() {
 		if (this.props.level === 0) {
-			var weekdays = this.props.locale.dayNames.slice(0);
+			var weekdays = this.props.dayNames.slice(0);
 			weekdays = weekdays.concat(weekdays.splice(0, this.props.firstDoW));
 			
 			var weekdayElems = weekdays.map(function(name, i) {
@@ -61,8 +61,8 @@ module.exports = React.createClass({
 		return rows.map(function(row, i) {
 			var dateElems = row.map(function(date, j) {
 				return (
-					<GridItem className={this.props.className} locale={this.props.locale}
-						selectedDate={this.props.selectedDate} setDate={this.props.setDate}
+					<GridItem className={this.props.className} monthNames={this.props.monthNames}
+						selectedDate={this.props.selectedDate} setValue={this.props.setValue}
 						setVisible={this.props.setVisible} viewDate={this.props.viewDate}
 						level={this.props.level} setViewDate={this.props.setViewDate}
 						setLevel={this.props.setLevel} date={date} key={j} />

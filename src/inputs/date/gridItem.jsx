@@ -7,7 +7,7 @@ module.exports = React.createClass({
 	displayName: 'DateGridItem',
 	
 	onDayClick: function() {
-		this.props.setDate(this.props.date);
+		this.props.setValue(this.props.date);
 		this.props.setVisible(false);
 	},
 	
@@ -53,7 +53,7 @@ module.exports = React.createClass({
 					<div className={this.props.className + '__month' + modifiers}
 						style={this.styles.cellContentTable} onClick={this.onMonthClick}>
 						<div style={this.styles.cellContentCell}>
-							{this.props.locale.monthNames[month]}
+							{this.props.monthNames[month]}
 						</div>
 					</div>
 				);

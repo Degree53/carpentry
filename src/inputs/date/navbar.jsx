@@ -12,12 +12,12 @@ module.exports = React.createClass({
 		switch (this.props.level) {
 			case 0:
 				var month = this.props.viewDate.getMonth();
-				var monthTitle = this.props.locale.monthNames[month] + ' ' +
+				var monthTitle = this.props.monthNames[month] + ' ' +
 					this.props.viewDate.getFullYear();
 				return (
 					<div className={this.props.className + '__navMonth'} style={GlobalUtils.merge([
-							this.styles.cellContentTable, this.styles.navCenter,
-							this.styles.interactive ])}
+						this.styles.cellContentTable, this.styles.navCenter,
+						this.styles.interactive ])}
 						onClick={this.onNavTitleClick}>
 						<div style={this.styles.cellContentCell}>
 							{monthTitle}
@@ -28,8 +28,8 @@ module.exports = React.createClass({
 				var yearTitle = this.props.viewDate.getFullYear();
 				return (
 					<div className={this.props.className + '__navYear'} style={GlobalUtils.merge([
-							this.styles.cellContentTable, this.styles.navCenter,
-							this.styles.interactive ])}
+						this.styles.cellContentTable, this.styles.navCenter,
+						this.styles.interactive ])}
 						onClick={this.onNavTitleClick}>
 						<div style={this.styles.cellContentCell}>
 							{yearTitle}
@@ -41,7 +41,7 @@ module.exports = React.createClass({
 				var decadeTitle = decade[0].getFullYear() + ' - ' + decade[decade.length - 1].getFullYear();
 				return (
 					<div className={this.props.className + '__navDecade'} style={GlobalUtils.merge([
-							this.styles.cellContentTable, this.styles.navCenter ])}
+						this.styles.cellContentTable, this.styles.navCenter ])}
 						onClick={this.onNavTitleClick}>
 						<div style={this.styles.cellContentCell}>
 							{decadeTitle}
