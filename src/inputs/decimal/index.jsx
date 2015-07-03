@@ -64,6 +64,7 @@ module.exports = React.createClass({
 		this.setState({ decimal: newDecimal, index: newIndex, cursor: position });
 		
 		if (GlobalUtils.isNum(newDecimal)) this.props.setValue(Number(newDecimal));
+		else this.props.setValue(0);
 	},
 	
 	onInputFocus: function() {
