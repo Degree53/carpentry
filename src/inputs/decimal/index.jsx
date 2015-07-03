@@ -1,6 +1,7 @@
 'use strict';
 
 var React = require('react');
+var GlobalUtils = require('../../utils');
 
 module.exports = React.createClass({
 	
@@ -62,7 +63,7 @@ module.exports = React.createClass({
 		
 		this.setState({ decimal: newDecimal, index: newIndex, cursor: position });
 		
-		this.props.setValue(Number(newDecimal));
+		if (GlobalUtils.isNum(newDecimal)) this.props.setValue(Number(newDecimal));
 	},
 	
 	onInputFocus: function() {
@@ -75,7 +76,8 @@ module.exports = React.createClass({
 	
 	onInputKeyPress: function(e) {
 		// Limit input to digits and decimal points
-		if (!e.key.match(/\d|\.|decimal/)) e.preventDefault();
+		var char = String.fromCharCode(e.charCode);
+		if (!char.match(/\d|\./)) e.preventDefault();
 		
 		// Update index of decimal point
 		this.setState({ index: e.target.value.indexOf('.') });
