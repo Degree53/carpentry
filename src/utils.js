@@ -2,7 +2,7 @@
 
 module.exports = {
 	
-	merge: function(objArray) {
+	mergeStyles: function(objArray) {
 		var newObj = {};
 		
 		for (var o in objArray) {

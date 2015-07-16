@@ -15,7 +15,7 @@ module.exports = React.createClass({
 				var monthTitle = this.props.monthNames[month] + ' ' +
 					this.props.viewDate.getFullYear();
 				return (
-					<div className={this.props.className + '__navMonth'} style={GlobalUtils.merge([
+					<div className={this.props.className + '__navMonth'} style={GlobalUtils.mergeStyles([
 						this.styles.cellContentTable, this.styles.navCenter,
 						this.styles.interactive ])}
 						onClick={this.onNavTitleClick}>
@@ -27,7 +27,7 @@ module.exports = React.createClass({
 			case 1:
 				var yearTitle = this.props.viewDate.getFullYear();
 				return (
-					<div className={this.props.className + '__navYear'} style={GlobalUtils.merge([
+					<div className={this.props.className + '__navYear'} style={GlobalUtils.mergeStyles([
 						this.styles.cellContentTable, this.styles.navCenter,
 						this.styles.interactive ])}
 						onClick={this.onNavTitleClick}>
@@ -40,7 +40,7 @@ module.exports = React.createClass({
 				var decade = DateUtils.getDecadeYears(this.props.viewDate);
 				var decadeTitle = decade[0].getFullYear() + ' - ' + decade[decade.length - 1].getFullYear();
 				return (
-					<div className={this.props.className + '__navDecade'} style={GlobalUtils.merge([
+					<div className={this.props.className + '__navDecade'} style={GlobalUtils.mergeStyles([
 						this.styles.cellContentTable, this.styles.navCenter ])}
 						onClick={this.onNavTitleClick}>
 						<div style={this.styles.cellContentCell}>
@@ -91,7 +91,7 @@ module.exports = React.createClass({
 		return (
 			<div className={this.props.className + '__navbar'} style={this.styles.navbar}>
 				<div className={this.props.className + '__navLeft'} style={this.styles.navCell}>
-					<div className={this.props.className + '__navPrev'} style={GlobalUtils.merge([
+					<div className={this.props.className + '__navPrev'} style={GlobalUtils.mergeStyles([
 						this.styles.cellContentTable, this.styles.navLeft,
 						this.styles.interactive ])}	onClick={this.onNavPrevClick}>
 						<div style={this.styles.cellContentCell}>
@@ -103,7 +103,7 @@ module.exports = React.createClass({
 					{this.getNavTitle()}
 				</div>
 				<div className={this.props.className + '__navRight'} style={this.styles.navCell}>
-					<div className={this.props.className + '__navNext'} style={GlobalUtils.merge([
+					<div className={this.props.className + '__navNext'} style={GlobalUtils.mergeStyles([
 						this.styles.cellContentTable, this.styles.navRight, this.styles.interactive ])}
 						onClick={this.onNavNextClick}>
 						<div style={this.styles.cellContentCell}>

@@ -112,7 +112,7 @@ module.exports = React.createClass({
 			<div className={this.props.className} style={this.styles.dateInput}>
 				<Input className={this.props.className}	size={this.props.size}
 					format={this.props.format} selectedDate={this.state.selectedDate} />
-				<div className={this.props.className + '__icon'} style={GlobalUtils.merge([
+				<div className={this.props.className + '__icon'} style={GlobalUtils.mergeStyles([
 					this.styles.icon, this.props.layout === 1 && this.styles.iconInside ])}>
 					<img style={this.styles.iconImg} src={this.props.iconSrc}
 						onMouseDown={this.onIconMouseDown} onClick={this.onIconClick}
