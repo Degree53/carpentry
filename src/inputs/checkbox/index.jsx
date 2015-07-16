@@ -1,20 +1,20 @@
 'use strict';
 
 var React = require('react');
-var utils = require('../../utils');
+var GlobalUtils = require('../../utils');
 
 var styles = {
-	checkboxTable: {
+	component: {
 		display: 'inline-table',
-		textAlign: 'center',
 		cursor: 'pointer'
 	},
-	disabled: {
+	componentDisabled: {
 		cursor: 'default'
 	},
-	checkboxCell: {
+	cell: {
 		display: 'table-cell',
-		verticalAlign: 'middle'
+		verticalAlign: 'middle',
+		textAlign: 'center'
 	}
 };
 
@@ -49,58 +49,49 @@ module.exports = React.createClass({
 		return { checked: this.props.checked };
 	},
 	
-	componentWillUpdate: function() {
+	componentDidUpdate: function() {
 		if (this.props.onChange) this.props.onChange();
 	},
 	
-	componentMouseDown: function(e) {
+	onComponentMouseDown: function(e) {
 		e.preventDefault();
 	},
 	
-	componentClick: function() {
+	onComponentClick: function() {
 		if (!this.props.disabled) {
 			var checked = !this.state.checked;
-			
 			this.setState({ checked: checked });
 			this.props.setChecked(checked);
 		}
 	},
 	
-	getIconElem: function() {
-		if (this.props.iconSrc) {
-			return (
-				<img className={this.props.className + '__imgIcon'}
-					src={this.props.iconSrc} />
-			);
-		}
-		if (this.props.charCode) {
-			return (
-				<div className={this.props.className + '__charIcon'}>
-					{String.fromCharCode(this.props.charCode)}
-				</div>
-			);
-		}
+	renderIcon: function() {
+		if (this.props.iconSrc) return (
+			<img className={this.props.className + '__imgIcon'} src={this.props.iconSrc} />
+		);
+		else if (this.props.charCode) return (
+			<span className={this.props.className + '__charIcon'}>
+				{String.fromCharCode(this.props.charCode)}
+			</span>
+		);
 	},
 	
 	render: function() {
-		var classes = this.props.className;
-		if (this.props.disabled) classes += ' isDisabled';
-		if (this.state.checked) classes += ' isChecked';
+		var componentClasses = this.props.className;
+		if (this.props.disabled) componentClasses += ' disabled';
+		if (this.state.checked) componentClasses += ' checked';
 		
-		var checkboxStyles = utils.merge([
-			styles.checkboxTable,
-			this.props.disabled && styles.disabled
-		]);
+		var componentStyles = GlobalUtils.merge([ styles.component,
+			this.props.disabled && styles.componentDisabled ]);
 		
 		return (
-			<div className={classes}
-				style={checkboxStyles}
-				onMouseDown={this.componentMouseDown}
-				onClick={this.componentClick}>
-				<div className={this.props.className + '__cell'}
-					style={styles.checkboxCell}>
-					{this.getIconElem()}
-					{this.props.label}
+			<div className={componentClasses} style={componentStyles}
+				onMouseDown={this.onComponentMouseDown} onClick={this.onComponentClick}>
+				<div className={this.props.className + '__cell'} style={styles.cell}>
+					{this.renderIcon()}
+					<span className={this.props.className + '__label'}>
+						{this.props.label}
+					</span>
 				</div>
 			</div>
 		);
