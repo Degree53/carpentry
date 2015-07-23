@@ -76,6 +76,14 @@ module.exports = React.createClass({
 		);
 	},
 	
+	renderLabel: function() {
+		if (this.props.label) return (
+			<span className={this.props.className + '__label'}>
+				{this.props.label}
+			</span>
+		);
+	},
+	
 	render: function() {
 		var componentClasses = this.props.className;
 		if (this.props.disabled) componentClasses += ' disabled';
@@ -89,9 +97,7 @@ module.exports = React.createClass({
 				onMouseDown={this.onComponentMouseDown} onClick={this.onComponentClick}>
 				<div className={this.props.className + '__cell'} style={styles.cell}>
 					{this.renderIcon()}
-					<span className={this.props.className + '__label'}>
-						{this.props.label}
-					</span>
+					{this.renderLabel()}
 				</div>
 			</div>
 		);
