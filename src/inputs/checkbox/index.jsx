@@ -49,6 +49,11 @@ module.exports = React.createClass({
 		return { checked: this.props.checked };
 	},
 	
+	componentWillReceiveProps: function(nextProps) {
+		if (nextProps.checked !== this.props.checked)
+			this.setState({ checked: nextProps.checked });
+	},
+	
 	componentDidUpdate: function() {
 		if (this.props.onChange) this.props.onChange();
 	},
@@ -60,8 +65,8 @@ module.exports = React.createClass({
 	onComponentClick: function() {
 		if (!this.props.disabled) {
 			var checked = !this.state.checked;
-			this.setState({ checked: checked });
 			this.props.setChecked(checked);
+			this.setState({ checked: checked });
 		}
 	},
 	
