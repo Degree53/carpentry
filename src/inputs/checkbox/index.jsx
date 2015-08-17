@@ -8,13 +8,16 @@ var styles = {
 		display: 'inline-table',
 		cursor: 'pointer'
 	},
-	componentDisabled: {
+	disabled: {
 		cursor: 'default'
 	},
 	cell: {
 		display: 'table-cell',
 		verticalAlign: 'middle',
 		textAlign: 'center'
+	},
+	icon: {
+		display: 'block'
 	}
 };
 
@@ -24,7 +27,7 @@ module.exports = React.createClass({
 	
 	propTypes: {
 		className: React.PropTypes.string,
-		iconSrc: React.PropTypes.string,
+		imgSrc: React.PropTypes.string,
 		charCode: React.PropTypes.number,
 		label: React.PropTypes.string,
 		checked: React.PropTypes.bool,
@@ -36,7 +39,7 @@ module.exports = React.createClass({
 	getDefaultProps: function() {
 		return {
 			className: 'CheckboxInput',
-			iconSrc: null,
+			imgSrc: null,
 			charCode: null,
 			label: null,
 			checked: false,
@@ -50,8 +53,9 @@ module.exports = React.createClass({
 	},
 	
 	componentWillReceiveProps: function(nextProps) {
-		if (nextProps.checked !== this.props.checked)
+		if (nextProps.checked !== this.props.checked) {
 			this.setState({ checked: nextProps.checked });
+		}
 	},
 	
 	componentDidUpdate: function() {
@@ -70,22 +74,26 @@ module.exports = React.createClass({
 		}
 	},
 	
-	renderIcon: function() {
-		if (this.props.iconSrc) return (
-			<img className={this.props.className + '__imgIcon'} src={this.props.iconSrc} />
+	renderImg: function() {
+		if (this.props.imgSrc) return (
+			<img className={this.props.className + '__img'} src={this.props.imgSrc}
+				style={styles.icon} />
 		);
-		else if (this.props.charCode) return (
-			<span className={this.props.className + '__charIcon'}>
+	},
+	
+	renderChar: function() {
+		if (this.props.charCode) return (
+			<div className={this.props.className + '__char'} style={styles.icon}>
 				{String.fromCharCode(this.props.charCode)}
-			</span>
+			</div>
 		);
 	},
 	
 	renderLabel: function() {
 		if (this.props.label) return (
-			<span className={this.props.className + '__label'}>
+			<div className={this.props.className + '__label'} style={styles.icon}>
 				{this.props.label}
-			</span>
+			</div>
 		);
 	},
 	
@@ -94,14 +102,17 @@ module.exports = React.createClass({
 		if (this.props.disabled) componentClasses += ' disabled';
 		if (this.state.checked) componentClasses += ' checked';
 		
-		var componentStyles = GlobalUtils.mergeStyles([ styles.component,
-			this.props.disabled && styles.componentDisabled ]);
+		var componentStyles = GlobalUtils.merge([
+			styles.component,
+			this.props.disabled && styles.disabled
+		]);
 		
 		return (
-			<div className={componentClasses} style={componentStyles}
-				onMouseDown={this.onComponentMouseDown} onClick={this.onComponentClick}>
+			<div className={componentClasses} onClick={this.onComponentClick}
+				onMouseDown={this.onComponentMouseDown} style={componentStyles}>
 				<div className={this.props.className + '__cell'} style={styles.cell}>
-					{this.renderIcon()}
+					{this.renderImg()}
+					{this.renderChar()}
 					{this.renderLabel()}
 				</div>
 			</div>
