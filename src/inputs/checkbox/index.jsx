@@ -102,7 +102,11 @@ module.exports = React.createClass({
 		if (this.props.disabled) componentClasses += ' disabled';
 		if (this.state.checked) componentClasses += ' checked';
 		
+<<<<<<< Updated upstream
 		var componentStyles = GlobalUtils.merge([
+=======
+		var componentStyles = GlobalUtils.mergeStyles([
+>>>>>>> Stashed changes
 			styles.component,
 			this.props.disabled && styles.disabled
 		]);
