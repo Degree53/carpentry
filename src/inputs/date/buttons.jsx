@@ -1,41 +1,25 @@
 'use strict';
 
-var React = require('react');
-var DateUtils = require('./utils');
+import React from 'react';
 
-module.exports = React.createClass({
+export default React.createClass({
 	
 	displayName: 'Buttons',
 	
-	onTodayClick: function() {
-		var today = DateUtils.cloneDate(new Date());
+	onTodayClick() {
+		const today = new Date(new Date().toISOString().slice(0, 10));
 		
-		this.props.setValue(today);
+		this.props.setSelectedDate(today);
 		this.props.setVisible(false);
 	},
 	
-	render: function() {
+	render() {
 		return (
 			<div className={this.props.className + '__buttons'}>
-				<div className={this.props.className + '__today'} style={this.styles.buttonTable}
-					onClick={this.onTodayClick}>
-					<div style={this.styles.buttonCell}>
-						{this.props.today}
-					</div>
+				<div className={this.props.className + '__today'} onClick={this.onTodayClick}>
+					{this.props.today}
 				</div>
 			</div>
 		);
-	},
-	
-	styles: {
-		buttonTable: {
-			display: 'inline-table',
-			cursor: 'pointer'
-		},
-		buttonCell: {
-			display: 'table-cell',
-			verticalAlign: 'middle'
-		}
 	}
-	
 });

@@ -26,12 +26,12 @@
     "url": "https://github.com/lebowski89/carpentry/issues"
   },
   "homepage": "https://github.com/lebowski89/carpentry",
-  "peerDependencies": {
-    "react": "0.13.x"
+  "dependencies": {
+    "react": "0.13.x - 1.0.0"
   },
   "devDependencies": {
     "del": "^1.1.1",
     "gulp": "^3.8.11",
-    "gulp-react": "^3.0.1"
+    "gulp-babel": "^5.2.1"
   }
 }

@@ -1,29 +1,21 @@
 'use strict';
 
-var gulp = require('gulp');
-var react = require('gulp-react');
+var babel = require('gulp-babel');
 var del = require('del');
+var gulp = require('gulp');
 
 gulp.task('clean', function() {
 	return del.sync(['./lib/*']);
 });
 
-gulp.task('copy', ['clean'], function() {
-	return gulp.src('./src/**/*.js')
-		.pipe(gulp.dest('./lib'));
-});
-
 gulp.task('transform', ['clean'], function() {
-	return gulp.src('./src/**/*.jsx')
-		.pipe(react())
+	return gulp.src('./src/**/*.js*')
+		.pipe(babel({ loose: ['es6.modules'] }))
 		.pipe(gulp.dest('./lib'));
 });
 
-gulp.task('build', ['copy', 'transform']);
+gulp.task('build', ['transform']);
 
 gulp.task('watch', function() {
-	gulp.watch([
-		'./src/**/*.jsx',
-		'./src/**/*.js'
-	], ['build']);
+	gulp.watch('./src/**/*.js*', ['build']);
 });

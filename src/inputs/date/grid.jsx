@@ -1,110 +1,85 @@
 'use strict';
 
-var React = require('react');
-var DateUtils = require('./utils');
-var GridItem = require('./gridItem');
+import Date from './Date';
+import Dates from '../../functions/Dates';
+import React from 'react';
 
-module.exports = React.createClass({
+export default React.createClass({
 	
-	displayName: 'DateGrid',
+	displayName: 'Grid',
 	
-	renderGridHead: function() {
-		if (this.props.level === 0) {
-			var weekdays = this.props.dayNames.slice(0);
-			weekdays = weekdays.concat(weekdays.splice(0, this.props.firstDoW));
-			
-			var weekdayElems = weekdays.map(function(name, i) {
-				return (
-					<div className={this.props.className + '__headCell'} style={this.styles.headCell}
-						key={i}>
-						<div className={this.props.className + '__weekday'} style={this.styles.headContent}>
+	getGridHead() {
+		let weekdays = this.props.dayNames.slice(0);
+		weekdays = weekdays.concat(weekdays.splice(0, this.props.firstDoW));
+		
+		return (
+			<div className={this.props.className + '__head'}>
+				{weekdays.map((name, i) => {
+					return (
+						<div className={this.props.className + '__weekday'} key={i}>
 							{name}
 						</div>
-					</div>
-				);
-			}, this);
-			
-			return (
-				<div className={this.props.className + '__headRow'} style={this.styles.head}>
-					{weekdayElems}
-				</div>
-			);
-		}
-	},
-	
-	getGridDates: function() {
-		switch (this.props.level) {
-			case 0:
-				var days = DateUtils.getMonthDates(this.props.viewDate, this.props.firstDoW);
-				
-				for (var i = 0; i < 6; i++) days.push(days.splice(0, 7));
-				
-				return days;
-			case 1:
-				var months = DateUtils.getYearMonths(this.props.viewDate);
-				
-				for (var j = 0; j < 3; j++) months.push(months.splice(0, 4));
-				
-				return months;
-			case 2:
-				var years = DateUtils.getDecadeYears(this.props.viewDate);
-				
-				for (var k = 0; k < 3; k++) years.push(years.splice(0, 4));
-				
-				return years;
-		}
-	},
-	
-	renderGridElems: function() {
-		var rows = this.getGridDates();
-		
-		return rows.map(function(row, i) {
-			var dateElems = row.map(function(date, j) {
-				return (
-					<GridItem className={this.props.className} monthNames={this.props.monthNames}
-						selectedDate={this.props.selectedDate} setValue={this.props.setValue}
-						setVisible={this.props.setVisible} viewDate={this.props.viewDate}
-						level={this.props.level} setViewDate={this.props.setViewDate}
-						setLevel={this.props.setLevel} date={date} key={j} />
-				);
-			}, this);
-			
-			return (
-				<div className={this.props.className + '__bodyRow'} style={this.styles.body}
-					key={i}>
-					{dateElems}
-				</div>
-			);
-		}, this);
-	},
-	
-	render: function() {
-		return (
-			<div className={this.props.className + '__grid'} style={this.styles.grid}>
-				{this.renderGridHead()}
-				{this.renderGridElems()}
+					);
+				})}
 			</div>
 		);
 	},
 	
-	styles: {
-		grid: {
-			display: 'table'
-		},
-		head: {
-			display: 'table-row',
-			cursor: 'default'
-		},
-		headCell: {
-			display: 'table-cell',
-			verticalAlign: 'middle'
-		},
-		headContent: {
-			display: 'inline-block'
-		},
-		body: {
-			display: 'table-row'
+	getDates() {
+		let dates = [];
+		
+		switch (this.props.level) {
+			case 0:
+				let days = Dates.getDatesInMonth(this.props.viewDate, this.props.firstDoW);
+				for (let i = 0; i < 6; i++) {
+					dates.push(days.splice(0, 7));
+				}
+				break;
+			case 1:
+				let months = Dates.getMonthsInYear(this.props.viewDate);
+				for (let i = 0; i < 4; i++) {
+					dates.push(months.splice(0, 3));
+				}
+				break;
+			case 2:
+				let years = Dates.getYearsInDecade(this.props.viewDate);
+				for (let i = 0; i < 4; i++) {
+					dates.push(years.splice(0, 3));
+				}
 		}
-	}
+		
+		return dates;
+	},
 	
+	getGridRows() {
+		let rows = this.getDates();
+		
+		return rows.map((row, i) => {
+			return (
+				<div className={this.props.className + '__row'} key={i}>
+					{row.map((date, i) => {
+						return (
+							<Date className={this.props.className} date={date} key={i}
+								level={this.props.level} monthNames={this.props.monthNames}
+								viewDate={this.props.viewDate} selectedDate={this.props.selectedDate}
+								setSelectedDate={this.props.setSelectedDate}
+								setLevel={this.props.setLevel} setViewDate={this.props.setViewDate}
+								setVisible={this.props.setVisible} />
+						);
+					})}
+				</div>
+			);
+		});
+	},
+	
+	render() {
+		return (
+			<div className={this.props.className + '__grid'}>
+				{this.props.level === 0 ?
+					this.getGridHead()
+				: null}
+				{this.getGridRows()}
+			</div>
+		);
+	}
 });

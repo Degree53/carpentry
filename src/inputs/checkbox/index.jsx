@@ -1,122 +1,78 @@
 'use strict';
 
-var React = require('react');
-var GlobalUtils = require('../../utils');
+import React from 'react';
+import styles from './styles';
 
-var styles = {
-	component: {
-		display: 'inline-table',
-		cursor: 'pointer'
-	},
-	disabled: {
-		cursor: 'default'
-	},
-	cell: {
-		display: 'table-cell',
-		verticalAlign: 'middle',
-		textAlign: 'center'
-	},
-	icon: {
-		display: 'block'
-	}
-};
-
-module.exports = React.createClass({
+export default React.createClass({
 	
 	displayName: 'CheckboxInput',
 	
 	propTypes: {
-		className: React.PropTypes.string,
-		imgSrc: React.PropTypes.string,
-		charCode: React.PropTypes.number,
-		label: React.PropTypes.string,
 		checked: React.PropTypes.bool,
-		setChecked: React.PropTypes.func.isRequired,
+		className: React.PropTypes.string,
 		disabled: React.PropTypes.bool,
-		onChange: React.PropTypes.func
+		onChange: React.PropTypes.func,
+		setChecked: React.PropTypes.func.isRequired
 	},
 	
-	getDefaultProps: function() {
+	getDefaultProps() {
 		return {
-			className: 'CheckboxInput',
-			imgSrc: null,
-			charCode: null,
-			label: null,
 			checked: false,
+			className: 'CheckboxInput',
 			disabled: false,
 			onChange: null
 		};
 	},
 	
-	getInitialState: function() {
-		return { checked: this.props.checked };
+	getInitialState() {
+		return {
+			checked: this.props.checked
+		};
 	},
 	
-	componentWillReceiveProps: function(nextProps) {
+	componentWillReceiveProps(nextProps) {
 		if (nextProps.checked !== this.props.checked) {
-			this.setState({ checked: nextProps.checked });
+			this.setState({
+				checked: nextProps.checked
+			});
 		}
 	},
 	
-	componentDidUpdate: function() {
+	componentDidUpdate() {
 		if (this.props.onChange) this.props.onChange();
 	},
 	
-	onComponentMouseDown: function(e) {
+	onComponentMouseDown(e) {
 		e.preventDefault();
 	},
 	
-	onComponentClick: function() {
+	onComponentClick() {
 		if (!this.props.disabled) {
-			var checked = !this.state.checked;
-			this.props.setChecked(checked);
-			this.setState({ checked: checked });
+			const checked = !this.state.checked;
+			
+			this.setState({
+				checked: checked
+			}, () => {
+				this.props.setChecked(checked);
+			});
 		}
 	},
 	
-	renderImg: function() {
-		if (this.props.imgSrc) return (
-			<img className={this.props.className + '__img'} src={this.props.imgSrc}
-				style={styles.icon} />
-		);
-	},
-	
-	renderChar: function() {
-		if (this.props.charCode) return (
-			<div className={this.props.className + '__char'} style={styles.icon}>
-				{String.fromCharCode(this.props.charCode)}
-			</div>
-		);
-	},
-	
-	renderLabel: function() {
-		if (this.props.label) return (
-			<div className={this.props.className + '__label'} style={styles.icon}>
-				{this.props.label}
-			</div>
-		);
-	},
-	
-	render: function() {
-		var componentClasses = this.props.className;
-		if (this.props.disabled) componentClasses += ' disabled';
-		if (this.state.checked) componentClasses += ' checked';
+	render() {
+		let classes = this.props.className;
+		if (this.props.disabled) classes += ' disabled';
+		if (this.props.checked) classes += ' checked';
 		
-		var componentStyles = GlobalUtils.mergeStyles([
-			styles.component,
-			this.props.disabled && styles.disabled
-		]);
+		const cursor = this.props.disabled ? 'default' : 'pointer';
 		
 		return (
-			<div className={componentClasses} onClick={this.onComponentClick}
-				onMouseDown={this.onComponentMouseDown} style={componentStyles}>
-				<div className={this.props.className + '__cell'} style={styles.cell}>
-					{this.renderImg()}
-					{this.renderChar()}
-					{this.renderLabel()}
+			<div className={classes} onClick={this.onComponentClick}
+				onMouseDown={this.onComponentMouseDown} style={{ cursor: cursor }}>
+				<style type="text/css">{styles(this.props.className)}</style>
+				<div className={this.props.className + '__cell'}>
+					{this.props.children}
 				</div>
 			</div>
 		);
 	}
-	
 });

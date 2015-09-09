@@ -1,71 +1,60 @@
 'use strict';
 
-var React = require('react');
-var Navbar = require('./navbar');
-var Grid = require('./grid');
-var Buttons = require('./buttons');
+import Buttons from './Buttons';
+import Grid from './Grid';
+import Navbar from './Navbar';
+import React from 'react';
 
-module.exports = React.createClass({
+export default React.createClass({
 	
 	displayName: 'Calendar',
 	
-	getInitialState: function() {
-		var yr = this.props.selectedDate.getFullYear();
-		var mth = this.props.selectedDate.getMonth();
-		
-		var initDate = new Date(yr, mth, 1);
-		
-		return { viewDate: initDate, level: 0 };
+	getInitialState() {
+		return {
+			viewDate: new Date(this.props.selectedDate.getTime()),
+			level: 0
+		};
 	},
 	
-	// Fix for IE changing focus to child elements which
-	// would incorrectly trigger blur and hide the calendar
-	onCalendarMouseDown: function(e) {
+	onCalendarMouseDown(e) {
+		// Prevent button losing focus whilst navigating calendar
 		e.preventDefault();
 	},
 	
-	setViewDate: function(date) {
-		this.setState({ viewDate: date });
+	setViewDate(date) {
+		this.setState({
+			viewDate: date
+		});
 	},
 	
-	setLevel: function(value) {
-		var newLevel = this.state.level + value;
-		if (0 <= newLevel && newLevel <= 2)	this.setState({ level: newLevel });
+	setLevel(modifier) {
+		const newLevel = this.state.level + modifier;
+		
+		if (0 <= newLevel && newLevel <= 2) {
+			this.setState({
+				level: newLevel
+			});
+		}
 	},
 	
-	render: function() {
+	render() {
 		return (
-			<div className={this.props.className + '__calendarWrapper'}
-				style={this.styles.calendarWrapper}>
-				<div className={this.props.className + '__calendar'} style={this.styles.calendar}
+			<div className={this.props.className + '__positioner'}>
+				<div className={this.props.className + '__calendar'}
 					onMouseDown={this.onCalendarMouseDown}>
-					<Navbar className={this.props.className} monthNames={this.props.monthNames}
-						viewDate={this.state.viewDate} level={this.state.level}
+					<Navbar className={this.props.className} viewDate={this.state.viewDate}
+						level={this.state.level} monthNames={this.props.monthNames}
 						setViewDate={this.setViewDate} setLevel={this.setLevel} />
-					<Grid className={this.props.className} dayNames={this.props.dayNames}
-						monthNames={this.props.monthNames} firstDoW={this.props.firstDoW}
-						selectedDate={this.props.selectedDate} viewDate={this.state.viewDate}
-						level={this.state.level} setValue={this.props.setValue}
-						setVisible={this.props.setVisible} setViewDate={this.setViewDate}
-						setLevel={this.setLevel} />
-					<Buttons className={this.props.className} today={this.props.today}
-						setValue={this.props.setValue} setVisible={this.props.setVisible} />
+					<Grid className={this.props.className} viewDate={this.state.viewDate}
+						level={this.state.level} monthNames={this.props.monthNames}
+						dayNames={this.props.dayNames} firstDoW={this.props.firstDoW}
+						selectedDate={this.props.selectedDate} setViewDate={this.setViewDate}
+						setSelectedDate={this.props.setSelectedDate} setLevel={this.setLevel}
+						setVisible={this.props.setVisible} />
+					<Buttons className={this.props.className} setVisible={this.props.setVisible}
+						setSelectedDate={this.props.setSelectedDate} today={this.props.today} />
 				</div>
 			</div>
 		);
-	},
-	
-	styles: {
-		calendarWrapper: {
-			position: 'absolute',
-			zIndex: 1,
-			left: '50%'
-		},
-		calendar: {
-			position: 'relative',
-			left: '-50%',
-			textAlign: 'center'
-		}
 	}
-	
 });
