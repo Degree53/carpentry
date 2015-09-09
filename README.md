@@ -1,26 +1,19 @@
 # Carpentry
 
-Carpentry is a library of highly customisable React components. The functionality and layout
-of each component is designed to be configurable via APIs using React props. All non-structural
-styling is left for the developer.
+Carpentry is a library of highly customisable React components. The functionality and layout of each component is designed to be configurable via APIs using React props. All non-structural styling is left for the developer.
 
-**WARNING** This package is under initial development. Until `v1.0.0` all changes should be
-treated as breaking. Not recommended for production.
+**WARNING** This package is under initial development. Until `v1.0.0` all changes should be treated as breaking. Not recommended for production.
 
 <br>
 
 ## Rationale
 
-Working to different style guides on different projects often means highly opinionated /
-pre-styled components can't be used. Developers can often reuse functionality but not styling
-even though the designs they are given usually conform to common user interface trends. All
-Carpentry components are designed to solve this problem by sticking to the following points:
+Working to different style guides on different projects often means highly opinionated / pre-styled components can't be used. Developers can often reuse functionality but not styling even though the designs they are given usually conform to common user interface trends. All Carpentry components are designed to solve this problem by sticking to the following points:
 
 + Components are functionally specialised, doing one job and doing it well
 + Components can have their functionality configured easily via an API using React props
 + Components have only structural styling included (no colours, fonts, padding etc.)
-+ Structural styling can be configured (e.g. a hamburger menu button on the left or the
-	right)
++ Structural styling can be configured (e.g. a hamburger menu button on the left or the right)
 + When necessary, components can nest other components
 
 <br>
@@ -33,9 +26,7 @@ Thanks to NPM it's super easy, just `npm install carpentry`.
 
 ## Usage
 
-Carpentry is built to work with the Node.js `require()` function. All components have an
-alias as listed in the table above. The recommended way to access a component is via its
-alias:
+Carpentry is built to work with the Node.js `require()` function. All components have an alias as listed in the table above. The recommended way to access a component is via its alias:
 
 ``` javascript
 var MyDecimalInput = require('carpentry').DecimalInput;
@@ -57,12 +48,12 @@ var MyDecimalInput = require('carpentry').DecimalInput;
 		<tr>
 			<td><a href="#decimalinput">DecimalInput</a></td>
 			<td>An input for enforcing a decimal value</td>
-			<td>Unstable</td>
+			<td>Stable</td>
 		</tr>
 		<tr>
 			<td><a href="#dateinput">DateInput</a></td>
-			<td>An input for picking a date</td>
-			<td>Unstable</td>
+			<td>An input for selecting a date value</td>
+			<td>Stable</td>
 		</tr>
 		<tr>
 			<td>ResponsiveNav</td>
@@ -71,8 +62,8 @@ var MyDecimalInput = require('carpentry').DecimalInput;
 		</tr>
 		<tr>
 			<td>CheckboxInput</td>
-			<td>A fully styleable checkbox input</td>
-			<td>Unstable</td>
+			<td>An input for toggling between two states</td>
+			<td>Stable</td>
 		</tr>
 		<tr>
 			<td>SelectInput</td>
@@ -97,18 +88,13 @@ var MyDecimalInput = require('carpentry').DecimalInput;
 	</tbody>
 </table>
 
-**Key:** Stable - currently included, API is stable. Unstable - currently included, API
-still under development. Development - not included, in development. Planning - not yet in
-development.
+**Key:** Stable - currently included, API is stable. Unstable - currently included, API still under development. Development - not included, in development. Planning - not yet in development.
 
 <br>
 
 ### DecimalInput
 
-Use this component to enforce input of a decimal value. `setValue` should be a function that
-can set a value to state or pass it to an action. Using `value`, the component can also take
-a value for conversion or display purposes. This can be useful for chaining multiple inputs
-or applying your own validation.
+Use this component to enforce input of a decimal value. `setValue` should be a function that can set a value to state or pass it to an action. Using `value`, the component can also take a value for conversion or display purposes. This can be useful for chaining multiple inputs or applying your own validation.
 
 ``` javascript
 setDecimal: function(decimal) {
@@ -117,9 +103,7 @@ setDecimal: function(decimal) {
 
 render: function() {
 	return (
-		<MyDecimalInput
-			className="MyDecimalInput"
-			setValue={this.setDecimal} />
+		<MyDecimalInput className="MyDecimalInput" setValue={this.setDecimal}>
 	);
 }
 ```
@@ -140,38 +124,21 @@ render: function() {
 			<td>String</td>
 			<td>null</td>
 			<td>no</td>
-			<td>A String to be used for the html class attribute for the component and all
-			sub-components</td>
+			<td>A String to be used for the html class attribute for the component and all sub-components</td>
 		</tr>
 		<tr>
-			<td>value</td>
-			<td>Number</td>
-			<td>null</td>
-			<td>no</td>
-			<td>A number value to set the input to (useful for chaining inputs). Can also
-			be used to set an initial value</td>
-		</tr>
-		<tr>
-			<td>setValue</td>
-			<td>Function</td>
-			<td>n/a</td>
-			<td>yes</td>
-			<td>A Function for setting the decimal value to state or for passing it to an
-			action</td>
-		</tr>
-		<tr>
-			<td>numOfPlaces</td>
-			<td>Number</td>
-			<td>2</td>
-			<td>no</td>
-			<td>The number of decimal places to which the decimal value should be restricted</td>
-		</tr>
-		<tr>
-			<td>isDisabled</td>
+			<td>disabled</td>
 			<td>Boolean</td>
 			<td>false</td>
 			<td>no</td>
 			<td>A Boolean for disabling access to the input</td>
+		</tr>
+		<tr>
+			<td>onBlur</td>
+			<td>Function</td>
+			<td>null</td>
+			<td>no</td>
+			<td>A Function to call on `onBlur`</td>
 		</tr>
 		<tr>
 			<td>onFocus</td>
@@ -181,21 +148,32 @@ render: function() {
 			<td>A Function to call on `onFocus`</td>
 		</tr>
 		<tr>
-			<td>onBlur</td>
+			<td>places</td>
+			<td>Number</td>
+			<td>2</td>
+			<td>no</td>
+			<td>The number of decimal places to which the decimal value should be restricted</td>
+		</tr>
+		<tr>
+			<td>setValue</td>
 			<td>Function</td>
+			<td>n/a</td>
+			<td>yes</td>
+			<td>A Function for setting the decimal value to state or for passing it to an action</td>
+		</tr>
+		<tr>
+			<td>value</td>
+			<td>Number</td>
 			<td>null</td>
 			<td>no</td>
-			<td>A Function to call on `onBlur`</td>
+			<td>A number value to set the input to (useful for chaining inputs). Can also be used to set an initial value</td>
 		</tr>
 	</tbody>
 </table>
 
 ### DateInput
 
-This component is useful for enforcing input of a `Date` object. `setValue` should be a
-function that can set a `Date` back to state or pass it to an action. `iconSrc` should be
-a relative path to an image file to be used for the icon that users click to display the
-calendar.
+This component is useful for enforcing input of a valid full-date string. `setValue` should be a function that can set a date string back to state or pass it to an action. `value` can be used to set a default date or update the input.
 
 ``` javascript
 setDate: function(date) {
@@ -204,9 +182,9 @@ setDate: function(date) {
 
 render: function() {
 	return (
-		<MyDateInput
-			className="MyDateInput"
-			setValue={this.setDate} />
+		<MyDateInput className="MyDateInput" setValue={this.setDate}>
+			{String.fromCharCode(10003)}
+		</MyDateInput>
 	);
 }
 ```
@@ -225,40 +203,23 @@ render: function() {
 		<tr>
 			<td>className</td>
 			<td>String</td>
-			<td width="19%">null</td>
+			<td>null</td>
 			<td>no</td>
-			<td>A String to be used for the html class attribute for the component and all
-			sub-components</td>
+			<td>A String to be used for the html class attribute for the component and all sub-components</td>
 		</tr>
 		<tr>
-			<td>value</td>
-			<td>Date</td>
-			<td>new Date()</td>
+			<td>dayNames</td>
+			<td>String Array</td>
+			<td>['Su', 'Mo'...]</td>
 			<td>no</td>
-			<td>A Date to set the input to. Can be used to set an initial value</td>
+			<td>An Array of strings to display as the days of the week on the calendar beginning with Sunday</td>
 		</tr>
 		<tr>
-			<td>setValue</td>
-			<td>function</td>
-			<td>n/a</td>
-			<td>yes</td>
-			<td>A Function for setting the date value back to state or for passing it to an
-			action</td>
-		</tr>
-		<tr>
-			<td>size</td>
+			<td>firstDoW</td>
 			<td>Number</td>
-			<td>10</td>
+			<td>1</td>
 			<td>no</td>
-			<td>The value to pass to the size attribute of the input</td>
-		</tr>
-		<tr>
-			<td>iconSrc</td>
-			<td>String</td>
-			<td>n/a</td>
-			<td>yes</td>
-			<td>A String representing a relative path to the image to be used for the calendar
-			icon</td>
+			<td>The first day of the week beginning with Sunday = 0, ending with Saturday = 6</td>
 		</tr>
 		<tr>
 			<td>format</td>
@@ -268,27 +229,18 @@ render: function() {
 			<td>A String representing the format for displaying the selected date</td>
 		</tr>
 		<tr>
-			<td>layout</td>
-			<td>Number</td>
-			<td>0</td>
-			<td>no</td>
-			<td>0 = icon displayed outside of input, 1 = icon displayed inside of input</td>
-		</tr>
-		<tr>
-			<td>dayNames</td>
-			<td>String Array</td>
-			<td>['Su', 'Mo', ...]</td>
-			<td>no</td>
-			<td>An Array of strings to display as the days of the week on the calendar
-			beginning with Sunday</td>
-		</tr>
-		<tr>
 			<td>monthNames</td>
 			<td>String Array</td>
-			<td>['Jan', 'Feb', ...]</td>
+			<td>['Jan', 'Feb'...]</td>
 			<td>no</td>
-			<td>An Array of strings to display as the months of the year on the calendar
-			beginning with January</td>
+			<td>An Array of strings to display as the months of the year on the calendar beginning with January</td>
+		</tr>
+		<tr>
+			<td>setValue</td>
+			<td>function</td>
+			<td>n/a</td>
+			<td>yes</td>
+			<td>A Function for setting the full-date value back to state or for passing it to an action</td>
 		</tr>
 		<tr>
 			<td>today</td>
@@ -298,12 +250,13 @@ render: function() {
 			<td>The text to use for the today button</td>
 		</tr>
 		<tr>
-			<td>firstDoW</td>
-			<td>Number</td>
-			<td>1</td>
+			<td>value</td>
+			<td>String</td>
+			<td>new Date()
+				<br />.toISOString()
+				<br />.slice(0, 10)</td>
 			<td>no</td>
-			<td>The first day of the week beginning with Sunday = 0, ending with Saturday
-			= 6</td>
+			<td>A full-date to set the input to. Can be used to set an initial value</td>
 		</tr>
 	</tbody>
 </table>
