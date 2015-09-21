@@ -183,7 +183,7 @@ setDate: function(date) {
 render: function() {
 	return (
 		<MyDateInput className="MyDateInput" setValue={this.setDate}>
-			{String.fromCharCode(10003)}
+			<img src="path/to/icon" alt="Date Input Icon" />
 		</MyDateInput>
 	);
 }
