@@ -4,12 +4,13 @@ import Calendar from './Calendar';
 import Dates from '../../functions/Dates';
 import Numbers from '../../functions/Numbers';
 import React from 'react';
+import ReactDOM from 'react-dom';
 import styles from './styles';
 
 export default React.createClass({
-	
+
 	displayName: 'DateInput',
-	
+
 	propTypes: {
 		className: React.PropTypes.string,
 		dayNames: React.PropTypes.arrayOf(React.PropTypes.string),
@@ -31,7 +32,7 @@ export default React.createClass({
 		today: React.PropTypes.string,
 		value: React.PropTypes.string
 	},
-	
+
 	getDefaultProps() {
 		return {
 			className: 'DateInput',
@@ -44,33 +45,33 @@ export default React.createClass({
 			value: new Date().toISOString().slice(0, 10)
 		};
 	},
-	
+
 	getInitialState() {
 		return {
 			selectedDate: new Date(this.props.value),
 			visible: false
 		};
 	},
-	
+
 	onInputMouseDown(e) {
 		e.preventDefault();
 	},
-	
+
 	onButtonMouseDown(e) {
 		// Prevent passing focus down to children of button
 		e.preventDefault();
 	},
-	
+
 	onButtonClick() {
 		// Manually focus button due to preventDefault
-		React.findDOMNode(this.refs.button).focus();
+		ReactDOM.findDOMNode(this.refs.button).focus();
 		this.setVisible(!this.state.visible);
 	},
-	
+
 	onButtonBlur() {
 		this.setVisible(false);
 	},
-	
+
 	setSelectedDate(date) {
 		this.setState({
 			selectedDate: date
@@ -78,17 +79,17 @@ export default React.createClass({
 			this.props.setValue(date.toISOString().slice(0, 10));
 		});
 	},
-	
+
 	setVisible(visible) {
 		this.setState({
 			visible: visible
 		});
 	},
-	
+
 	render() {
 		const dateString = Dates.toFormattedString(this.state.selectedDate,
 			this.props.format);
-		
+
 		return (
 			<div className={this.props.className}>
 				<style type="text/css">{styles(this.props.className)}</style>
