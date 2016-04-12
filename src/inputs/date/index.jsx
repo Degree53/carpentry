@@ -54,6 +54,7 @@ export default React.createClass({
 	},
 
 	onInputMouseDown(e) {
+		// Prevent typing into input or text selection
 		e.preventDefault();
 	},
 
@@ -69,6 +70,7 @@ export default React.createClass({
 	},
 
 	onButtonBlur() {
+		// Automatically close calendar upon blur
 		this.setVisible(false);
 	},
 
