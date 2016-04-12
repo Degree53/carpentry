@@ -10,7 +10,9 @@ gulp.task('clean', function() {
 
 gulp.task('transform', ['clean'], function() {
 	return gulp.src('./src/**/*.js*')
-		.pipe(babel({ loose: ['es6.modules'] }))
+		.pipe(babel({
+			presets: ['react', 'es2015']
+		}))
 		.pipe(gulp.dest('./lib'));
 });
 
