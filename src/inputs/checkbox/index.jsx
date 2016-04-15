@@ -31,6 +31,7 @@ export default React.createClass({
 	},
 	
 	componentWillReceiveProps(nextProps) {
+		// Update state if passed new checked value
 		if (nextProps.checked !== this.props.checked) {
 			this.setState({
 				checked: nextProps.checked
@@ -39,14 +40,18 @@ export default React.createClass({
 	},
 	
 	componentDidUpdate() {
+		// Call onChange function at appropriate moment
 		if (this.props.onChange) this.props.onChange();
 	},
 	
 	onComponentMouseDown(e) {
+		// Prevent highlighting of inner contents
 		e.preventDefault();
 	},
 	
 	onComponentClick() {
+		// Toggle checked state if not disabled and then pass
+		// to setChecked function
 		if (!this.props.disabled) {
 			const checked = !this.state.checked;
 			
@@ -61,7 +66,7 @@ export default React.createClass({
 	render() {
 		let classes = this.props.className;
 		if (this.props.disabled) classes += ' disabled';
-		if (this.props.checked) classes += ' checked';
+		if (this.state.checked) classes += ' checked';
 		
 		const cursor = this.props.disabled ? 'default' : 'pointer';
 		

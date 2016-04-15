@@ -64,7 +64,7 @@ export default React.createClass({
 	},
 
 	onInputFocus() {
-		// Empty decimal if equal to 0
+		// Empty value if equal to 0
 		if (parseFloat(this.state.value) === 0) {
 			this.setState({
 				cursorIndex: 0,
@@ -72,7 +72,8 @@ export default React.createClass({
 				value: ''
 			});
 		}
-
+		
+		// Call onFocus function at appropriate moment
 		if (this.props.onFocus) this.props.onFocus();
 	},
 
@@ -89,6 +90,7 @@ export default React.createClass({
 	},
 
 	onInputPaste(e) {
+		// Prevent pasting to prevent invalid inputs
 		e.preventDefault();
 	},
 
@@ -115,6 +117,7 @@ export default React.createClass({
 	},
 
 	onInputBlur() {
+		// Update state if value is passed back into component
 		const value = this.props.value.toFixed(this.props.places);
 		const decimalIndex = value.indexOf('.');
 
@@ -122,12 +125,14 @@ export default React.createClass({
 			decimalIndex: decimalIndex,
 			value: value
 		});
-
+		
+		// Call onBlur function at appropriate moment
 		if (this.props.onBlur) this.props.onBlur();
 	},
 
 	setValue(value) {
-		// Store decimal, index and cursor position in state
+		// Store decimal, index and cursor position in state then
+		// pass value to setValue function
 		const decimalIndex = value.indexOf('.');
 		const cursorIndex = ReactDOM.findDOMNode(this).selectionStart;
 
