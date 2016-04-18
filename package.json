@@ -27,8 +27,8 @@
   },
   "homepage": "https://github.com/lebowski89/carpentry",
   "dependencies": {
-    "react": "0.13.x - 1.0.0",
-    "react-dom": "0.13.x - 1.0.0"
+    "react": "0.13.x - 15.x.x",
+    "react-dom": "0.13.x - 15.x.x"
   },
   "devDependencies": {
     "del": "^1.1.1",
