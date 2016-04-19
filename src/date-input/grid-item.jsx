@@ -1,10 +1,8 @@
-'use strict';
-
 import React from 'react';
 
 export default React.createClass({
 	
-	displayName: 'Date',
+	displayName: 'GridItem',
 	
 	onDayClick() {
 		this.props.setSelectedDate(this.props.date);

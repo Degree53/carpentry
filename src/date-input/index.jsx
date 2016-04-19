@@ -1,11 +1,9 @@
-'use strict';
-
-import Calendar from './Calendar';
-import Dates from '../../functions/Dates';
-import Numbers from '../../functions/Numbers';
+import Calendar from './calendar';
+import Dates from '../helpers/dates';
+import Numbers from '../helpers/numbers';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import styles from './styles';
+import Styles from './styles';
 
 export default React.createClass({
 
@@ -94,7 +92,7 @@ export default React.createClass({
 
 		return (
 			<div className={this.props.className}>
-				<style type="text/css">{styles(this.props.className)}</style>
+				<style type="text/css">{Styles(this.props.className)}</style>
 				<div className={this.props.className + '__table'}>
 					<div className={this.props.className + '__cell'}>
 						<input className={this.props.className + '__input'} value={dateString}

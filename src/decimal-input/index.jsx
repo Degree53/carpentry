@@ -1,6 +1,4 @@
-'use strict';
-
-import Numbers from '../../functions/Numbers';
+import Numbers from '../helpers/numbers';
 import React from 'react';
 import ReactDOM from 'react-dom';
 

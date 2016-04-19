@@ -1,6 +1,4 @@
-'use strict';
-
-import Dates from '../../functions/Dates';
+import Dates from '../helpers/dates';
 import React from 'react';
 
 export default React.createClass({
