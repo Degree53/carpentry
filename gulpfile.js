@@ -17,7 +17,8 @@ gulp.task('clean', function () {
 gulp.task('build', ['clean'], function () {
 	return gulp.src('./src/**/*.js*')
 		.pipe(babel({
-			presets: ['es2015', 'react']
+			presets: ['es2015', 'react'],
+			sourceMaps: 'inline'
 		}))
 		.pipe(gulp.dest('./lib'));
 });

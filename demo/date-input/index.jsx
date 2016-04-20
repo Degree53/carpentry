@@ -1,3 +1,7 @@
+/* eslint no-magic-numbers: [ 2, {
+	"ignore": [ 0, 1, 10 ]
+}] */
+
 import Carpentry from '../../';
 import React from 'react';
 import ReactDOM from 'react-dom';

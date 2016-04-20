@@ -6,7 +6,7 @@ class Parent extends React.Component {
 	
 	constructor (props) {
 		super(props);
-		this.state = { decimal: 0 };
+		this.state = { decimal: 10 };
 		this.setDecimal = this.setDecimal.bind(this);
 	}
 	
@@ -17,7 +17,7 @@ class Parent extends React.Component {
 	render () {
 		return (
 			<div>
-				<div>{'this.state.decimal = '}{this.state.decimal}</div>
+				<div>{`this.state.decimal = ${this.state.decimal}`}</div>
 				<Carpentry.DecimalInput value={this.state.decimal}
 					setValue={this.setDecimal} />
 			</div>

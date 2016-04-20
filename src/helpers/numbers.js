@@ -1,6 +1,6 @@
 export default {
 	
-	isNum(num) {
+	isNum (num) {
 		return !isNaN(parseFloat(num)) && isFinite(num);
 	}
 	
