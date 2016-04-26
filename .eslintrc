@@ -1,0 +1,12 @@
+{
+	"extends": [
+		"degree53-core",
+		"degree53-es6",
+		"degree53-react"
+	],
+	
+	"env": {
+		"browser": true,
+		"node": true
+	}
+}
