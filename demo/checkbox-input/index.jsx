@@ -1,5 +1,5 @@
 /* eslint no-magic-numbers: [ 2, {
-	"ignore": [ 0, 10 ]
+	"ignore": [ 10003 ]
 }] */
 
 import Carpentry from '../../';
@@ -10,21 +10,22 @@ class Parent extends React.Component {
 	
 	constructor (props) {
 		super(props);
-		this.state = { date: new Date().toISOString().slice(0, 10) };
-		this.setDate = this.setDate.bind(this);
+		this.state = { checked: false };
+		this.setChecked = this.setChecked.bind(this);
 	}
 	
-	setDate (date) {
-		this.setState({ date });
+	setChecked (checked) {
+		this.setState({ checked });
 	}
 	
 	render () {
 		return (
 			<div>
-				<div>{'this.state.date = '}{this.state.date}</div>
-				<Carpentry.DateInput setValue={this.setDate} format="DD / MM / YY">
-					<img src="date-input/calendar.png" />
-				</Carpentry.DateInput>
+				<div>{`this.state.checked = ${this.state.checked}`}</div>
+				<Carpentry.CheckboxInput checked={this.state.checked}
+					setChecked={this.setChecked}>
+					{String.fromCharCode(10003)}
+				</Carpentry.CheckboxInput>
 			</div>
 		);
 	}

@@ -16,6 +16,8 @@ class DecimalInput extends React.Component {
 			value
 		};
 		
+		this.elems = {};
+		
 		this.onInputFocus = this.onInputFocus.bind(this);
 		this.onInputKeyPress = this.onInputKeyPress.bind(this);
 		this.onInputChange = this.onInputChange.bind(this);
@@ -27,7 +29,7 @@ class DecimalInput extends React.Component {
 		// Update decimal and index if incoming value is not null and
 		// input is not currently focused
 		if (nextProps.value !== null &&
-			this.input !== document.activeElement) {
+			this.elems.input !== document.activeElement) {
 			
 			const value = nextProps.value.toFixed(this.props.places);
 			
@@ -40,9 +42,9 @@ class DecimalInput extends React.Component {
 	
 	componentDidUpdate () {
 		// Move cursor position back if value has been replaced
-		if (this.input.selectionStart !== this.state.cursorIndex) {
-			this.input.selectionStart = this.state.cursorIndex;
-			this.input.selectionEnd = this.state.cursorIndex;
+		if (this.elems.input.selectionStart !== this.state.cursorIndex) {
+			this.elems.input.selectionStart = this.state.cursorIndex;
+			this.elems.input.selectionEnd = this.state.cursorIndex;
 		}
 	}
 	
@@ -50,7 +52,7 @@ class DecimalInput extends React.Component {
 		// Store decimal, index and cursor position in state then
 		// pass value to setValue function
 		this.setState({
-			cursorIndex: this.input.selectionStart,
+			cursorIndex: this.elems.input.selectionStart,
 			decimalIndex: value.indexOf('.'),
 			value
 		});
@@ -91,7 +93,7 @@ class DecimalInput extends React.Component {
 	}
 	
 	onInputChange () {
-		let value = this.input.value;
+		let value = this.elems.input.value;
 		const firstIndex = value.indexOf('.');
 		
 		// Prevent two decimal points
@@ -100,8 +102,8 @@ class DecimalInput extends React.Component {
 				// Remove first decimal point
 				value = value.replace(/^(\d*)\.(\d*\.\d*)$/, '$1$2');
 				// Update cursor to counter character removal
-				--this.input.selectionStart;
-				--this.input.selectionEnd;
+				--this.elems.input.selectionStart;
+				--this.elems.input.selectionEnd;
 			} else {
 				// Remove second decimal point
 				value = value.replace(/^(\d*\.\d*)\.(\d*)$/, '$1$2');
@@ -130,7 +132,7 @@ class DecimalInput extends React.Component {
 	
 	render () {
 		return (
-			<input className={this.props.className} ref={c => this.input = c}
+			<input className={this.props.className} ref={c => this.elems.input = c}
 				value={this.state.value} disabled={this.props.disabled}
 				onFocus={this.onInputFocus} onKeyPress={this.onInputKeyPress}
 				onPaste={this.onInputPaste} onChange={this.onInputChange}
