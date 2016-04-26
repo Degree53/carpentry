@@ -1,8 +1,6 @@
-'use strict';
-
-import Buttons from './Buttons';
-import Grid from './Grid';
-import Navbar from './Navbar';
+import Buttons from './buttons';
+import Grid from './grid';
+import Navbar from './navbar';
 import React from 'react';
 
 export default React.createClass({

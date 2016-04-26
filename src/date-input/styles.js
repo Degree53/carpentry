@@ -1,11 +1,10 @@
-'use strict';
-
 export default function(className) {
 	
 	return `
 		
 		.$component {
 			position: relative;
+			display: inline-block;
 		}
 		
 		.$component__table {
@@ -43,7 +42,6 @@ export default function(className) {
 		
 		.$component__navbar {
 			display: table;
-			table-layout: fixed;
 			width: 100%;
 		}
 		

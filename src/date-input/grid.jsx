@@ -1,7 +1,5 @@
-'use strict';
-
-import Date from './Date';
-import Dates from '../../functions/Dates';
+import Dates from '../helpers/dates';
+import GridItem from './grid-item';
 import React from 'react';
 
 export default React.createClass({
@@ -59,7 +57,7 @@ export default React.createClass({
 				<div className={this.props.className + '__row'} key={i}>
 					{row.map((date, i) => {
 						return (
-							<Date className={this.props.className} date={date} key={i}
+							<GridItem className={this.props.className} date={date} key={i}
 								level={this.props.level} monthNames={this.props.monthNames}
 								viewDate={this.props.viewDate} selectedDate={this.props.selectedDate}
 								setSelectedDate={this.props.setSelectedDate}
