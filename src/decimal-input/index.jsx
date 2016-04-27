@@ -6,9 +6,9 @@ class DecimalInput extends React.Component {
 		super(props);
 		
 		// Default initial value to 0 if not passed via prop
-		const value = this.props.value === null ?
-			Number(0).toFixed(this.props.places) :
-			this.props.value.toFixed(this.props.places);
+		const value = props.value === null ?
+			Number(0).toFixed(props.places) :
+			props.value.toFixed(props.places);
 		
 		this.state = {
 			cursorIndex: 0,
@@ -19,6 +19,8 @@ class DecimalInput extends React.Component {
 		this.elems = {};
 		
 		this.onInputFocus = this.onInputFocus.bind(this);
+		this.onInputMouseUp = this.onInputMouseUp.bind(this);
+		this.onInputTouchEnd = this.onInputTouchEnd.bind(this);
 		this.onInputKeyPress = this.onInputKeyPress.bind(this);
 		this.onInputChange = this.onInputChange.bind(this);
 		this.onInputBlur = this.onInputBlur.bind(this);
@@ -78,9 +80,22 @@ class DecimalInput extends React.Component {
 		}
 	}
 	
+	onInputMouseUp () {
+		this.setState({
+			cursorIndex: this.elems.input.selectionStart
+		});
+	}
+	
+	onInputTouchEnd () {
+		this.setState({
+			cursorIndex: this.elems.input.selectionStart
+		});
+	}
+	
 	onInputKeyPress (e) {
 		// Limit input to digits and decimal points
-		const char = String.fromCharCode(e.charCode);
+		const char = typeof e.key === 'string' && e.key.length > 0 ?
+			e.key : String.fromCharCode(e.charCode);
 		
 		if (!char.match(/\d|\./)) {
 			e.preventDefault();
@@ -120,6 +135,7 @@ class DecimalInput extends React.Component {
 			this.props.value.toFixed(this.props.places);
 		
 		this.setState({
+			cursorIndex: this.elems.input.selectionStart,
 			decimalIndex: value.indexOf('.'),
 			value
 		});
@@ -134,7 +150,8 @@ class DecimalInput extends React.Component {
 		return (
 			<input className={this.props.className} ref={c => this.elems.input = c}
 				value={this.state.value} disabled={this.props.disabled}
-				onFocus={this.onInputFocus} onKeyPress={this.onInputKeyPress}
+				onFocus={this.onInputFocus} onMouseUp={this.onInputMouseUp}
+				onTouchEnd={this.onInputTouchEnd} onKeyPress={this.onInputKeyPress}
 				onPaste={this.onInputPaste} onChange={this.onInputChange}
 				onBlur={this.onInputBlur} />
 		);
