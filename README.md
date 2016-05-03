@@ -171,6 +171,8 @@ render: function() {
 	</tbody>
 </table>
 
+In addition to the `props` API above, you can also use the `triggerKeypress` method to pass a key (`String`) to the component. This is useful for simulating a keypress when implementing a soft keyboard. In order to access this method, add a `ref` to your `DecimalInput` and call the method via that `ref`.
+
 ### DateInput
 
 This component is useful for enforcing input of a valid full-date string. `setValue` should be a function that can set a date string back to state or pass it to an action. `value` can be used to set a default date or update the input.
