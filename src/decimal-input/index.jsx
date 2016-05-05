@@ -5,21 +5,14 @@ class DecimalInput extends React.Component {
 	constructor (props) {
 		super(props);
 		
-		// Default initial value to 0 if not passed via prop
-		const value = props.value === null ?
-			Number(0).toFixed(props.places) :
-			props.value.toFixed(props.places);
+		const value = props.autoFormat ?
+			props.value.toFixed(props.places) : String(props.value);
 		
 		this.state = {
 			cursorIndex: 0,
 			value
 		};
 		
-		this.elems = {};
-		
-		this.setValue = this.setValue.bind(this);
-		this.formatDecimalPoints = this.formatDecimalPoints.bind(this);
-		this.triggerKeypress = this.triggerKeypress.bind(this);
 		this.onInputFocus = this.onInputFocus.bind(this);
 		this.onInputMouseUp = this.onInputMouseUp.bind(this);
 		this.onInputTouchEnd = this.onInputTouchEnd.bind(this);
@@ -32,56 +25,64 @@ class DecimalInput extends React.Component {
 	componentWillReceiveProps (nextProps) {
 		// Update decimal if incoming value has changed and input
 		// is not currently focused
-		if (nextProps.value !== this.props.value &&
-			this.elems.input !== document.activeElement) {
+		if (this.input !== document.activeElement &&
+			// Prevent update when value has leading decimal point
+			this.state.value !== '.' &&
+			// Prevent 'x.000' from passing
+			String(nextProps.value) === this.state.value &&
+			// Prevent update when value has trailing decimal point
+			nextProps.value !== Number(this.state.value)) {
 			
-			const value = nextProps.value.toFixed(this.props.places);
+			const value = nextProps.autoFormat ?
+				nextProps.value.toFixed(this.props.places) :
+				String(nextProps.value);
+			
+			this.setState({ value });
+		}
+		
+		if (nextProps.autoFormat !== this.props.autoFormat) {
+			const value = nextProps.autoFormat ?
+				nextProps.value.toFixed(this.props.places) :
+				String(nextProps.value);
+			
 			this.setState({ value });
 		}
 	}
 	
 	componentDidUpdate () {
-		// Move cursor position back if value has been replaced
-		if (this.elems.input.selectionStart !== this.state.cursorIndex) {
-			this.elems.input.selectionStart = this.state.cursorIndex;
-			this.elems.input.selectionEnd = this.state.cursorIndex;
+		// Update cursor position if it has changed
+		if (this.input.selectionStart !== this.state.cursorIndex) {
+			this.input.selectionStart = this.state.cursorIndex;
+			this.input.selectionEnd = this.state.cursorIndex;
 		}
 	}
 	
 	setValue (value) {
-		// Store cursor position and value in state then round and
-		// pass value to props.setValue
-		this.setState({
-			cursorIndex: this.elems.input.selectionStart,
-			value
-		}, () => {
-			const rounded = Number(value).toFixed(this.props.places);
-			this.props.setValue(Number(rounded));
+		// Store value in state then pass value to props.setValue
+		this.setState({ value }, () => {
+			// Need to safely convert to number in case value is '.'
+			let numValue = isNaN(Number(value)) ? 0 : Number(value);
+			
+			const newValue = numValue.toFixed(this.props.places);
+				
+			// Need to safely convert to number in case newValue is '.'
+			numValue = isNaN(Number(newValue)) ? 0 : Number(newValue);
+			
+			this.props.setValue(numValue);
 		});
 	}
 	
 	formatDecimalPoints (value) {
-		let newValue = value;
-		const firstIndex = value.indexOf('.');
-		
-		// Prevent two decimal points
-		if (firstIndex !== value.lastIndexOf('.')) {
-			if (firstIndex === this.state.cursorIndex) {
-				// Remove second decimal point
-				newValue = value.replace(/^(\d*\.\d*)\.(\d*)$/, '$1$2');
-			} else {
-				// Remove first decimal point
-				newValue = value.replace(/^(\d*)\.(\d*\.\d*)$/, '$1$2');
-				// Update cursor to counter character removal
-				--this.elems.input.selectionStart;
-				this.elems.input.selectionEnd = this.elems.input.selectionStart;
-			}
+		if (value.indexOf('.') === this.state.cursorIndex) {
+			// Remove second decimal point
+			return value.replace(/^(\d*\.\d*)\.(\d*)$/, '$1$2');
 		}
 		
-		return newValue;
+		// Remove first decimal point
+		return value.replace(/^(\d*)\.(\d*\.\d*)$/, '$1$2');
 	}
 	
-	triggerKeypress (key) {
+	triggerKeypress (key, cursorIndex = this.state.cursorIndex) {
 		if (!typeof key === 'string' || !key.length === 1) {
 			throw new Error(`The first parameter of triggerKeypress()
 				must receive a string argument of length 1`);
@@ -92,19 +93,44 @@ class DecimalInput extends React.Component {
 				must be an integer or period character`);
 		}
 		
-		this.elems.input.focus();
+		let value = Number(this.state.value) === 0 ?
+			'' : this.state.value;
 		
-		// Insert key value at current cursor position
-		let value = this.state.value.slice(0, this.state.cursorIndex) +
-			key + this.state.value.slice(this.state.cursorIndex);
+		// Insert key value at cursor position
+		value = value.slice(0, cursorIndex) + key + value.slice(cursorIndex);
 		
-		value = this.formatDecimalPoints(value);
+		// If there's only one decimal point, move cursor forward
+		// and call setValue, else remove excess decimal point
+		if (value.indexOf('.') === value.lastIndexOf('.')) {
+			this.setState({ cursorIndex: cursorIndex + 1 }, () => {
+				this.setValue(value);
+			});
+		} else {
+			value = this.formatDecimalPoints(value);
+			
+			if (cursorIndex === value.indexOf('.') + 1) {
+				// Don't store new position of cursor if inputting a
+				// decimal point after an existing decimal point
+				this.setValue(value);
+			} else {
+				this.setState({ cursorIndex: cursorIndex + 1 }, () => {
+					this.setValue(value);
+				});
+			}
+		}
+	}
+	
+	triggerBackspace (cursorIndex = this.state.cursorIndex) {
+		// Remove character at cursor position
+		const value = this.state.value.slice(0, cursorIndex - 1) +
+			this.state.value.slice(cursorIndex);
 		
-		// Manually move the cursor forward
-		++this.elems.input.selectionStart;
-		this.elems.input.selectionEnd = this.elems.input.selectionStart;
-		
-		this.setValue(value);
+		this.setState({
+			cursorIndex: cursorIndex - 1,
+			value
+		}, () => {
+			this.setValue(value);
+		});
 	}
 	
 	onInputFocus () {
@@ -113,11 +139,15 @@ class DecimalInput extends React.Component {
 			this.setState({
 				cursorIndex: 0,
 				value: ''
+			}, () => {
+				// Call onFocus function at appropriate moment
+				if (this.props.onFocus) {
+					this.props.onFocus();
+				}
 			});
+			
+			return;
 		}
-		
-		this.elems.input.selectionStart = this.state.cursorIndex;
-		this.elems.input.selectionEnd = this.state.cursorIndex;
 		
 		// Call onFocus function at appropriate moment
 		if (this.props.onFocus) {
@@ -127,16 +157,12 @@ class DecimalInput extends React.Component {
 	
 	onInputMouseUp () {
 		// Update cursor position when user clicks input
-		this.setState({
-			cursorIndex: this.elems.input.selectionStart
-		});
+		this.setState({ cursorIndex: this.input.selectionStart });
 	}
 	
 	onInputTouchEnd () {
 		// Update cursor position when user taps input
-		this.setState({
-			cursorIndex: this.elems.input.selectionStart
-		});
+		this.setState({ cursorIndex: this.input.selectionStart });
 	}
 	
 	onInputKeyPress (e) {
@@ -155,24 +181,43 @@ class DecimalInput extends React.Component {
 	}
 	
 	onInputChange () {
-		let value = this.elems.input.value;
-		value = this.formatDecimalPoints(value);
+		let value = this.input.value;
 		
-		this.setValue(value);
+		// If there's only one decimal point, move cursor forward
+		// and call setValue, else remove excess decimal point
+		if (value.indexOf('.') === value.lastIndexOf('.')) {
+			this.setState({ cursorIndex: this.input.selectionStart }, () => {
+				this.setValue(value);
+			});
+		} else {
+			value = this.formatDecimalPoints(value);
+			
+			if (this.input.selectionStart - 1 === value.indexOf('.') + 1) {
+				// Don't store new position of cursor if inputting a
+				// decimal point after an existing decimal point
+				this.setValue(value);
+			} else {
+				this.setState({ cursorIndex: this.input.selectionStart }, () => {
+					this.setValue(value);
+				});
+			}
+		}
 	}
 	
 	onInputKeyUp () {
 		// Update cursor position when user presses key
-		this.setState({
-			cursorIndex: this.elems.input.selectionStart
-		});
+		this.setState({ cursorIndex: this.input.selectionStart });
 	}
 	
 	onInputBlur () {
+		// Need to safely convert to number in case value is '.'
+		const numValue = isNaN(Number(this.state.value)) ?
+			0 : Number(this.state.value);
 		// Round the current value and set to state
-		const value = Number(this.state.value).toFixed(this.props.places);
+		const value = numValue.toFixed(this.props.places);
 		
 		this.setState({ value }, () => {
+			this.setValue(value);
 			// Call onBlur function at appropriate moment
 			if (this.props.onBlur) {
 				this.props.onBlur();
@@ -182,7 +227,7 @@ class DecimalInput extends React.Component {
 	
 	render () {
 		return (
-			<input className={this.props.className} ref={c => this.elems.input = c}
+			<input className={this.props.className} ref={c => this.input = c}
 				value={this.state.value} disabled={this.props.disabled}
 				onFocus={this.onInputFocus} onMouseUp={this.onInputMouseUp}
 				onTouchEnd={this.onInputTouchEnd} onKeyPress={this.onInputKeyPress}
@@ -193,6 +238,7 @@ class DecimalInput extends React.Component {
 }
 
 DecimalInput.propTypes = {
+	autoFormat: React.PropTypes.bool,
 	className: React.PropTypes.string,
 	disabled: React.PropTypes.bool,
 	onBlur: React.PropTypes.func,
@@ -203,12 +249,13 @@ DecimalInput.propTypes = {
 };
 
 DecimalInput.defaultProps = {
+	autoFormat: true,
 	className: 'DecimalInput',
 	disabled: false,
 	onBlur: null,
 	onFocus: null,
 	places: 2,
-	value: null
+	value: 0
 };
 
 export default DecimalInput;
