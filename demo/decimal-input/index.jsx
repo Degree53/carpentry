@@ -7,18 +7,22 @@ class Parent extends React.Component {
 	constructor (props) {
 		super(props);
 		
-		this.state = { decimal: 0, autoFormat: true };
+		this.state = { decimal: 0, allowUpdate: true };
 		
 		this.setDecimal = this.setDecimal.bind(this);
+		this.onAllowUpdateButtonClick = this.onAllowUpdateButtonClick.bind(this);
 		this.onZeroButtonClick = this.onZeroButtonClick.bind(this);
 		this.onNineButtonClick = this.onNineButtonClick.bind(this);
 		this.onPeriodButtonClick = this.onPeriodButtonClick.bind(this);
 		this.onBackspaceButtonClick = this.onBackspaceButtonClick.bind(this);
-		this.onAutoFormatButtonClick = this.onAutoFormatButtonClick.bind(this);
 	}
 	
 	setDecimal (decimal) {
 		this.setState({ decimal });
+	}
+	
+	onAllowUpdateButtonClick () {
+		this.setState({ allowUpdate: !this.state.allowUpdate });
 	}
 	
 	onZeroButtonClick () {
@@ -41,17 +45,16 @@ class Parent extends React.Component {
 		this.input.triggerBackspace(lng);
 	}
 	
-	onAutoFormatButtonClick () {
-		this.setState({ autoFormat: !this.state.autoFormat });
-	}
-	
 	render () {
 		return (
 			<div>
 				<div>{`this.state.decimal = ${this.state.decimal}`}</div>
 				<Carpentry.DecimalInput ref={c => this.input = c}
 					setValue={this.setDecimal} value={this.state.decimal}
-					autoFormat={this.state.autoFormat} />
+					allowUpdate={this.state.allowUpdate} />
+				<button onClick={this.onAllowUpdateButtonClick}>
+					{'toggle allowUpdate'}
+				</button>
 				<button onClick={this.onZeroButtonClick}>
 					{'triggerKeypress(\'0\')'}
 				</button>
@@ -63,9 +66,6 @@ class Parent extends React.Component {
 				</button>
 				<button onClick={this.onBackspaceButtonClick}>
 					{'triggerBackspace()'}
-				</button>
-				<button onClick={this.onAutoFormatButtonClick}>
-					{'toggle autoFormat'}
 				</button>
 			</div>
 		);
