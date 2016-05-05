@@ -5,8 +5,7 @@ class DecimalInput extends React.Component {
 	constructor (props) {
 		super(props);
 		
-		const value = props.autoFormat ?
-			props.value.toFixed(props.places) : String(props.value);
+		const value = props.value.toFixed(props.places);
 		
 		this.state = {
 			cursorIndex: 0,
@@ -24,26 +23,11 @@ class DecimalInput extends React.Component {
 	
 	componentWillReceiveProps (nextProps) {
 		// Update decimal if incoming value has changed and input
-		// is not currently focused
+		// is not currently focused or allowUpdate is false
 		if (this.input !== document.activeElement &&
-			// Prevent update when value has leading decimal point
-			this.state.value !== '.' &&
-			// Prevent 'x.000' from passing
-			String(nextProps.value) === this.state.value &&
-			// Prevent update when value has trailing decimal point
-			nextProps.value !== Number(this.state.value)) {
+			nextProps.allowUpdate) {
 			
-			const value = nextProps.autoFormat ?
-				nextProps.value.toFixed(this.props.places) :
-				String(nextProps.value);
-			
-			this.setState({ value });
-		}
-		
-		if (nextProps.autoFormat !== this.props.autoFormat) {
-			const value = nextProps.autoFormat ?
-				nextProps.value.toFixed(this.props.places) :
-				String(nextProps.value);
+			const value = nextProps.value.toFixed(this.props.places);
 			
 			this.setState({ value });
 		}
@@ -238,7 +222,7 @@ class DecimalInput extends React.Component {
 }
 
 DecimalInput.propTypes = {
-	autoFormat: React.PropTypes.bool,
+	allowUpdate: React.PropTypes.bool,
 	className: React.PropTypes.string,
 	disabled: React.PropTypes.bool,
 	onBlur: React.PropTypes.func,
@@ -249,7 +233,7 @@ DecimalInput.propTypes = {
 };
 
 DecimalInput.defaultProps = {
-	autoFormat: true,
+	allowUpdate: true,
 	className: 'DecimalInput',
 	disabled: false,
 	onBlur: null,
