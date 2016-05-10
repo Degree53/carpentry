@@ -150,8 +150,18 @@ class DecimalInput extends React.Component {
 	}
 
 	onInputKeyPress (e) {
-		// Limit input to digits and decimal points
-		const key = String.fromCharCode(e.charCode);
+
+		let key;
+
+		// Only use the key if the charCode isn't available
+		// This is in place because of the bug in IE causing the period on the
+		// numpad to be picked up as delete, breaking the key property. This
+		// could eventually be removed when microsoft sort their stuff out.
+		if (typeof e.charCode === 'undefined') {
+			key = e.key;
+		} else {
+			key = String.fromCharCode(e.charCode);
+		}
 
 		if (!key.match(/\d|\./)) {
 			e.preventDefault();
