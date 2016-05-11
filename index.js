@@ -5,5 +5,6 @@ module.exports = {
 	CheckboxInput: require('./lib/checkbox-input').default,
 	DateInput: require('./lib/date-input').default,
 	DecimalInput: require('./lib/decimal-input').default,
-	DialogBox: require('./lib/dialog-box').default
+	DialogBox: require('./lib/dialog-box').default,
+	DialogManager: require('./lib/dialog-manager')
 };

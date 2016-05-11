@@ -24,6 +24,8 @@
   },
   "homepage": "https://github.com/lebowski89/carpentry",
   "dependencies": {
+    "flux": "^2.1.1",
+    "immutable": "^3.8.1",
     "react": "0.13.x - 1.0.0",
     "react-dom": "0.13.x - 1.0.0"
   },
