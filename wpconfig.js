@@ -18,6 +18,12 @@ module.exports = function (entryPath) {
 					presets: ['es2015', 'react']
 				},
 				test: /\.jsx?$/
+			}, {
+				loader: 'style!css!autoprefixer-loader?{browsers:["last 5 versions"]}',
+				test: /\.css$/
+			}, {
+				loader: 'style!css!autoprefixer-loader?{browsers:["last 5 versions"]}!sass?outputStyle=expanded',
+				test: /\.scss$/
 			}]
 		},
 		output: {
@@ -27,8 +33,8 @@ module.exports = function (entryPath) {
 			extensions: ['', '.js', '.jsx']
 		}
 	};
-	
+
 	delete config.output.path;
-	
+
 	return config;
 }

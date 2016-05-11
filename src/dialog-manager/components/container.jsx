@@ -20,20 +20,15 @@ class DialogContainer extends React.Component {
 		};
 	}
 
-	getDialogToRender () {
+	render () {
 		if (typeof this.state.currentDialog === 'undefined') {
 			return null;
 		}
 
-		return <Dialog dialogData={this.state.currentDialog} />;
-	}
-
-	render () {
 		return (
-			<div>
-				<h1>{'Dialog Container'}</h1>
-				<p>{this.state.dialogs.length}</p>
-				{this.getDialogToRender()}
+			<div className={'carpentry-dialog-manager__dialog-container'}>
+				<div className={'carpentry-dialog-manager__dialog__background'}></div>
+				<Dialog dialogData={this.state.currentDialog} />
 			</div>
 		);
 	}

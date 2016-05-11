@@ -1,0 +1,72 @@
+.carpentry-dialog-manager__dialog-container {
+	position: fixed;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+}
+
+.carpentry-dialog-manager__dialog__background {
+	background: rgba(black, 0.75);
+	position: absolute;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+}
+
+.carpentry-dialog-manager__dialog {
+	padding: 10px;
+	background: white;
+	border: 1px solid black;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+}
+
+.carpentry-dialog-manager__dialog-title {
+	text-align: center;
+	font-weight: bold;
+
+	&:empty {
+		display: none;
+	}
+}
+
+.carpentry-dialog-manager__dialog-body {
+	text-align: center;
+
+	&:empty {
+		display: none;
+	}
+}
+
+.carpentry-dialog-manager__dialog-buttons {
+
+}
+
+.carpentry-dialog-manager__dialog-button-table {
+	display: table;
+	table-layout: fixed;
+	width: 100%;
+}
+
+.carpentry-dialog-manager__dialog-button-row {
+	display: table-row;
+}
+
+.carpentry-dialog-manager__dialog-button-cell,
+.carpentry-dialog-manager__dialog-button-spacer {
+	display: table-cell;
+	vertical-align: middle;
+}
+
+.carpentry-dialog-manager__dialog-button-spacer {
+	width: 10px;
+}
+
+.carpentry-dialog-manager__dialog-button {
+	display: block;
+	width: 100%;
+}

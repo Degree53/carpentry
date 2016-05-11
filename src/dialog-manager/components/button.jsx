@@ -14,7 +14,11 @@ export default class Button extends React.Component {
 
 	render () {
 		return (
-			<button key={this.props.buttonData.id} onClick={this.onClick}>
+			<button
+				key={this.props.buttonData.id}
+				className={`carpentry-dialog-manager__dialog-button  carpentry-dialog-manager__dialog-button--${this.props.buttonData.importance || 'default'}`}
+				onClick={this.onClick}
+			>
 				{this.props.buttonData.text}
 			</button>
 		);

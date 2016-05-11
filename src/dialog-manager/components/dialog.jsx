@@ -22,23 +22,41 @@ export default class Dialog extends React.Component {
 		this.props.dialogData.buttons.filter(b => b.id === id)[0].callback();
 	}
 
-	renderButton (buttonData) {
-		return (
-			<Button
-				key={buttonData.id}
-				onClick={this.onButtonClicked}
-				buttonData={buttonData}
-			/>
-		);
+	renderButton (buttonData, isLastButton) {
+		const output = [
+			<div key={buttonData.id} className={'carpentry-dialog-manager__dialog-button-cell'}>
+				<Button onClick={this.onButtonClicked} buttonData={buttonData} />
+			</div>
+		];
+
+		if (!isLastButton) {
+			output.push(
+				<div key={`${buttonData.id}.spacer`} className={'carpentry-dialog-manager__dialog-button-spacer'} />
+			);
+		}
+		
+		return output;
+	}
+
+	renderButtons () {
+		return this.props.dialogData.buttons.reduce((out, button, i, arr) => [].concat(out, ...this.renderButton(button, arr.length - 1 === i)), []);
 	}
 
 	render () {
 		return (
-			<div className={'dialog'}>
-				<p className={'dialog__title'}>{this.props.dialogData.title}</p>
-				<p className={'dialog__body'}>{this.props.dialogData.body}</p>
-				<div className={'dialog__buttons'}>
-					{this.props.dialogData.buttons.map(b => this.renderButton(b))}
+			<div className={'carpentry-dialog-manager__dialog'} data-dialog-id={this.props.dialogData.id}>
+				<p className={'carpentry-dialog-manager__dialog-title'}>
+					{this.props.dialogData.title}
+				</p>
+				<p className={'carpentry-dialog-manager__dialog-body'}>
+					{this.props.dialogData.body}
+				</p>
+				<div className={'carpentry-dialog-manager__dialog-buttons'}>
+					<div className={'carpentry-dialog-manager__dialog-button-table'}>
+						<div className={'carpentry-dialog-manager__dialog-button-row'}>
+							{this.renderButtons()}
+						</div>
+					</div>
 				</div>
 			</div>
 		);
