@@ -1,6 +1,6 @@
 {
   "name": "carpentry",
-  "version": "0.12.2",
+  "version": "0.15.2",
   "description": "A library of highly customisable React components",
   "main": "index.js",
   "repository": {
@@ -30,8 +30,8 @@
   },
   "homepage": "https://github.com/lebowski89/carpentry",
   "dependencies": {
-    "react": "0.13.x - 1.0.0",
-    "react-dom": "0.13.x - 1.0.0"
+    "react": "0.13.x - 15.x.x",
+    "react-dom": "0.13.x - 15.x.x"
   },
   "devDependencies": {
     "babel-core": "^6.7.6",
