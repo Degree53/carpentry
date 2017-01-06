@@ -78,7 +78,7 @@ class DecimalInput extends React.Component {
 				must be an integer or period character`);
 		}
 
-		let value = this.state.value === Numbers.toFixed(Number(0), this.props.places) ?
+		let value = this.state.value === Numbers.toFixed(0, this.props.places) ?
 			'' : this.state.value;
 
 		// Insert key value at cursor position
