@@ -7,6 +7,12 @@
     "type": "git",
     "url": "https://github.com/lebowski89/carpentry.git"
   },
+  "scripts": {
+    "clean": "gulp clean",
+    "build": "gulp build",
+    "bundle": "gulp bundle",
+    "demo": "gulp demo"
+  },
   "keywords": [
     "carpentry",
     "react",

@@ -34,6 +34,17 @@ var MyDecimalInput = require('carpentry').DecimalInput;
 
 <br>
 
+## Building and Testing
+
+Carpentry can be built and demonstrated by running one of the following commands:
+
++ `npm run clean` - Clean the output directory.
++ `npm run build` - Produce a build of the package.
++ `npm run bundle -- -c COMPONENT` - Produce a demonstration bundle containing the specified component.
++ `npm run demo -- -c COMPONENT` - Produce a demonstration bundle containing the specified component and open it in the default browser.
+
+<br>
+
 ## Components
 
 <table>
