@@ -1,11 +1,12 @@
 import React from 'react';
+import Numbers from '../helpers/numbers';
 
 class DecimalInput extends React.Component {
 
 	constructor (props) {
 		super(props);
 
-		const value = props.value.toFixed(props.places);
+		const value = Numbers.toFixed(props.value, props.places);
 
 		this.state = {
 			cursorIndex: 0,
@@ -27,7 +28,7 @@ class DecimalInput extends React.Component {
 		if (this.input !== document.activeElement &&
 			nextProps.allowUpdate) {
 
-			const value = nextProps.value.toFixed(this.props.places);
+			const value = Numbers.toFixed(nextProps.value, this.props.places);
 
 			this.setState({ value });
 		}
@@ -47,7 +48,7 @@ class DecimalInput extends React.Component {
 			// Need to safely convert to number in case value is '.'
 			let numValue = isNaN(Number(value)) ? 0 : Number(value);
 
-			const newValue = numValue.toFixed(this.props.places);
+			const newValue = Numbers.toFixed(numValue, this.props.places);
 
 			// Need to safely convert to number in case newValue is '.'
 			numValue = isNaN(Number(newValue)) ? 0 : Number(newValue);
@@ -77,7 +78,7 @@ class DecimalInput extends React.Component {
 				must be an integer or period character`);
 		}
 
-		let value = this.state.value === Number(0).toFixed(this.props.places) ?
+		let value = this.state.value === Numbers.toFixed(Number(0), this.props.places) ?
 			'' : this.state.value;
 
 		// Insert key value at cursor position
@@ -207,7 +208,7 @@ class DecimalInput extends React.Component {
 		const numValue = isNaN(Number(this.state.value)) ?
 			0 : Number(this.state.value);
 		// Round the current value and set to state
-		const value = numValue.toFixed(this.props.places);
+		const value = Numbers.toFixed(numValue, this.props.places);
 
 		this.setState({ value }, () => {
 			this.setValue(value);
