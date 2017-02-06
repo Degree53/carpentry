@@ -84,6 +84,12 @@ class DecimalInput extends React.Component {
 		// Insert key value at cursor position
 		value = value.slice(0, cursorIndex) + key + value.slice(cursorIndex);
 
+		// If the new length is greater than the maxLength
+		// property, don't make any changes and silently abort
+		if (value.toString().length > this.props.maxLength) {
+			return;
+		}
+
 		// If there's only one decimal point, move cursor forward
 		// and call setValue, else remove excess decimal point
 		if (value.indexOf('.') === value.lastIndexOf('.')) {
@@ -221,12 +227,20 @@ class DecimalInput extends React.Component {
 
 	render () {
 		return (
-			<input className={this.props.className} ref={c => this.input = c}
-				value={this.state.value} disabled={this.props.disabled}
-				onFocus={this.onInputFocus} onMouseUp={this.onInputMouseUp}
-				onTouchEnd={this.onInputTouchEnd} onKeyPress={this.onInputKeyPress}
-				onKeyUp={this.onInputKeyUp} onPaste={this.onInputPaste}
-				onChange={this.onInputChange} onBlur={this.onInputBlur} />
+			<input className={this.props.className}
+				ref={c => this.input = c}
+				value={this.state.value}
+				disabled={this.props.disabled}
+				maxLength={this.props.maxLength}
+				onFocus={this.onInputFocus}
+				onMouseUp={this.onInputMouseUp}
+				onTouchEnd={this.onInputTouchEnd}
+				onKeyPress={this.onInputKeyPress}
+				onKeyUp={this.onInputKeyUp}
+				onPaste={this.onInputPaste}
+				onChange={this.onInputChange}
+				onBlur={this.onInputBlur}
+			/>
 		);
 	}
 }
@@ -235,6 +249,7 @@ DecimalInput.propTypes = {
 	allowUpdate: React.PropTypes.bool,
 	className: React.PropTypes.string,
 	disabled: React.PropTypes.bool,
+	maxLength: React.PropTypes.number,
 	onBlur: React.PropTypes.func,
 	onFocus: React.PropTypes.func,
 	places: React.PropTypes.number,
@@ -246,6 +261,7 @@ DecimalInput.defaultProps = {
 	allowUpdate: true,
 	className: 'DecimalInput',
 	disabled: false,
+	maxLength: 99999,
 	onBlur: null,
 	onFocus: null,
 	places: 2,

@@ -50,7 +50,9 @@ class Parent extends React.Component {
 			<div>
 				<div>{`this.state.decimal = ${this.state.decimal}`}</div>
 				<Carpentry.DecimalInput ref={c => this.input = c}
-					setValue={this.setDecimal} value={this.state.decimal}
+					setValue={this.setDecimal}
+					value={this.state.decimal}
+					maxLength={8}
 					allowUpdate={this.state.allowUpdate} />
 				<button onClick={this.onAllowUpdateButtonClick}>
 					{'toggle allowUpdate'}
