@@ -261,7 +261,7 @@ DecimalInput.defaultProps = {
 	allowUpdate: true,
 	className: 'DecimalInput',
 	disabled: false,
-	maxLength: Number.MAX_SAFE_INTEGER,
+	maxLength: 99999,
 	onBlur: null,
 	onFocus: null,
 	places: 2,
