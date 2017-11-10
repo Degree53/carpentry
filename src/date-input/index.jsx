@@ -40,7 +40,7 @@ export default React.createClass({
 			monthNames: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug',
 				'Sep', 'Oct', 'Nov', 'Dec'],
 			today: 'Today',
-			value: new Date().toISOString().slice(0, 10)
+			value: new Date()
 		};
 	},
 
@@ -76,7 +76,7 @@ export default React.createClass({
 		this.setState({
 			selectedDate: date
 		}, () => {
-			this.props.setValue(date.toISOString().slice(0, 10));
+			this.props.setValue(date);
 		});
 	},
 
