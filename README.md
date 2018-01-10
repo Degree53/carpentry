@@ -265,11 +265,9 @@ render: function() {
 		<tr>
 			<td>value</td>
 			<td>String</td>
-			<td>new Date()
-				<br />.toISOString()
-				<br />.slice(0, 10)</td>
+			<td>new Date()</td>
 			<td>no</td>
-			<td>A full-date to set the input to. Can be used to set an initial value</td>
+			<td>A date to set the input to. Can be used to set an initial value</td>
 		</tr>
 	</tbody>
 </table>
