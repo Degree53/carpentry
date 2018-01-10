@@ -4,42 +4,44 @@ import Navbar from './navbar';
 import React from 'react';
 
 export default React.createClass({
-	
+
 	displayName: 'Calendar',
-	
+
 	getInitialState() {
 		return {
 			viewDate: new Date(this.props.selectedDate.getTime()),
 			level: 0
 		};
 	},
-	
-	onCalendarMouseDown(e) {
-		// Prevent button losing focus whilst navigating calendar
-		e.preventDefault();
-	},
-	
+
 	setViewDate(date) {
 		this.setState({
 			viewDate: date
 		});
 	},
-	
+
 	setLevel(modifier) {
 		const newLevel = this.state.level + modifier;
-		
+
 		if (0 <= newLevel && newLevel <= 2) {
 			this.setState({
 				level: newLevel
 			});
 		}
 	},
-	
+
+	onPositionerClick() {
+		this.props.setVisible(false);
+	},
+
+	onCalendarClick(e) {
+		e.stopPropagation();
+	},
+
 	render() {
 		return (
-			<div className={this.props.className + '__positioner'}>
-				<div className={this.props.className + '__calendar'}
-					onMouseDown={this.onCalendarMouseDown}>
+			<div className={this.props.className + '__positioner'} onClick={this.onPositionerClick}>
+				<div className={this.props.className + '__calendar'} onClick={this.onCalendarClick}>
 					<Navbar className={this.props.className} viewDate={this.state.viewDate}
 						level={this.state.level} monthNames={this.props.monthNames}
 						setViewDate={this.setViewDate} setLevel={this.setLevel} />
