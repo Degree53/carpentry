@@ -2,7 +2,6 @@ import Calendar from './calendar';
 import Dates from '../helpers/dates';
 import Numbers from '../helpers/numbers';
 import React from 'react';
-import ReactDOM from 'react-dom';
 import Styles from './styles';
 
 export default React.createClass({
@@ -28,7 +27,7 @@ export default React.createClass({
 		monthNames: React.PropTypes.arrayOf(React.PropTypes.string),
 		setValue: React.PropTypes.func.isRequired,
 		today: React.PropTypes.string,
-		value: React.PropTypes.string
+		value: React.PropTypes.object
 	},
 
 	getDefaultProps() {
@@ -51,27 +50,6 @@ export default React.createClass({
 		};
 	},
 
-	onInputMouseDown(e) {
-		// Prevent typing into input or text selection
-		e.preventDefault();
-	},
-
-	onButtonMouseDown(e) {
-		// Prevent passing focus down to children of button
-		e.preventDefault();
-	},
-
-	onButtonClick() {
-		// Manually focus button due to preventDefault
-		ReactDOM.findDOMNode(this.refs.button).focus();
-		this.setVisible(!this.state.visible);
-	},
-
-	onButtonBlur() {
-		// Automatically close calendar upon blur
-		this.setVisible(false);
-	},
-
 	setSelectedDate(date) {
 		this.setState({
 			selectedDate: date
@@ -86,22 +64,22 @@ export default React.createClass({
 		});
 	},
 
+	onDateInputClick() {
+		this.setVisible(!this.state.visible);
+	},
+
 	render() {
-		const dateString = Dates.toFormattedString(this.state.selectedDate,
-			this.props.format);
+		const dateString = Dates.toFormattedString(this.state.selectedDate, this.props.format);
 
 		return (
-			<div className={this.props.className}>
+			<div className={this.props.className} onClick={this.onDateInputClick}>
 				<style type="text/css">{Styles(this.props.className)}</style>
 				<div className={this.props.className + '__table'}>
 					<div className={this.props.className + '__cell'}>
-						<input className={this.props.className + '__input'} value={dateString}
-							onMouseDown={this.onInputMouseDown} onChange={()=>{}} />
+						<input className={this.props.className + '__input'} readOnly={true} value={dateString} />
 					</div>
 					<div className={this.props.className + '__cell'}>
-						<button className={this.props.className + '__button'} ref="button"
-							onMouseDown={this.onButtonMouseDown} onClick={this.onButtonClick}
-							onBlur={this.onButtonBlur}>
+						<button className={this.props.className + '__button'}>
 							{this.props.children}
 						</button>
 					</div>
